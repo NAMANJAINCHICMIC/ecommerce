@@ -14,3 +14,5 @@ export const environment = {
   };
   const app = initializeApp( environment.firebase);
 export const auth = getAuth(app);
+
+export const AUTH_URL = 'https://ecommerce-d831d-default-rtdb.asia-southeast1.firebasedatabase.app/'

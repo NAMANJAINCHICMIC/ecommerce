@@ -22,7 +22,8 @@ import { RouterModule, Routes } from '@angular/router';
     CommonModule,
     AngularFireModule.initializeApp(environment.firebase),
     ReactiveFormsModule,
-    FormsModule, AuthRoutingModule
+    FormsModule, AuthRoutingModule,
+
   ],
   // providers: [AuthService],
 })
