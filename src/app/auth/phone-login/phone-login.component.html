@@ -1,0 +1,103 @@
+<div [hidden]="user">
+    <h1>Sign In with Your Phone Number</h1>
+<!--   
+    <label for="phone">Phone Number</label><br>
+    <input type="text" [(ngModel)]="phoneNumber.country"  class="input" placeholder="1"    maxlength="2">
+    <input type="text" [(ngModel)]="phoneNumber.area"     class="input" placeholder="949"  maxlength="3">
+    <input type="text" [(ngModel)]="phoneNumber.prefix"   class="input" placeholder="555"  maxlength="3">
+    <input type="text" [(ngModel)]="phoneNumber.line"     class="input" placeholder="5555" maxlength="4">
+  
+    <div id="recaptcha-container"></div>
+  
+    <button (click)="sendLoginCode()">SMS Text Login Code</button>
+   -->
+    <!-- <div *ngIf="windowRef.confirmationResult">
+      <hr>
+      <label for="code">Enter your Verification Code Here</label><br>
+      <input type="text" name="code" [(ngModel)]="verificationCode">
+  
+      <button (click)="verifyLoginCode()">Verify</button>
+    </div> -->
+  
+  </div>
+  
+  <div *ngIf="user">
+    You have successfully logged in with your phone number!
+  
+    UserId: {{ user?.uid }}
+  
+  </div>
+<!-- <div id="recaptcha-container">
+
+</div> -->
+
+<div class="mask d-flex align-items-center h-100 gradient-custom-3">
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body p-5">
+              <h2 class="text-uppercase text-center mb-5">Login Form</h2>
+  <form [formGroup]="loginForm" class="align-self-center"(ngSubmit)="sendLoginCode()" [hidden]="windowRef.confirmationResult" >
+     
+      <div class="form-group align-self-center">
+        <label for="inputphone">Mobile Number</label>
+        <input type="text" class="form-control col col-12" id="inputphone" formControlName="phone"
+          [ngClass]="{'is-invalid': controlName.phone.errors && (controlName.phone.touched || controlName.phone.dirty), 'is-valid':controlName.phone.valid}"
+          placeholder="Mobile Number" pattern="[0-9]*"
+          oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+        <div *ngIf="controlName.phone.invalid && (controlName.phone.touched || controlName.phone.dirty)" class="alert alert-danger">
+          <div *ngIf="controlName.phone.errors?.['required']">
+            Mobile Number is required.
+          </div>
+          <div *ngIf="controlName.phone.errors?.['minlength']">
+            Mobile Number must be 10 digit long.
+          </div>
+          <div *ngIf="controlName.phone.errors?.['pattern']">
+            Enter valid Mobile Number.
+          </div>
+        </div>
+         
+        </div>
+        <div id="recaptcha-container"></div>
+    
+      <button type="submit" class="btn btn-primary">Submit</button>
+      
+    </form>
+    <form [formGroup]="verificationForm" class="align-self-center"(ngSubmit)="verifyLoginCode()" [hidden]="!windowRef.confirmationResult" >
+        <div class="form-group align-self-center">
+            <label for="inputotp">Enter your Verification Code Here</label>
+            <div class="d-flex">
+              <input type="text" class="form-control col col-12" id="inputotp" formControlName="otp"
+                [ngClass]="{'is-invalid': controlNameVerify.otp.errors && (controlNameVerify.otp.touched || controlNameVerify.otp.dirty), 'is-valid':controlNameVerify.otp.valid}"
+                placeholder="otp" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+              <div *ngIf="controlNameVerify.otp.invalid && (controlNameVerify.otp.dirty || controlNameVerify.otp.touched)"
+                class="alert alert-danger">
+                <div *ngIf="controlNameVerify.otp.errors?.['required']">
+                  OTP is required.
+                </div>
+              </div>
+            </div>
+          </div>
+        
+           
+   
+          <div id="recaptcha-container"></div>
+      
+        <button type="submit" class="btn btn-primary">Submit</button>
+        
+      </form>
+    <!-- <div *ngIf="windowRef.confirmationResult">
+        <hr>
+        <label for="code">Enter your Verification Code Here</label><br>
+        <input type="text" name="code" [(ngModel)]="verificationCode">
+    
+        <button (click)="verifyLoginCode()">Verify</button>
+      </div> -->
+
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
