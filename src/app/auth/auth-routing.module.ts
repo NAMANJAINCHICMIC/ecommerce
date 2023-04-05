@@ -5,6 +5,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { PhoneLoginComponent } from './phone-login/phone-login.component';
 import { AuthInterceptor } from '../utils/interceptors/auth.interceptor';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
 
 
 
@@ -21,6 +22,10 @@ const routes: Routes = [
     // canActivate: [AuthGuard]
  
 },
+{
+  path:'profile',
+  component:ProfilePageComponent
+}
 // {
 //     path: 'sign-up',
 //     component: SignUpComponent,
