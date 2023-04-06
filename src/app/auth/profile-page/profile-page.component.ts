@@ -12,7 +12,10 @@ import { auth } from 'src/environment';
   styleUrls: ['./profile-page.component.scss']
 })
 export class ProfilePageComponent {
+
   visible=true;
+  showCustomer = false; 
+  showVendor = false; 
   // picUploaded = false;
   showError= false;
   categories = [
@@ -32,18 +35,20 @@ export class ProfilePageComponent {
       email: new FormControl('', [Validators.required,Validators.email]),
       phone: new FormControl('',[Validators.required , Validators.minLength(10),Validators.pattern("^[6-9]\\d{9}$")]),
       address: new FormControl('',Validators.required ),
-      category: new FormControl('',Validators.required ),
-      firmName: new FormControl('' ),
+      role: new FormControl('customer')
+      // category: new FormControl('',Validators.required ),
+      // firmName: new FormControl('' ),
       // pathToProfilePic: new FormControl('', ),
     }
   )
-  VendorForm = new FormGroup(
+  vendorForm = new FormGroup(
     {
      
       email: new FormControl('', [Validators.required,Validators.email]),
       phone: new FormControl('',[Validators.required , Validators.minLength(10),Validators.pattern("^[6-9]\\d{9}$")]),
       address: new FormControl('',Validators.required ),
-      firmName: new FormControl('' ),
+      firmName: new FormControl('' ,Validators.required),
+      role: new FormControl('vendor')
       // category: new FormControl('',Validators.required ),
       // pathToProfilePic: new FormControl('', ),
     }
@@ -51,7 +56,17 @@ export class ProfilePageComponent {
 get controlName(){
   return this.registrationForm.controls;
 }
-
+get vendorControlName(){
+  return this.vendorForm.controls;
+}
+onCustomer(){
+this.showCustomer =true;
+this.showVendor = false;
+}
+onVendor(){
+  this.showCustomer =false;
+  this.showVendor = true;
+}
 onSubmit(){
   if (this.registrationForm.valid ) {
     console.log('form submitted');
@@ -72,6 +87,12 @@ this.authService.profileDetail(this.registrationForm.value)
 //   // validate all form fields
 //   console.log("show errors")
 //   this.showError = true;
+}
+}
+onVendorSubmit(){
+if(this.vendorForm.valid){
+console.log(this.vendorForm.value);
+this.authService.vendorProfileDetail(this.vendorForm.value)
 }
 }
 

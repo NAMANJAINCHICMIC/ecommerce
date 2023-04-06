@@ -66,7 +66,8 @@ signInWithPhoneNumber(auth,num, appVerifier)
                     if(result._tokenResponse.isNewUser){
                       this.router.navigate([PAGE.PROFILE])
                     }else{
-                      this.router.navigate([PAGE.HOME])
+                      // this.router.navigate([PAGE.HOME])
+                      this.authService.getUserData();
                     }
 
     })

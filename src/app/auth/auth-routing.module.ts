@@ -6,6 +6,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PhoneLoginComponent } from './phone-login/phone-login.component';
 import { AuthInterceptor } from '../utils/interceptors/auth.interceptor';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { AuthGuard } from '../utils/guards/auth.guard';
 
 
 
@@ -19,12 +20,13 @@ const routes: Routes = [
     path: 'sign-in',
     component: PhoneLoginComponent,
     // component: SignInComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
  
 },
 {
   path:'profile',
-  component:ProfilePageComponent
+  component:ProfilePageComponent,
+  canActivate: [AuthGuard]
 }
 // {
 //     path: 'sign-up',

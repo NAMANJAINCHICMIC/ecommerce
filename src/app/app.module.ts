@@ -11,6 +11,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore/'; 
+import { AngularFireStorageModule } from '@angular/fire/compat/storage/'; 
 import { environment } from 'src/environment';
 const material =[
   MatIconModule,
@@ -27,6 +28,7 @@ const material =[
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    AngularFireStorageModule,
     ToastrModule.forRoot(),
     HttpClientModule,
     BrowserAnimationsModule,
