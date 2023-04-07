@@ -9,13 +9,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { VendorUpdateItemComponent } from './vendor-update-item/vendor-update-item.component';
+import { VendorViewProfileComponent } from './vendor-view-profile/vendor-view-profile.component';
+import { VendorUpdateProfileComponent } from './vendor-update-profile/vendor-update-profile.component';
 const material =[
   MatIconModule,
   MatSelectModule,
   MatFormFieldModule,
   MatButtonModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatSlideToggleModule
 ]
 
 
@@ -24,6 +29,9 @@ const material =[
     VendorHomeComponent,
     VendorComponent,
     VendorAddItemComponent,
+    VendorUpdateItemComponent,
+    VendorViewProfileComponent,
+    VendorUpdateProfileComponent,
   ],
   imports: [
     CommonModule,

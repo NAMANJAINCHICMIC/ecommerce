@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { VendorService } from 'src/app/services/vendor.service';
+import { PAGE } from 'src/app/utils/constants/constant';
+import { Product } from 'src/app/utils/models/product';
 
 @Component({
   selector: 'app-vendor-home',
@@ -8,8 +11,29 @@ import { VendorService } from 'src/app/services/vendor.service';
 })
 export class VendorHomeComponent implements OnInit {
   itemList :any;
-  constructor(private vendorService: VendorService){}
-  ngOnInit(): void {
-this.vendorService.getVendorAllProduct()
+  productList :Array<Product |any > = []
+  constructor(private vendorService: VendorService ,private router: Router ){}
+  async ngOnInit() {
+// this.vendorService.getVendorProduct()
+// this.vendorService.getVendorAllProduct()
+const querySnapshot = await this.vendorService.getUniqueVendor()
+querySnapshot.forEach((doc) => {
+
+  const productId = doc.id
+ this.productList.push({ ...doc.data(), productId})
+ console.log(this.productList);
+
+});
+  }
+  editProduct(productId:string){
+    this.router.navigate([`${PAGE.UPDATE_ITEM}/${productId}`]);
+  }
+  async deleteProduct(productId:string ){
+this.vendorService.deleteProduct(productId)
+
+
+this.productList.splice(this.productList.findIndex(a => a.productId == productId) , 1)
+
+
   }
 }

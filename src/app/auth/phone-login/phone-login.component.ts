@@ -17,7 +17,7 @@ import { PAGE } from 'src/app/utils/constants/constant';
   styleUrls: ['./phone-login.component.scss']
 })
 export class PhoneLoginComponent  implements OnInit {
-
+displayOtpPage = false;
   windowRef: any;
   verificationCode?: string;
   user: any;
@@ -49,6 +49,9 @@ signInWithPhoneNumber(auth,num, appVerifier)
             .then(result => {
               console.log(result)
                 this.windowRef.confirmationResult = result;
+                if(this.windowRef.confirmationResult){
+this.displayOtpPage = true
+                }
             })
             .catch( error => console.log(error) );
   }
@@ -69,7 +72,7 @@ signInWithPhoneNumber(auth,num, appVerifier)
                       // this.router.navigate([PAGE.HOME])
                       this.authService.getUserData();
                     }
-
+                    this.displayOtpPage = false;
     })
     .catch( (error:any) => console.log(error, "Incorrect code entered?"));
   }

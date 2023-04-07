@@ -6,6 +6,9 @@ import { AuthInterceptor } from '../utils/interceptors/auth.interceptor';
 import { VendorComponent } from './vendor/vendor.component';
 import { VendorHomeComponent } from './vendor-home/vendor-home.component';
 import { VendorAddItemComponent } from './vendor-add-item/vendor-add-item.component';
+import { VendorUpdateItemComponent } from './vendor-update-item/vendor-update-item.component';
+import { VendorViewProfileComponent } from './vendor-view-profile/vendor-view-profile.component';
+import { VendorUpdateProfileComponent } from './vendor-update-profile/vendor-update-profile.component';
 
 
 
@@ -32,6 +35,18 @@ const routes: Routes = [
             {
             path: 'add-item',
             component: VendorAddItemComponent,
+          },
+            {
+            path: `update-item/:id`,
+            component: VendorUpdateItemComponent,
+          },
+            {
+            path: `vendor-detail`,
+            component: VendorViewProfileComponent,
+          },
+            {
+            path: `update-vendor-detail`,
+            component: VendorUpdateProfileComponent,
           },
         
     ]

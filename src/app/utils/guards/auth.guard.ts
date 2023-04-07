@@ -23,9 +23,7 @@ export class AuthGuard implements CanActivate {
       if ((path?.includes('customer'))&& !this.authService.isNotLoggedIn() && (this.authService.getRole() == 'customer') ) {
         return true;
       }  
-      if ((path?.includes('profile'))&& !this.authService.isNotLoggedIn()) {
-        return true;
-      }  
+   
       if (( path?.includes('sign-in')) && !this.authService.isNotLoggedIn()&& (this.authService.getRole() == 'customer')) {
         this.router.navigate([PAGE.HOME]);
         return false; 
@@ -38,6 +36,9 @@ export class AuthGuard implements CanActivate {
         this.router.navigate([PAGE.VENDOR_HOME]);
         return false; 
       }
+      if ((path?.includes('profile'))&& !this.authService.isNotLoggedIn()) {
+        return true;
+      }  
       if (( path?.includes('sign-in')) && !this.authService.isNotLoggedIn()&& (this.authService.getRole() == 'vendor')) {
         this.router.navigate([PAGE.VENDOR_HOME]);
         return false; 

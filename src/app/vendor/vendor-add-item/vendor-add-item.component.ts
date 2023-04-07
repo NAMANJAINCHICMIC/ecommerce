@@ -15,18 +15,13 @@ import { environment } from 'src/environment';
   styleUrls: ['./vendor-add-item.component.scss']
 })
 export class VendorAddItemComponent {
-  foodItem:any;
+ 
   userId  = this.authService.getUserId()
   uploadImage : Blob | string=''
   imgPath='';
   picUpladed = false;
   showError= false;
-  categories = [
-    'Starters' ,
-    'Main course',
-    'Dessert',
-    'Drinks',
-  ]
+ 
   
 
   constructor(private fireStorage : AngularFireStorage ,private router: Router ,private toastr: ToastrService, private http: HttpClient, private vendorService : VendorService , private authService :AuthService){
@@ -41,7 +36,7 @@ export class VendorAddItemComponent {
           productName: new FormControl('', [Validators.required ]),
         price: new FormControl('',[ Validators.required ]),     
         // category: new FormControl('',Validators.required ),
-        avaliable: new FormControl(true),
+        available: new FormControl(true),
         userId: new FormControl(this.userId),
         detail: new FormControl('',[Validators.required ]),
         pathToPic: new FormControl('', Validators.required ),

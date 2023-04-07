@@ -14,7 +14,7 @@
           <div class="card" style="border-radius: 15px;">
             <div class="card-body p-5">
               <h2 class="text-uppercase text-center mb-5">Authentication Form</h2>
-  <form [formGroup]="loginForm" class="align-self-center"(ngSubmit)="sendLoginCode()" [hidden]="windowRef.confirmationResult" >
+  <form [formGroup]="loginForm" class="align-self-center"(ngSubmit)="sendLoginCode()" [hidden]="displayOtpPage" >
      
       <div class="form-group align-self-center m-2">
         <label for="inputphone">Mobile Number</label>
@@ -40,7 +40,7 @@
       <button type="submit" class="btn btn-primary m-2">Submit</button>
       
     </form>
-    <form [formGroup]="verificationForm" class="align-self-center"(ngSubmit)="verifyLoginCode()" [hidden]="!windowRef.confirmationResult" >
+    <form [formGroup]="verificationForm" class="align-self-center"(ngSubmit)="verifyLoginCode()" [hidden]="!displayOtpPage" >
         <div class="form-group align-self-center m-2">
             <label for="inputotp">Enter your Verification Code Here</label>
             <div class="d-flex">

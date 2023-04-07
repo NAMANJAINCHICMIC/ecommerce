@@ -22,4 +22,10 @@ signOut(){
 addItem(){
   this.router.navigate([PAGE.ADD_ITEM]);
 }
+viewProfile(){
+  this.router.navigate([PAGE.VENDOR_PROFILE]);
+}
+updateProfile(){
+  this.router.navigate([PAGE.UPDATE_VENDOR_PROFILE]);
+}
 }
