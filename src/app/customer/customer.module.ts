@@ -9,19 +9,30 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
+import { CustomerViewProfileComponent } from './customer-view-profile/customer-view-profile.component';
+import { CustomerUpdateProfileComponent } from './customer-update-profile/customer-update-profile.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { CartFooterComponent } from './cart-footer/cart-footer.component';
+import { CartComponent } from './cart/cart.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 const material =[
   MatIconModule,
   MatSelectModule,
   MatFormFieldModule,
   MatButtonModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatProgressSpinnerModule
 ]
 
 @NgModule({
   declarations: [
     CustomerComponent,
-    CustomerHomeComponent
+    CustomerHomeComponent,
+    CustomerViewProfileComponent,
+    CustomerUpdateProfileComponent,
+    ProductDetailComponent,
+    CartFooterComponent,
+    CartComponent
   ],
   imports: [
     CommonModule,

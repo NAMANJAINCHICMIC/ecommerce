@@ -10,3 +10,21 @@ export interface Product {
 
   userId: string;
 }
+export interface Cart {
+
+  items: ItemDetails;
+  totalAmt: number;
+}
+
+export interface ItemDetails {
+[id: string]: {
+  addedOn: string;
+  quantity: number;
+  productId: string;
+  userId: string;
+  productName: string;
+  price: string;
+  pathToPic: string;
+  
+};
+}

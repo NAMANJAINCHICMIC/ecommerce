@@ -4,55 +4,56 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DocumentData } from 'firebase/firestore';
 import { ToastrService } from 'ngx-toastr';
-import { VendorService } from 'src/app/services/vendor.service';
-import { defaultImage, PAGE } from 'src/app/utils/constants/constant';
-import { environment } from 'src/environment';
+import { CustomerService } from 'src/app/services/customer.service';
 
 @Component({
-  selector: 'app-vendor-update-profile',
-  templateUrl: './vendor-update-profile.component.html',
-  styleUrls: ['./vendor-update-profile.component.scss']
+  selector: 'app-customer-update-profile',
+  templateUrl: './customer-update-profile.component.html',
+  styleUrls: ['./customer-update-profile.component.scss']
 })
-export class VendorUpdateProfileComponent  implements OnInit{
+export class CustomerUpdateProfileComponent  implements OnInit{
   info:DocumentData = [];
   showError= false;
   async ngOnInit(): Promise<void> {
-    const snap = await this.vendorService.getVendorProfile( );
+    const snap = await this.customerService.getCustomerProfile( );
     if (snap.exists()) {
              this.info = snap.data()      
              
             console.log(this.info)   
         }
-        this.vendorForm = new FormGroup(
+        this.customerForm = new FormGroup(
           {
            
             email: new FormControl(this.info['email'], [Validators.required,Validators.email]),
             phone: new FormControl(this.info['phone'],[Validators.required , Validators.minLength(10),Validators.pattern("^[6-9]\\d{9}$")]),
             address: new FormControl(this.info['address'],Validators.required ),
-            firmName: new FormControl(this.info['firmName'],Validators.required),
-            role: new FormControl('vendor')
+            firstName: new FormControl(this.info['firstName'],Validators.required),
+            lastName: new FormControl(this.info['lastName'],Validators.required),
+            role: new FormControl('customer')
             // category: new FormControl('',Validators.required ),
             // pathToProfilePic: new FormControl('', ),
           }
         )
       }
-  vendorForm: FormGroup<{
-      firmName: FormControl<string | null>,
+  customerForm: FormGroup<{
+      firstName: FormControl<string | null>,
+      lastName: FormControl<string | null>,
       role: FormControl<string | null>,
       email: FormControl<string | null>,
       phone: FormControl<string | null>,
       address: FormControl<string | null>,
       // pathToProfilePic: FormControl<string | null>
   }>;
-  constructor(private router: Router ,private toastr: ToastrService , private http: HttpClient , private vendorService : VendorService){
-    this.vendorForm = new FormGroup(
+  constructor(private router: Router ,private toastr: ToastrService , private http: HttpClient , private customerService : CustomerService){
+    this.customerForm = new FormGroup(
       {
        
         email: new FormControl('', [Validators.required,Validators.email]),
         phone: new FormControl('',[Validators.required , Validators.minLength(10),Validators.pattern("^[6-9]\\d{9}$")]),
         address: new FormControl('',Validators.required ),
-        firmName: new FormControl('' ,Validators.required),
-        role: new FormControl('vendor')
+        firstName: new FormControl('' ,Validators.required),
+        lastName: new FormControl('' ,Validators.required),
+        role: new FormControl('customer')
         // category: new FormControl('',Validators.required ),
         // pathToProfilePic: new FormControl('', ),
       }
@@ -60,11 +61,11 @@ export class VendorUpdateProfileComponent  implements OnInit{
       }
  
 get controlName(){
-  return this.vendorForm.controls;
+  return this.customerForm.controls;
 }
 onSubmit(){
-  if (this.vendorForm.valid ) {
-   this.vendorService.updateVendorProfile(this.vendorForm.value ) 
+  if (this.customerForm.valid ) {
+   this.customerService.updateCustomerProfile(this.customerForm.value ) 
 
 } else {
   console.log("show errors")

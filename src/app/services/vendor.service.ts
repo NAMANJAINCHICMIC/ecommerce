@@ -46,6 +46,7 @@ return await this.fireStorage.upload(path,file)
     
     //     this.getUserData()
   }
+ 
   async deleteProduct( productId:string){
     
       const ref = doc(db,`product`, productId);   
@@ -95,7 +96,17 @@ return await getDoc(doc(db, 'product', productId))
   async getVendorProfile(){
   return await getDoc(doc(db, 'vendor', this.userId)) 
 }
+async updateVendorProfile(data:any ){
+    
+  if(this.userId){
+    const ref = doc(db,`vendor`, this.userId);   
 
+    await updateDoc(ref,data)
+this.router.navigate([PAGE.VENDOR_HOME]);
+  }
+  
+  //     this.getUserData()
+}
 
 
 }

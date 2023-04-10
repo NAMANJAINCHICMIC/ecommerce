@@ -1,0 +1,71 @@
+<!-- <app-header></app-header> -->
+<div id="" style="height: 90vh;" class="d-flex align-items-center justify-content-center spinner-container" *ngIf="isLoading">
+    <mat-spinner class="spinner"></mat-spinner>
+</div>
+<div style="background-color: #eee;" *ngIf="!isLoading">
+   
+   <div style="height: 90vh;" class="d-flex align-items-center justify-content-center spinner-container">
+
+  
+            <div class="card mb-3 mx-auto" style="max-width: 700px;" >
+                <div class="row g-0 justify-content-between">
+                    <div class="col-md-4">
+                        <img class="item-image" style="max-width:100%;" [ngClass]="{'not-available': item?.available =='0'}" [src]="item?.pathToPic">
+                       
+                    </div>
+                   
+                    <div class="col-md-8" style="border:0px solid gray"> 
+                        <div class="card-body p-4 ">
+                            <div class="row card-title " id="productName" >
+                                <h1 id="title">
+            
+                                     {{item?.productName}}
+                                </h1>
+                            </div>
+                            <div class="row" id="productPrice" >
+                                <h2 id="price">
+            
+                                    ₹ {{item?.price}}
+                                </h2>
+                            </div>
+                            <div class="row" id="productdetail" >
+                                <p id="detail">
+            
+                                     {{item?.detail}}
+                                </p>
+                            </div>
+                            <div class="btn-group" *ngIf="item?.available !='0'">
+                                <div class="row justify-content-end align-items-bottom" id="productdetailbtn" *ngIf="item?.quantity == 0" >
+                                <button mat-raised-button color="accent" (click)="onAdd(item)">Add To Cart</button>
+                                    
+                                </div>
+                                <!-- <span class="btn btn-sm" *ngIf="item?.quantity == 0" (click)="onAdd(item)">
+                                    <mat-icon>add_shopping_cart</mat-icon>
+                                </span> -->
+
+                                <div class="btn-toolbar" role="toolbar" *ngIf="item?.quantity > 0">
+                                    <div class="btn-group" role="group" aria-label="-">
+                                        <span type="button" class="btn btn-outline-danger btn-sm" (click)="onRemove(item)">-</span>
+                                        <span class="text-center" style="width: 30px;">{{[(item.quantity)]}}</span>
+                                        <span type="button" class="btn btn-outline-success btn-sm" (click)="onAdd(item)">+</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="item?.available =='0'">
+                                <span class="not-available-text">Not Available.</span>
+                            </div>
+                            <!-- <div class="btn-toolbar" role="toolbar" *ngIf="item.quantity > 0">
+                                <div class="btn-group" role="group" aria-label="-">
+                                    <span type="button" class="btn btn-outline-danger btn-sm" (click)="onRemove(item)">-</span>
+                                    <span class="text-center" style="width: 30px;">{{[(item.quantity)]}}</span>
+                                    <span type="button" class="btn btn-outline-success btn-sm" (click)="onAdd(item)">+</span>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <app-cart-footer></app-cart-footer>
+                </div>
+            </div>
+            
+  

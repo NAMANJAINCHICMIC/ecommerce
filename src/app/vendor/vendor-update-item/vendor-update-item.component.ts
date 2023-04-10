@@ -27,7 +27,7 @@ export class VendorUpdateItemComponent implements OnInit {
     detail: FormControl<string | null>,
     pathToPic: FormControl<string | null>,
     userId: FormControl<string | null>,
-    available: FormControl<boolean | null>,
+    available: FormControl<string | null>,
  
    
 }>;
@@ -41,7 +41,7 @@ export class VendorUpdateItemComponent implements OnInit {
             productName: new FormControl('', [Validators.required ]),
           price: new FormControl('',[ Validators.required ]),     
           // category: new FormControl('',Validators.required ),
-          available: new FormControl(true),
+          available: new FormControl('',[Validators.required ]),
           userId: new FormControl(this.userId),
           detail: new FormControl('',[Validators.required ]),
           pathToPic: new FormControl('', Validators.required ),
@@ -63,7 +63,7 @@ export class VendorUpdateItemComponent implements OnInit {
               productName: new FormControl(this.info['productName'], [Validators.required ]),
             price: new FormControl(this.info['price'],[ Validators.required ]),     
             // category: new FormControl('',Validators.required ),
-            available: new FormControl(this.info['availabel']),
+            available: new FormControl(this.info['available'],[ Validators.required ]),
             userId: new FormControl(this.userId),
             detail: new FormControl(this.info['detail'],[Validators.required ]),
             pathToPic: new FormControl(this.info['pathToPic'], Validators.required ),

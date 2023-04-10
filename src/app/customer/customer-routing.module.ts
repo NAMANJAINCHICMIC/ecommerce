@@ -5,6 +5,10 @@ import { AuthGuard } from '../utils/guards/auth.guard';
 import { AuthInterceptor } from '../utils/interceptors/auth.interceptor';
 import { CustomerComponent } from './customer/customer.component';
 import { CustomerHomeComponent } from './customer-home/customer-home.component';
+import { CustomerUpdateProfileComponent } from './customer-update-profile/customer-update-profile.component';
+import { CustomerViewProfileComponent } from './customer-view-profile/customer-view-profile.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { CartComponent } from './cart/cart.component';
 
 
 
@@ -30,6 +34,22 @@ const routes: Routes = [
             component: CustomerHomeComponent,
             // canActivate: [AuthGuard]
           },
+          {
+          path: `view-details`,
+          component: CustomerViewProfileComponent,
+        },
+          {
+          path: `update-details`,
+          component: CustomerUpdateProfileComponent,
+        },
+          {
+          path: `my-cart`,
+          component: CartComponent,
+        },
+          {
+          path: `product-detail/:id`,
+          component: ProductDetailComponent,
+        },
         
     ]
   },

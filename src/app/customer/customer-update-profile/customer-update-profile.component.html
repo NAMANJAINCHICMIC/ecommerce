@@ -5,26 +5,41 @@
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
           <div class="card shadow-2-strong" style="border-radius: 1rem;">
 <div class="card-body p-3 mb-0 text-center" >
-    <h2 class="text-uppercase text-center mb-2">Enter Your Profile</h2>
+    <h2 class="text-uppercase text-center mb-2">Update Your Profile</h2>
 
-    <form [formGroup]="vendorForm" class="align-self-center justify-content-center"
+    <form [formGroup]="customerForm" class="align-self-center justify-content-center"
       (ngSubmit)="onSubmit()">
       
      
-      <div class="form-row align-self-center justify-content-center"
-    >
+      <div class="form-row align-self-center justify-content-center" >
         <div class="col mb-3">
-          <label for="inputFirmname">Firm Name</label>
-          <input type="text" class="form-control " formControlName="firmName"
-          [ngClass]="{'is-invalid': controlName.firmName.errors && (controlName.firmName.touched || controlName.firmName.dirty), 'is-valid':controlName.firmName.valid}"
+          <label for="inputFirmname">First Name</label>
+          <input type="text" class="form-control " formControlName="firstName"
+          [ngClass]="{'is-invalid': controlName.firstName.errors && (controlName.firstName.touched || controlName.firstName.dirty), 'is-valid':controlName.firstName.valid}"
           placeholder="Firm name">
-          <div *ngIf="controlName.firmName.invalid && showError " class="alert alert-danger">
-            <div *ngIf="controlName.firmName.errors?.['required']">
-              Firm Name is required.
+          <div *ngIf="controlName.firstName.invalid && showError " class="alert alert-danger">
+            <div *ngIf="controlName.firstName.errors?.['required']">
+              First Name is required.
             </div>
-            
+            <div *ngIf="controlName.lastName.errors?.['minlength']">
+                First Name must be at least 3 characters long.
+              </div>
           </div>
         </div>
+        <div class="col mb-3">
+            <label for="inputLastname">Last Name</label>
+            <input type="text" class="form-control " formControlName="lastName"
+              [ngClass]="{'is-invalid': controlName.lastName.errors && (controlName.lastName.touched || controlName.lastName.dirty), 'is-valid':controlName.lastName.valid}"
+              placeholder="Last name">
+            <div *ngIf="controlName.lastName.invalid && showError " class="alert alert-danger">
+              <div *ngIf="controlName.lastName.errors?.['required']">
+                Last Name is required.
+              </div>
+              <div *ngIf="controlName.lastName.errors?.['minlength']">
+                Last Name must be at least 3 characters long.
+              </div>
+            </div>
+          </div>
       </div>
       <div class="form-row align-self-center justify-content-center">
         <div class="col mb-3">

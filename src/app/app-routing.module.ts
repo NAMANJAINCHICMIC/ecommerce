@@ -25,11 +25,6 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path:'main',
-    loadChildren:()=>import('./main/main.module').then(m=>m.MainModule),
-    // canActivate: [AuthGuard]
-  },
-  {
     path: '**',
     component: PageNotFoundComponent,
   },

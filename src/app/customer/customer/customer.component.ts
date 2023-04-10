@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { PAGE } from 'src/app/utils/constants/constant';
 
 @Component({
   selector: 'app-customer',
@@ -7,12 +9,20 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./customer.component.scss']
 })
 export class CustomerComponent {
-  constructor(private authService : AuthService){
+  constructor(private authService : AuthService ,  private router:Router){
     //  authService.getProfile()
     //  authService.getUserData()
     }
-homePage(){}
+homePage(){
+  this.router.navigate([PAGE.HOME]);
+}
 signOut(){
   this.authService.signOutFn()
+}
+viewProfile(){
+  this.router.navigate([PAGE.CUSTOMER_PROFILE]);
+}
+updateProfile(){
+  this.router.navigate([PAGE.UPDATE_CUSTOMER_PROFILE]);
 }
 }
