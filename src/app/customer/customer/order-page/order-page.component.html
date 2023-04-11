@@ -1,0 +1,36 @@
+<main class="my-order-page">
+    <div class="album py-5">
+        <div class="container">
+
+            <div class="d-flex align-items-center pb-3 mb-5 border-bottom">
+                <span class="fs-2">My orders</span>
+            </div>
+
+            <div *ngIf="isLoading == true">
+                <!-- <mat-spinner class="spinner"></mat-spinner> -->
+            </div>
+
+            <div class="text-center" *ngIf="isLoaded == true && orderArray.length == 0">
+                <h3>You haven't ordered anything yet.</h3>
+            </div>
+
+            <div *ngFor="let order of orderArray">
+                <div class="card mx-auto" style="max-width: 700px;">
+                    <div class="card-header">
+                        <strong>Order # {{order.transactionId}}</strong> placed on {{order.transactionTime}}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">ID: {{order.transactionId}}</h5>
+                        <div *ngFor="let oi of innerObjectKeys">
+                            
+                            <p class="card-text">
+                                {{order.productDetails.items[oi].productName}}: ₹{{order.productDetails.items[oi].price}} × {{order.productDetails.items[oi].quantity}} = ₹{{getItemTotalAmount(order.productDetails.items[oi].price, order.productDetails.items[oi].quantity)}}
+                            </p>
+                        </div>
+                        <hr> <strong>Total amount paid: ₹{{order.productDetails.totalAmt}}</strong> (inclusive of 18 %GST)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

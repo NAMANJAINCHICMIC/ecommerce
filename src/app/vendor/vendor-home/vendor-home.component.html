@@ -1,6 +1,9 @@
 <div>
     <main>
-        <div class="album py-5">
+        <div id="" style="height: 90vh;" class="d-flex align-items-center justify-content-center spinner-container" *ngIf="isLoading">
+            <mat-spinner class="spinner"></mat-spinner>
+        </div>
+        <div class="album py-5" *ngIf="!isLoading">
             <div class="container">
                 <section class="section" id="starters" style="scroll-margin-top: 0rem;">
                     <div class="items-div" >                 

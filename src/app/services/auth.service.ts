@@ -62,7 +62,8 @@ export class AuthService {
         // this.store = this.db.doc('userrole');
         // this.store.set({ title: 'zkoder Tutorial'});
         // tutorialsRef.add({ ...tutorial });
-        this.router.navigate([PAGE.HOME]);
+        // this.router.navigate([PAGE.HOME]);
+        this.getUserData() 
     }
     vendorProfileDetail(data: any) {
         if (!this.userId) {

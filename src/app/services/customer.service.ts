@@ -40,4 +40,19 @@ async getUniqueProduct(productId : string){
   return await getDoc(doc(db, 'product', productId))
    
   }
+
+ transactionDone(data: any , transactionId : string) {
+    if (!this.userId) {
+        this.userId = this.authService.getUserId();
+    }
+    // const ref = this.db.doc(`user/${this.userId}/vendor/${this.userId}`);   
+    const ref = this.db.doc(`transaction/${transactionId}`);
+    ref.set(data);
+    // this.router.navigate([PAGE.VENDOR_HOME]);
+    // this.getUserData()
+}
+getUniqueCustomerOrder(){
+  const querySnapshot = query(collection(db, "transaction") , where('customerId', '==', this.userId))
+  return getDocs(querySnapshot);
+}
 }

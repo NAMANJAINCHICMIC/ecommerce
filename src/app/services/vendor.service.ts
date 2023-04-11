@@ -67,19 +67,19 @@ querySnapshot.forEach((doc) => {
  }
 });
 }
-getVendorProduct(){
-  this.userId = this.authService.getUserId();
-const productDetail  = this.db.collection('product', ref => ref.where('userId', '==', this.userId));
+// getVendorProduct(){
+//   this.userId = this.authService.getUserId();
+// const productDetail  = this.db.collection('product', ref => ref.where('userId', '==', this.userId));
 
-productDetail.get().forEach((doc) => { 
-  const info = doc.docs.forEach((document)=>{
-   document.data() 
-  console.log(document.data())
-  console.log(document.id)
-  })
-});
+// productDetail.get().forEach((doc) => { 
+//   const info = doc.docs.forEach((document)=>{
+//    document.data() 
+//   console.log(document.data())
+//   console.log(document.id)
+//   })
+// });
 
-}
+// }
 getUniqueVendor(){
   const querySnapshot = query(collection(db, "product") , where('userId', '==', this.userId))
   return getDocs(querySnapshot);

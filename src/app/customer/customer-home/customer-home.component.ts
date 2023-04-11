@@ -10,6 +10,7 @@ import { Product } from 'src/app/utils/models/product';
   styleUrls: ['./customer-home.component.scss']
 })
 export class CustomerHomeComponent implements OnInit {
+  isLoading = true;
   itemList :any;
   productList :Array<Product |any > = []
   constructor(private customerService: CustomerService ,private router: Router ){}
@@ -24,6 +25,7 @@ querySnapshot.forEach((doc) => {
  console.log(this.productList);
 
 });
+this.isLoading = false;
   }
   productDetail(productId:string){
     this.router.navigate([`${PAGE.PRODUCT_DETAIL}/${productId}`]);

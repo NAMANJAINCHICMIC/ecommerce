@@ -137,7 +137,14 @@ export class CartService implements OnInit {
       return localStorage.getItem('cartData');
     }
     getCartDataObservable() {
-      this.cartDataSub.next(JSON.parse(this.getCartData() || '{}')== '{}' ?JSON.parse(this.getCartData() || '{}'):this.cartObj);
+      // if (localStorage.getItem('cartData')) {
+        
+      //   this.cartDataSub.next(JSON.parse(this.getCartData()||'{}'));
+      // }else{
+
+      //   this.cartDataSub.next(this.cartObj);
+      // }
+      this.cartDataSub.next((localStorage.getItem('cartData') ) ? (JSON.parse(this.getCartData() || '{}') ): this.cartObj);
       return this.cartDataSub.asObservable();
     }
 }

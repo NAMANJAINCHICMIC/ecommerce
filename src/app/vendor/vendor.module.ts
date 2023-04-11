@@ -14,13 +14,15 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { VendorUpdateItemComponent } from './vendor-update-item/vendor-update-item.component';
 import { VendorViewProfileComponent } from './vendor-view-profile/vendor-view-profile.component';
 import { VendorUpdateProfileComponent } from './vendor-update-profile/vendor-update-profile.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 const material =[
   MatIconModule,
   MatSelectModule,
   MatFormFieldModule,
   MatButtonModule,
   MatToolbarModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatProgressSpinnerModule
 ]
 
 

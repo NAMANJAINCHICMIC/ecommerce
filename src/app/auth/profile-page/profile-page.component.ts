@@ -72,21 +72,7 @@ onSubmit(){
     console.log('form submitted');
   console.log(this.registrationForm.value);
 this.authService.profileDetail(this.registrationForm.value)
-//   this.authService.enterProfile(this.registrationForm.value).subscribe((res:any)=>{
-//     // this.toastr.info(res.message);
-//     //     if(res.success){
-  
-//     //       this.registrationForm.reset();
-//     //       this.mainService.userRole = res.data.userRole;
-//     //       this.authService.storeToken(res.data.token);
-//     //       this.router.navigate([PAGE.HOME]);
-//     //     }
-//     console.log(res)
-//       })
-// } else {
-//   // validate all form fields
-//   console.log("show errors")
-//   this.showError = true;
+
 }
 }
 onVendorSubmit(){

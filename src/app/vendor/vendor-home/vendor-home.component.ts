@@ -10,6 +10,7 @@ import { Product } from 'src/app/utils/models/product';
   styleUrls: ['./vendor-home.component.scss']
 })
 export class VendorHomeComponent implements OnInit {
+  isLoading = true;
   itemList :any;
   productList :Array<Product |any > = []
   constructor(private vendorService: VendorService ,private router: Router ){}
@@ -24,6 +25,7 @@ querySnapshot.forEach((doc) => {
  console.log(this.productList);
 
 });
+    this.isLoading = false;
   }
   editProduct(productId:string){
     this.router.navigate([`${PAGE.UPDATE_ITEM}/${productId}`]);

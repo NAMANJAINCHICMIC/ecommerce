@@ -121,6 +121,6 @@ export class CartComponent implements OnInit{
     //   this.router.navigate([PAGE.ORDERS]);
     // }
     placeOrder(){
-      
+      this.router.navigate([PAGE.PAYMENT_GATEWAY]);
     }
 }

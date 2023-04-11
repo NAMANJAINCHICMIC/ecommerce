@@ -9,9 +9,8 @@ import { CustomerUpdateProfileComponent } from './customer-update-profile/custom
 import { CustomerViewProfileComponent } from './customer-view-profile/customer-view-profile.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { CartComponent } from './cart/cart.component';
-
-
-
+import { PaymentComponent } from './payment/payment.component';
+import { OrderPageComponent } from './customer/order-page/order-page.component';
 
 const routes: Routes = [
   {
@@ -23,45 +22,50 @@ const routes: Routes = [
   {
     path: 'customer',
     component: CustomerComponent,
-    children:[
-        {
-            path: '',
-            redirectTo: 'home',
-            pathMatch: 'full',
-          },
-            {
-            path: 'home',
-            component: CustomerHomeComponent,
-            // canActivate: [AuthGuard]
-          },
-          {
-          path: `view-details`,
-          component: CustomerViewProfileComponent,
-        },
-          {
-          path: `update-details`,
-          component: CustomerUpdateProfileComponent,
-        },
-          {
-          path: `my-cart`,
-          component: CartComponent,
-        },
-          {
-          path: `product-detail/:id`,
-          component: ProductDetailComponent,
-        },
-        
-    ]
+    children: [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      },
+      {
+        path: 'home',
+        component: CustomerHomeComponent,
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: `view-details`,
+        component: CustomerViewProfileComponent,
+      },
+      {
+        path: `update-details`,
+        component: CustomerUpdateProfileComponent,
+      },
+      {
+        path: `my-cart`,
+        component: CartComponent,
+      },
+      {
+        path: `my-orders`,
+        component: OrderPageComponent,
+      },
+      {
+        path: `payment-gateway`,
+        component: PaymentComponent,
+      },
+      {
+        path: `product-detail/:id`,
+        component: ProductDetailComponent,
+      },
+    ],
   },
- 
-
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   providers: [
-    {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}
-  ]
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
 })
-export class CustomerRoutingModule { }
+export class CustomerRoutingModule {}

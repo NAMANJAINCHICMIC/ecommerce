@@ -15,16 +15,16 @@
     <span class="example-spacer"></span>
     <span class="float-right justify-content-end ">
 
-      <button (click)="homePage()">Home</button>
+      <button class="btn" (click)="homePage()">Home</button>
       <!-- <button (click)="menuPage()">Menu</button>
         (input)="onSearchQueryInput($event)"
       <button (click)="ordersPage()">Orders</button>
       <button *ngIf="authService.userRole === 'admin'" (click)="addFoodPage()">Add Food Item</button>
       <button *ngIf="authService.userRole === 'admin'" (click)="addChefPage()">Add Chef</button>
       <button (click)="changePassword()">Change Password</button> -->
-      <button (click)="viewProfile()">View Profile</button>
-      <button (click)="updateProfile()">Update Profile</button>
-      <button (click)="signOut()">Log Out</button>
+      <button class="btn" (click)="viewProfile()">View Profile</button>
+      <button class="btn" (click)="updateProfile()">Update Profile</button>
+      <button class="btn" (click)="signOut()">Log Out</button>
     </span>
   </mat-toolbar>
 <router-outlet></router-outlet>

@@ -3,6 +3,8 @@ export const PAGE = {
     PROFILE:'auth/profile',
     HOME:'customer/customer/home',
     MY_CART:'customer/customer/my-cart',
+    MY_ORDERS:'customer/customer/my-orders',
+    PAYMENT_GATEWAY:'customer/customer/payment-gateway',
     CUSTOMER_PROFILE:'customer/customer/view-details',
     UPDATE_CUSTOMER_PROFILE:'customer/customer/update-details',
     PRODUCT_DETAIL: 'customer/customer/product-detail',
