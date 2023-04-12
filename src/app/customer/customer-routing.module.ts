@@ -10,7 +10,7 @@ import { CustomerViewProfileComponent } from './customer-view-profile/customer-v
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { CartComponent } from './cart/cart.component';
 import { PaymentComponent } from './payment/payment.component';
-import { OrderPageComponent } from './customer/order-page/order-page.component';
+import { OrderPageComponent } from './order-page/order-page.component';
 
 const routes: Routes = [
   {

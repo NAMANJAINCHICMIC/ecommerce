@@ -102,9 +102,11 @@ get controlName(){
             transactionDetails : stripeToken,
             customerId : this.authService.getUserId(),
             transactionTime: new Date().toLocaleString(),
+            totalAmt:this.totalAmt
           }
           console.log("data",data);
-          this.customerService.transactionDone(data , stripeToken.id)
+          this.customerService.transactionDone(data , stripeToken.id);
+          this.cartService.clearCart();
           this.router.navigate([PAGE.MY_ORDERS]);
       },
     });

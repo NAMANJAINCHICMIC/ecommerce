@@ -9,6 +9,7 @@ import { CustomerService } from 'src/app/services/customer.service';
 export class OrderPageComponent implements OnInit {
   orders: any;
   orderArray: any = [];
+  orderDetail: any = [];
   isLoading: boolean = true;
   isLoaded: boolean = false;
   innerObjectKeys : any =[];
@@ -76,6 +77,24 @@ querySnapshot.forEach((doc) => {
       console.log(order)
     this.innerObjectKeys = Object.keys(order.productDetails.items);
       console.log(this.innerObjectKeys);
+      const oiArray: any[] = [];
+      for(let oi of this.innerObjectKeys){
+
+        const orderObj = {
+          
+          productName: order.productDetails.items[oi].productName,
+          price: order.productDetails.items[oi].price,
+          quantity: order.productDetails.items[oi].quantity,
+        };
+        oiArray.push(orderObj);
+      }
+     const obj : any = {
+      transactionId:order.transactionId,
+      transactionTime:order.transactionTime,
+      totalAmt:order.totalAmt,
+      orderedItems: oiArray,
+     }
+     this.orderDetail.push(obj)
     }
   }
 }

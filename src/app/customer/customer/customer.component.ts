@@ -22,6 +22,12 @@ signOut(){
 viewProfile(){
   this.router.navigate([PAGE.CUSTOMER_PROFILE]);
 }
+myCart(){
+  this.router.navigate([PAGE.MY_CART]);
+}
+myOrders(){
+  this.router.navigate([PAGE.MY_ORDERS]);
+}
 updateProfile(){
   this.router.navigate([PAGE.UPDATE_CUSTOMER_PROFILE]);
 }

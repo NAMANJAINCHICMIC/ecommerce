@@ -22,6 +22,8 @@
       <button *ngIf="authService.userRole === 'admin'" (click)="addFoodPage()">Add Food Item</button>
       <button *ngIf="authService.userRole === 'admin'" (click)="addChefPage()">Add Chef</button>
       <button (click)="changePassword()">Change Password</button> -->
+      <button class="btn" (click)="myCart()">My Cart</button>
+      <button class="btn" (click)="myOrders()">My Orders</button>
       <button class="btn" (click)="viewProfile()">View Profile</button>
       <button class="btn" (click)="updateProfile()">Update Profile</button>
       <button class="btn" (click)="signOut()">Log Out</button>

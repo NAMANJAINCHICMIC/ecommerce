@@ -16,7 +16,7 @@ import { CartFooterComponent } from './cart-footer/cart-footer.component';
 import { CartComponent } from './cart/cart.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { PaymentComponent } from './payment/payment.component';
-import { OrderPageComponent } from './customer/order-page/order-page.component';
+import { OrderPageComponent } from './order-page/order-page.component';
 const material =[
   MatIconModule,
   MatSelectModule,
