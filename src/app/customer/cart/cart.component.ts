@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart.service';
 import { PAGE } from 'src/app/utils/constants/constant';
 import { Cart } from 'src/app/utils/models/product';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cart',
@@ -61,7 +62,7 @@ export class CartComponent implements OnInit{
             price: itemObj.price,
             pathToPic: itemObj.pathToPic,
             quantity: itemObj.quantity,
-            
+            available: itemObj.available
           };
   
           this.cartArray.push(obj);
@@ -74,8 +75,16 @@ export class CartComponent implements OnInit{
   
     /** add to cart */
     onAdd(item: any) {
+      if(+item.available > item.quantity){
       item.quantity += 1; //two-way binded
       this.cartService.addOrUpdate(item);
+    }else{
+      Swal.fire(
+'No more stock is available for the Product',
+)
+
+      // this.toastr.info("No more stock is available for the Product")
+    }
     }
   
     /** remove from cart */

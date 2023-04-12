@@ -9,6 +9,7 @@ export const PAGE = {
     UPDATE_CUSTOMER_PROFILE:'customer/customer/update-details',
     PRODUCT_DETAIL: 'customer/customer/product-detail',
     VENDOR_HOME:'vendor/vendor/vendor-home',
+    VENDOR_ORDERS:'vendor/vendor/vendor-orders',
     ADD_ITEM:'vendor/vendor/add-item',
     UPDATE_ITEM:'vendor/vendor/update-item',
     VENDOR_PROFILE:'vendor/vendor/vendor-detail',

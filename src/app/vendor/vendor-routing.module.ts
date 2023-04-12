@@ -9,8 +9,7 @@ import { VendorAddItemComponent } from './vendor-add-item/vendor-add-item.compon
 import { VendorUpdateItemComponent } from './vendor-update-item/vendor-update-item.component';
 import { VendorViewProfileComponent } from './vendor-view-profile/vendor-view-profile.component';
 import { VendorUpdateProfileComponent } from './vendor-update-profile/vendor-update-profile.component';
-
-
+import { VendorOrdersComponent } from './vendor-orders/vendor-orders.component';
 
 const routes: Routes = [
   {
@@ -22,44 +21,45 @@ const routes: Routes = [
   {
     path: 'vendor',
     component: VendorComponent,
-    children:[
-        {
-            path: '',
-            redirectTo: 'vendor-home',
-            pathMatch: 'full',
-          },
-            {
-            path: 'vendor-home',
-            component: VendorHomeComponent,
-          },
-            {
-            path: 'add-item',
-            component: VendorAddItemComponent,
-          },
-            {
-            path: `update-item/:id`,
-            component: VendorUpdateItemComponent,
-          },
-            {
-            path: `vendor-detail`,
-            component: VendorViewProfileComponent,
-          },
-            {
-            path: `update-vendor-detail`,
-            component: VendorUpdateProfileComponent,
-          },
-        
-    ]
+    children: [
+      {
+        path: '',
+        redirectTo: 'vendor-home',
+        pathMatch: 'full',
+      },
+      {
+        path: 'vendor-home',
+        component: VendorHomeComponent,
+      },
+      {
+        path: 'add-item',
+        component: VendorAddItemComponent,
+      },
+      {
+        path: `update-item/:id`,
+        component: VendorUpdateItemComponent,
+      },
+      {
+        path: `vendor-detail`,
+        component: VendorViewProfileComponent,
+      },
+      {
+        path: `update-vendor-detail`,
+        component: VendorUpdateProfileComponent,
+      },
+      {
+        path: `vendor-orders`,
+        component: VendorOrdersComponent,
+      },
+    ],
   },
- 
-
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   providers: [
-    {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}
-  ]
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
 })
-export class VendorRoutingModule { }
+export class VendorRoutingModule {}

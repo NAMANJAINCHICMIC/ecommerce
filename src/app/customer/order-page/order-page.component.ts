@@ -29,45 +29,7 @@ querySnapshot.forEach((doc) => {
   })
   this.listDetails()
 }
-  async fetchOrderData() {
-    this.isLoaded = false;
-    this.isLoading = true;
-
-    // this.orders = await this.orderDataService.getOrderData();
-
-    let count = 0;
-    for (let orderId in this.orders) {
-      count++;
-
-      const orderObj: any = this.orders[orderId];
-      const oia = [];
-
-      for (let oi in orderObj.orderedItems) {
-        const o = {
-          name: orderObj.orderedItems[oi].name,
-          price: orderObj.orderedItems[oi].price,
-          quantity: orderObj.orderedItems[oi].quantity,
-        };
-        oia.push(o);
-      }
-
-      const obj: any = {
-        orderNo: count,
-        orderId: orderObj.orderId,
-        addedOn: orderObj.addedOn,
-        orderedItems: oia,
-        totalAmt: orderObj.totalAmt,
-      };
-
-      this.orderArray.push(obj);
-    }
-
-    // reverse it to show latest order first
-    this.orderArray.reverse();
-
-    this.isLoaded = true;
-    this.isLoading = false;
-  }
+ 
 
   getItemTotalAmount(price: number, quantity: number) {
     return Number(price) * Number(quantity);
@@ -85,6 +47,7 @@ querySnapshot.forEach((doc) => {
           productName: order.productDetails.items[oi].productName,
           price: order.productDetails.items[oi].price,
           quantity: order.productDetails.items[oi].quantity,
+          // totalAmt:order.productDetails.totalAmt,
         };
         oiArray.push(orderObj);
       }
@@ -93,8 +56,10 @@ querySnapshot.forEach((doc) => {
       transactionTime:order.transactionTime,
       totalAmt:order.totalAmt,
       orderedItems: oiArray,
+      subTotalAmt:order.productDetails.totalAmt,
      }
      this.orderDetail.push(obj)
     }
+    this.orderDetail.reverse();
   }
 }

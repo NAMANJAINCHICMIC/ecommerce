@@ -38,6 +38,7 @@ export class CartService implements OnInit {
             productName: item.productName,
             price: item.price,
             pathToPic: item.pathToPic,
+            available:item.available
           },
           },
        
@@ -58,6 +59,7 @@ export class CartService implements OnInit {
             productName: item.productName,
             price: item.price,
             pathToPic: item.pathToPic,
+            available:item.available
           },
         };
         this.cartObj = {

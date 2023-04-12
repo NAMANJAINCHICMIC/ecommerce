@@ -29,7 +29,10 @@ const material =[
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireStorageModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-top-center',
+    }),
     HttpClientModule,
     BrowserAnimationsModule,
     material

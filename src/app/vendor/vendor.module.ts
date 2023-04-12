@@ -15,6 +15,7 @@ import { VendorUpdateItemComponent } from './vendor-update-item/vendor-update-it
 import { VendorViewProfileComponent } from './vendor-view-profile/vendor-view-profile.component';
 import { VendorUpdateProfileComponent } from './vendor-update-profile/vendor-update-profile.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { VendorOrdersComponent } from './vendor-orders/vendor-orders.component';
 const material =[
   MatIconModule,
   MatSelectModule,
@@ -34,6 +35,7 @@ const material =[
     VendorUpdateItemComponent,
     VendorViewProfileComponent,
     VendorUpdateProfileComponent,
+    VendorOrdersComponent,
   ],
   imports: [
     CommonModule,

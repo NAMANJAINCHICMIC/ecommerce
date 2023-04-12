@@ -1,0 +1,85 @@
+<main class="my-order-page">
+    <div class="album py-5">
+        <div class="container">
+
+            <div class="d-flex align-items-center pb-3 mb-5 border-bottom">
+                <span class="fs-2">My orders</span>
+            </div>
+
+            <div *ngIf="isLoading == true">
+                <!-- <mat-spinner class="spinner"></mat-spinner> -->
+            </div>
+
+            <div class="text-center" *ngIf="orderDetail.length == 0">
+                <h3>You haven't ordered anything yet.</h3>
+            </div>
+
+            <div *ngFor="let order of orderDetail">
+                <div class="card mx-auto" style="max-width: 700px;">
+                    <div class="card-header">
+                        <strong>Order # {{order.transactionId}}</strong> placed on {{order.transactionTime}}
+                    </div>
+                    <div class="card-body">
+                        <!-- <h5 class="card-title">ID: {{order.transactionId}}</h5> -->
+                        <!-- <h4>{{order.customerDetail.firstName}}</h4> -->
+                        <div class="card-body">
+                            <h2 class="card-title">Customer Details</h2>
+                            <!-- <h5 class="card-title">ID: {{order.transactionId}}</h5> -->
+                            <div class="row">
+                              <div class="col-sm-3">
+                                <p class="mb-0">Customer Name</p>
+                              </div>
+                              <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{order.customerDetail.firstName}} {{ order.customerDetail?.lastName}}</p>
+                              </div>
+                            </div>
+                            <hr>
+                            
+                            <div class="row">
+                              <div class="col-sm-3">
+                                <p class="mb-0">Email</p>
+                              </div>
+                              <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ order.customerDetail?.email}}</p>
+                              </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                              <div class="col-sm-3">
+                                <p class="mb-0">Address</p>
+                              </div>
+                              <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ order.customerDetail?.address}}</p>
+                              </div>
+                            </div>
+                            <hr>
+                       
+                              
+                
+                            <div class="row">
+                              <div class="col-sm-3">
+                                <p class="mb-0">Mobile</p>
+                              </div>
+                              <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ order.customerDetail?.phone}}</p>
+                              </div>
+                            </div>
+                            </div>
+                            <hr>
+                            <div class="card-body">
+                                <h2 class="card-title">Product Details</h2>
+                        <div *ngFor="let oi of order.orderedItems">
+                            
+                            <p class="card-text">
+                                {{oi.productName}}: ₹{{oi.price}} × {{oi.quantity}} = ₹{{getItemTotalAmount(oi.price, oi.quantity)}}
+                            </p>
+                        </div>
+                      
+                        <hr> <strong>Total amount received : ₹{{order.totalAmt}}</strong> 
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

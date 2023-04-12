@@ -17,6 +17,7 @@ import { CartComponent } from './cart/cart.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { PaymentComponent } from './payment/payment.component';
 import { OrderPageComponent } from './order-page/order-page.component';
+import { ToastrModule } from 'ngx-toastr';
 const material =[
   MatIconModule,
   MatSelectModule,
@@ -43,7 +44,8 @@ const material =[
     CustomerRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    material
+    material,
+   
   ],
   exports : [
     material

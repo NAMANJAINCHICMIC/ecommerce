@@ -6,6 +6,7 @@ import { getDoc, doc, updateDoc, collection, getDocs, query, where } from 'fireb
 import { db } from 'src/environment';
 import { PAGE } from '../utils/constants/constant';
 import { AuthService } from './auth.service';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,32 @@ async getUniqueProduct(productId : string){
   return await getDoc(doc(db, 'product', productId))
    
   }
+  async updateProduct(data:any , productId:string){
+    const snap = await this.getUniqueProduct( productId);
+    if (snap.exists()) {
+             const info = snap.data()      
+        const count = info['available']
+        // console.log("data",data)
+        // console.log("count",count)
+        if(count >= data){
+          const ref = doc(db,`product`, productId);   
+          const available = count - data
+          // console.log("available",available)
+          // await updateDoc(ref,['available']:available)
+          const docRef = this.db.collection('product').doc(productId);
+          docRef.update({
+            available: `${available.toString()}`
+          })
+          return true;
+        }else{
+          Swal.fire(
+"product is out of stock!!","You Are Late!"
+)
+// this.toastr.info("No more stock is available for the Product")
+}
+}
+return false;
+  }
 
  transactionDone(data: any , transactionId : string) {
     if (!this.userId) {
@@ -55,4 +82,5 @@ getUniqueCustomerOrder(){
   const querySnapshot = query(collection(db, "transaction") , where('customerId', '==', this.userId))
   return getDocs(querySnapshot);
 }
+
 }

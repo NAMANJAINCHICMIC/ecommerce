@@ -9,6 +9,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { defaultImage } from 'src/app/utils/constants/constant';
 import { Cart } from 'src/app/utils/models/product';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-product-detail',
@@ -17,6 +18,7 @@ import { Cart } from 'src/app/utils/models/product';
 })
 export class ProductDetailComponent implements OnInit {
   isLoading = true;
+ 
   productId : string|null ='';
   info:DocumentData = [];
   item: any;
@@ -33,19 +35,25 @@ export class ProductDetailComponent implements OnInit {
                this.item = snap.data()      
                this.item.productId = this.productId;
                this.mergeItemAndCartData()
-              console.log(this.info)   
+              // console.log(this.info)   
           }
         }
         this.isLoading = false;
         }
 
           onAdd(item: any) {
-            console.log(item)
-            item.quantity += 1; 
-            this.cartService.addOrUpdate(item);    
-          }
-        
-         
+            if(+item.available > item.quantity){
+              // console.log(item)
+              item.quantity += 1; 
+
+              this.cartService.addOrUpdate(item);    
+            }else{
+              Swal.fire(
+  'No more stock is available for the Product',
+)
+              // this.toastr.info("No more stock is available for the Product")
+            }
+          }     
           onRemove(item: any) {
             item.quantity -= 1; 
             this.cartService.removeItem(item);

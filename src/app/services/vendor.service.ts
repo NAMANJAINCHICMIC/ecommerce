@@ -107,6 +107,10 @@ this.router.navigate([PAGE.VENDOR_HOME]);
   
   //     this.getUserData()
 }
-
+  async getUniqueVendorOrder(){
+  const querySnapshot = query(collection(db, "transaction") , where('vendorArray', 'array-contains', this.userId));
+  return getDocs(querySnapshot);
+ 
+}
 
 }

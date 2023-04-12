@@ -25,6 +25,6 @@ export interface ItemDetails {
   productName: string;
   price: string;
   pathToPic: string;
-  
+  available: string;
 };
 }

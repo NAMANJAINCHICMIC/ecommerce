@@ -10,7 +10,7 @@
                 <!-- <mat-spinner class="spinner"></mat-spinner> -->
             </div>
 
-            <div class="text-center" *ngIf="isLoaded == true && orderArray.length == 0">
+            <div class="text-center" *ngIf="orderDetail.length == 0">
                 <h3>You haven't ordered anything yet.</h3>
             </div>
 
@@ -27,6 +27,8 @@
                                 {{oi.productName}}: ₹{{oi.price}} × {{oi.quantity}} = ₹{{getItemTotalAmount(oi.price, oi.quantity)}}
                             </p>
                         </div>
+                        <hr>
+                        <strong>Sub-Total amount : ₹{{order.subTotalAmt}}</strong>
                         <hr> <strong>Total amount paid: ₹{{order.totalAmt}}</strong> (inclusive of 18 %GST)
                     </div>
                 </div>
