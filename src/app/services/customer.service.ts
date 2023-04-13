@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFirestore  } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Router } from '@angular/router';
-import { getDoc, doc, updateDoc, collection, getDocs, query, where } from 'firebase/firestore';
+import { getDoc, doc, updateDoc, collection, getDocs, query, where, orderBy, limit , FieldValue , arrayUnion , arrayRemove, setDoc} from 'firebase/firestore';
 import { db } from 'src/environment';
 import { PAGE } from '../utils/constants/constant';
 import { AuthService } from './auth.service';
 import Swal from 'sweetalert2';
+import { Observable, switchMap, combineLatest } from 'rxjs';
+import { Product } from '../utils/models/product';
+// import firebase from 'firebase/app';
+// import 'firebase/firestore';
 
+// const arrayUnion = firebase.firestore.FieldValue.arrayUnion;
 @Injectable({
   providedIn: 'root'
 })
@@ -78,9 +83,91 @@ return false;
     // this.router.navigate([PAGE.VENDOR_HOME]);
     // this.getUserData()
 }
+ reviews(data: any , transactionId : string) {
+    if (!this.userId) {
+        this.userId = this.authService.getUserId();
+    }
+    // const ref = this.db.doc(`user/${this.userId}/vendor/${this.userId}`);   
+    const ref = this.db.doc(`reviews/${transactionId}`);
+    ref.set(data);
+    // this.router.navigate([PAGE.VENDOR_HOME]);
+    // this.getUserData()
+}
+async addNewReview(data:any){
+ 
+      const ref = doc(collection(db,`reviews`));   
+        
+           await setDoc(ref,data)
+      // this.router.navigate([PAGE.VENDOR_HOME]);
+
+}
+recentlyViewing(productId:string ) {
+  if (!this.userId) {
+      this.userId = this.authService.getUserId();
+  }
+  // const ref = this.db.doc(`user/${this.userId}/vendor/${this.userId}`);   
+  const ref = this.db.doc(`recentlyView/${this.userId}`);
+  ref.set(productId);
+  
+}
 getUniqueCustomerOrder(){
-  const querySnapshot = query(collection(db, "transaction") , where('customerId', '==', this.userId))
+  const querySnapshot = query(collection(db, "transaction") , where('customerId', '==', this.userId ,))
   return getDocs(querySnapshot);
+}
+  async addRecentlyViewed(productId: string): Promise<void> {
+  const userId = this.authService.getUserId();
+  const timestamp = new Date().getTime();
+  const snap = await this.getViewRecently();
+    if (snap.exists()){
+      this.db.doc(`recentlyViewed/${userId}`).update({  myArray: arrayUnion(productId) });
+    }
+    else{
+
+      // this.db.doc(`recentlyViewed/${userId}`).set({ productId , timestamp });
+      const ref =  this.db.doc(`recentlyViewed/${userId}`)
+      
+      ref.set({  myArray: arrayUnion(productId) });
+    }
+
+    this.db.doc(`recentlyViewed/${userId}`).update({  myArray: arrayUnion(productId) });
+
+}
+deleteRecentlyViewed(productId: string){
+  const userId = this.authService.getUserId();
+  this.db.doc(`recentlyViewed/${userId}`).update({  myArray: arrayRemove(productId) });
+}
+getRecentlyViewed() {
+  const userId = this.authService.getUserId();
+  // const docRef = this.db.collection('recentlyViewed').doc(this.userId );
+  // docRef.update({
+  //   myArray: arrayUnion('newElement')
+  // })
+  // const querySnapshot =  query(collection(db, `recentlyViewed`) , orderBy('timestamp', 'desc'),limit(5))
+  const querySnapshot =  query(collection(db, `recentlyViewed`))
+ return  getDocs(querySnapshot)
+
+}
+  async getViewRecently(){
+  return await getDoc(doc(db, 'recentlyViewed', this.userId))
+}
+//   async getRecentProduct(){
+//     let recentArray: never[] = []
+//   const recentlyViewedCollection = await this.getRecentlyViewed()
+//   const productIds$ = recentlyViewedCollection.forEach((doc) => {
+//     const transactionId = doc.id
+//     const ref = doc.data();
+//     recentArray = ref['myArray']
+   
+//     })
+//   const s =   switchMap(actions => {
+//       const productIds = recentArray
+//       return combineLatest(productIds.map((productId:string) => this.getProductById(productId)));
+//     })
+//   // return productIds$;
+//   return s;
+// }
+ getProductById(productId: string) {
+  return this.db.collection('product').doc(productId)
 }
 
 }

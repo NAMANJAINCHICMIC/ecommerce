@@ -1,5 +1,5 @@
 export interface Product {
-  available: boolean;
+  available: string;
   detail: string;
   pathToPic: string;
   price: string;

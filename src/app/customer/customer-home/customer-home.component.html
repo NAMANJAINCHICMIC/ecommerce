@@ -27,6 +27,35 @@
                             </div>
                         </div>
                     </div>
+                    <!-- <app-recently-view></app-recently-view> -->
+                </section>  
+            </div>
+            <hr>
+            <div class="container">
+                <section class="section" id="recent" style="scroll-margin-top: 0rem;">
+                    <div class="items-div" >                 
+                        <h2>Recently Viewed Product</h2>
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                            <div class="col" *ngFor="let item of productViewRecentlyList">
+                                <div class="card m-1" (click)="productDetail(item?.productId)">                               
+                                    <img class="img-loading card-img-top" [ngClass]="{'not-available': item?.available =='0'}" src={{item?.pathToPic}} role="img"  aria-label="item-image" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    <div class="card-body">
+                                        <p class="card-text"><strong>{{item?.productName | uppercase}}</strong></p>
+                                           <div class="d-flex justify-content-between align-items-center">
+                                            <small class="text-dark item-price">₹{{item?.price}}</small>
+                                            <div >     
+                                                <span class="not-available-text" *ngIf="item?.available =='0'">Not Available</span>
+                                                <!-- <span >Availablity.</span> -->
+                                                
+                                            </div>
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <app-recently-view></app-recently-view> -->
                 </section>  
             </div>
         </div>       

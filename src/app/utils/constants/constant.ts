@@ -8,6 +8,7 @@ export const PAGE = {
     CUSTOMER_PROFILE:'customer/customer/view-details',
     UPDATE_CUSTOMER_PROFILE:'customer/customer/update-details',
     PRODUCT_DETAIL: 'customer/customer/product-detail',
+    ADD_REVIEWS: 'customer/customer/add-reviews',
     VENDOR_HOME:'vendor/vendor/vendor-home',
     VENDOR_ORDERS:'vendor/vendor/vendor-orders',
     ADD_ITEM:'vendor/vendor/add-item',

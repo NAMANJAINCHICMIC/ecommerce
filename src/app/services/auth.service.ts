@@ -59,10 +59,9 @@ export class AuthService {
         const ref = this.db.doc(`user/${this.userId}`);
         // const ref = this.db.doc(`user/${this.userId}/customer/${this.userId}`);   
         ref.set(data);
-        // this.store = this.db.doc('userrole');
-        // this.store.set({ title: 'zkoder Tutorial'});
-        // tutorialsRef.add({ ...tutorial });
-        // this.router.navigate([PAGE.HOME]);
+        // const reference =  this.db.doc(`recentlyViewed/${this.userId}`)
+        // reference.set(null);
+       
         this.getUserData() 
     }
     vendorProfileDetail(data: any) {

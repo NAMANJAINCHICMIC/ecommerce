@@ -17,7 +17,9 @@ import { CartComponent } from './cart/cart.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { PaymentComponent } from './payment/payment.component';
 import { OrderPageComponent } from './order-page/order-page.component';
-import { ToastrModule } from 'ngx-toastr';
+
+
+import { AddReviewsComponent } from './add-reviews/add-reviews.component';
 const material =[
   MatIconModule,
   MatSelectModule,
@@ -37,7 +39,8 @@ const material =[
     CartFooterComponent,
     CartComponent,
     PaymentComponent,
-    OrderPageComponent
+    OrderPageComponent,
+    AddReviewsComponent
   ],
   imports: [
     CommonModule,

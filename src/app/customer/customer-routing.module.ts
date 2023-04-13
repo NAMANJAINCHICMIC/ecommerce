@@ -11,6 +11,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { CartComponent } from './cart/cart.component';
 import { PaymentComponent } from './payment/payment.component';
 import { OrderPageComponent } from './order-page/order-page.component';
+import { AddReviewsComponent } from './add-reviews/add-reviews.component';
 
 const routes: Routes = [
   {
@@ -56,6 +57,10 @@ const routes: Routes = [
       {
         path: `product-detail/:id`,
         component: ProductDetailComponent,
+      },
+      {
+        path: `add-reviews/:id`,
+        component: AddReviewsComponent,
       },
     ],
   },

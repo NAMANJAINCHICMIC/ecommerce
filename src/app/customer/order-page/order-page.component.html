@@ -21,11 +21,16 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">ID: {{order.transactionId}}</h5>
-                        <div *ngFor="let oi of order.orderedItems">
-                            
-                            <p class="card-text">
-                                {{oi.productName}}: ₹{{oi.price}} × {{oi.quantity}} = ₹{{getItemTotalAmount(oi.price, oi.quantity)}}
-                            </p>
+                        <div *ngFor="let oi of order.orderedItems"  >
+                           <div class="card " (click)="addReviews(oi.productId)">
+
+                               <span class="d-flex ">
+                                   <img class="item-image" style="width: 50px;"  [src]="oi?.pathToPic">
+                                   <h3 class="card-text ">
+                                       {{oi.productName}}: ₹{{oi.price}} × {{oi.quantity}} = ₹{{getItemTotalAmount(oi.price, oi.quantity)}}
+                                    </h3>
+                                </span>
+                            </div>
                         </div>
                         <hr>
                         <strong>Sub-Total amount : ₹{{order.subTotalAmt}}</strong>

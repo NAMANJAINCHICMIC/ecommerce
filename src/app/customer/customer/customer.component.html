@@ -1,6 +1,6 @@
 <mat-toolbar color="accent">
    
-    <span>My App</span>
+    <span (click)="homePage()">My App</span>
     <span class="example-spacer"></span>
     <span>
       <div class="input-group rounded ">
@@ -16,12 +16,7 @@
     <span class="float-right justify-content-end ">
 
       <button class="btn" (click)="homePage()">Home</button>
-      <!-- <button (click)="menuPage()">Menu</button>
-        (input)="onSearchQueryInput($event)"
-      <button (click)="ordersPage()">Orders</button>
-      <button *ngIf="authService.userRole === 'admin'" (click)="addFoodPage()">Add Food Item</button>
-      <button *ngIf="authService.userRole === 'admin'" (click)="addChefPage()">Add Chef</button>
-      <button (click)="changePassword()">Change Password</button> -->
+   
       <button class="btn" (click)="myCart()">My Cart</button>
       <button class="btn" (click)="myOrders()">My Orders</button>
       <button class="btn" (click)="viewProfile()">View Profile</button>

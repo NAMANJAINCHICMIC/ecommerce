@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
+import { PAGE } from 'src/app/utils/constants/constant';
 
 @Component({
   selector: 'app-order-page',
@@ -13,7 +15,7 @@ export class OrderPageComponent implements OnInit {
   isLoading: boolean = true;
   isLoaded: boolean = false;
   innerObjectKeys : any =[];
-  constructor(private customerService: CustomerService) {    
+  constructor(private customerService: CustomerService , private router : Router) {    
     // this.fetchOrderData();
    
   }
@@ -44,9 +46,12 @@ querySnapshot.forEach((doc) => {
 
         const orderObj = {
           
+          productId: order.productDetails.items[oi].productId,
           productName: order.productDetails.items[oi].productName,
           price: order.productDetails.items[oi].price,
           quantity: order.productDetails.items[oi].quantity,
+          pathToPic: order.productDetails.items[oi].pathToPic,
+
           // totalAmt:order.productDetails.totalAmt,
         };
         oiArray.push(orderObj);
@@ -61,5 +66,8 @@ querySnapshot.forEach((doc) => {
      this.orderDetail.push(obj)
     }
     this.orderDetail.reverse();
+  }
+  addReviews(productId:string){
+    this.router.navigate([`${PAGE.ADD_REVIEWS}/${productId}`]);
   }
 }

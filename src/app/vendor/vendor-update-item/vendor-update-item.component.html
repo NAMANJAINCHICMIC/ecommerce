@@ -73,7 +73,7 @@
                                     <div class="form-outline mb-4">
                                         <label for="inputName">Product Details</label>
 
-                                        <textarea type="text" class="form-control "
+                                        <textarea type="text" class="form-control " rows="4" cols="50"
                                             [ngClass]="{'is-invalid': controlName.detail.errors && (controlName.detail.touched || controlName.detail.dirty), 'is-valid':controlName.detail.valid}"
                                             formControlName="detail" placeholder="Detail"></textarea>
                                         <div *ngIf="controlName.detail.invalid && showError "
