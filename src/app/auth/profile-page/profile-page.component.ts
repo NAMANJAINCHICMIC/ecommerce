@@ -71,6 +71,7 @@ onSubmit(){
   if (this.registrationForm.valid ) {
     console.log('form submitted');
   console.log(this.registrationForm.value);
+  // this.authService.storeUserName(`${this.registrationForm.value.firstName} ${this.registrationForm.value.lastName}`)
 this.authService.profileDetail(this.registrationForm.value)
 
 }

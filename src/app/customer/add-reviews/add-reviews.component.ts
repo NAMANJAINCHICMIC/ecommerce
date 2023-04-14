@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CustomerService } from 'src/app/services/customer.service';
-import { defaultImage } from 'src/app/utils/constants/constant';
+import { PAGE, defaultImage } from 'src/app/utils/constants/constant';
 import { Cart } from 'src/app/utils/models/product';
 
 @Component({
@@ -16,15 +16,21 @@ import { Cart } from 'src/app/utils/models/product';
 })
 export class AddReviewsComponent implements OnInit {
   isLoading = true;
- 
   productId : string|null ='';
-  
+  userId:string|null ;
   item: any;
   defaultImage = defaultImage;
-  private snackBarDuration: number = 2000;
-  private ratingArr: Array<any>= [];
+  snackBarDuration: number = 2000;
+  ratingArr: Array<any>= [];
+ 
 
-  constructor(private fireStorage : AngularFireStorage ,private router: Router ,private toastr: ToastrService, private http: HttpClient, private customerService : CustomerService , private authService :AuthService , private cartService : CartService , private activatedRoute : ActivatedRoute){}
+  rating:number = 3;
+  starCount:number = 5;
+
+  constructor(private fireStorage : AngularFireStorage ,private router: Router ,private toastr: ToastrService, private http: HttpClient, private customerService : CustomerService , private authService :AuthService , private cartService : CartService , private activatedRoute : ActivatedRoute){
+    this.userId = this.authService.getUserId();
+
+  }
   async ngOnInit(): Promise<void> {
     this.productId = this.activatedRoute.snapshot.paramMap.get('id');
     console.log( this.productId);
@@ -39,14 +45,11 @@ export class AddReviewsComponent implements OnInit {
           }
         }
         this.isLoading = false;
-        // console.log("a "+this.starCount)
-        // for (let index = 0; index < this.starCount; index++) {
-        //   this.ratingArr.push(index);
-        // }
+        console.log("a "+this.starCount)
+        for (let index = 0; index < this.starCount; index++) {
+          this.ratingArr.push(index);
         }
-
-  //       rating:number = 3;
-  //       starCount:number = 5;
+        }
 
 
 
@@ -58,20 +61,30 @@ export class AddReviewsComponent implements OnInit {
   // }
 
  
-  // onClick(rating:number) {
-  //   console.log(rating)
-   
-  //   // this.ratingUpdated.emit(rating);
-  //   return false;
-  // }
+  onClick(rating:number) {
+    console.log(rating)
+   this.rating = rating
+    // this.ratingUpdated.emit(rating);
+    return false;
+  }
 
-  // showIcon(index:number) {
-  //   if (this.rating >= index + 1) {
-  //     return 'star';
-  //   } else {
-  //     return 'star_border';
-  //   }
-  // }
-
+  showIcon(index:number) {
+    if (this.rating >= index + 1) {
+      return 'star';
+    } else {
+      return 'star_border';
+    }
+  }
+  onSubmit(form:any) {
+    console.log(form.value);
+    const obj = {
+      comment : form.value.comment,
+      rating :this.rating,
+      productId:this.productId,
+      userId:this.userId
+    }
+    this.customerService.addNewReview(obj);
+    this.router.navigate([PAGE.HOME]);
+  }
 }
 

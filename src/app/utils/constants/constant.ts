@@ -15,5 +15,6 @@ export const PAGE = {
     UPDATE_ITEM:'vendor/vendor/update-item',
     VENDOR_PROFILE:'vendor/vendor/vendor-detail',
     UPDATE_VENDOR_PROFILE:'vendor/vendor/update-vendor-detail',
+    VENDOR_PRODUCT_DETAIL:'vendor/vendor/vendor-product-detail'
 }
 export const defaultImage = '../assets/noImage.jpeg';

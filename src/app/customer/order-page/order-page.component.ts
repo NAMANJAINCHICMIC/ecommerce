@@ -21,7 +21,7 @@ export class OrderPageComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.customerService.getUniqueCustomerOrder();
+    // this.customerService.getUniqueCustomerOrder();
     const querySnapshot = await this.customerService.getUniqueCustomerOrder();
 querySnapshot.forEach((doc) => {
   // console.log(doc.data());

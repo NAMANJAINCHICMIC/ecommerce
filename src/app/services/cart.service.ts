@@ -1,6 +1,10 @@
 import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Cart, ItemDetails } from '../utils/models/product';
+import { AuthService } from './auth.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import {  collection, setDoc, deleteDoc, doc, getDoc } from 'firebase/firestore';
+import { db } from 'src/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +19,8 @@ export class CartService implements OnInit {
   cartDataSub = new BehaviorSubject<Cart|null>(null);
   onCartPageSub = new BehaviorSubject<boolean>(false);
   onConfirmOrderPageSub = new BehaviorSubject<boolean>(false);
-
-  constructor() {}
+  userId = this.authService.getUserId();
+  constructor( private authService : AuthService ,private db : AngularFirestore) {}
 
   ngOnInit() {
     this.cartObj = this.getCartDataConverted();
@@ -113,12 +117,15 @@ export class CartService implements OnInit {
   } 
   clearCart() {
     this.cartObj = null;
+    if(this.userId)
+    this.deleteCart(this.userId);
     this.removeCartData();
   }
 
     // cart locol storage
     addCartData(cart: Cart |null) {
       console.log("addCart",cart)
+      this.cartData(cart);
       localStorage.setItem('cartData', JSON.stringify(cart));
       const obj = JSON.parse(localStorage.getItem('cartData') || '{}');
       // check if items in cart is empty
@@ -130,6 +137,7 @@ export class CartService implements OnInit {
     }
   
     removeCartData() {
+    
       if (localStorage.getItem('cartData')) {
         localStorage.removeItem('cartData');
       }
@@ -149,4 +157,21 @@ export class CartService implements OnInit {
       this.cartDataSub.next((localStorage.getItem('cartData') ) ? (JSON.parse(this.getCartData() || '{}') ): this.cartObj);
       return this.cartDataSub.asObservable();
     }
+    async cartData(data:any ) { 
+          const userId = this.authService.getUserId();
+      const ref = this.db.doc(`cartData/${userId}`);
+      ref.set(data);  
+    }
+
+    async deleteCart( userId:string){
+    
+      const ref = doc( db ,`cartData`, userId);   
+
+      await deleteDoc(ref)
+
+  }
+  async getCartDataFirebase(userId:string){
+   
+    return await getDoc(doc(db, 'cartData', userId))
+  }
 }

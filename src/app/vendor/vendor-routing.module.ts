@@ -10,6 +10,7 @@ import { VendorUpdateItemComponent } from './vendor-update-item/vendor-update-it
 import { VendorViewProfileComponent } from './vendor-view-profile/vendor-view-profile.component';
 import { VendorUpdateProfileComponent } from './vendor-update-profile/vendor-update-profile.component';
 import { VendorOrdersComponent } from './vendor-orders/vendor-orders.component';
+import { VendorProductDetailComponent } from './vendor-product-detail/vendor-product-detail.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
       {
         path: `update-vendor-detail`,
         component: VendorUpdateProfileComponent,
+      },
+      {
+        path: `vendor-product-detail/:id`,
+        component: VendorProductDetailComponent,
       },
       {
         path: `vendor-orders`,

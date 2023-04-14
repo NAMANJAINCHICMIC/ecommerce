@@ -112,5 +112,9 @@ this.router.navigate([PAGE.VENDOR_HOME]);
   return getDocs(querySnapshot);
  
 }
+getReviewsByProductId(productId: string | null){
+  const querySnapshot = query(collection(db, "reviews") , where('productId', '==', productId ,))
+  return getDocs(querySnapshot);
+}
 
 }

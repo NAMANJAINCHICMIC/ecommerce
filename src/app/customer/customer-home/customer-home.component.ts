@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import { CartService } from 'src/app/services/cart.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { PAGE } from 'src/app/utils/constants/constant';
 import { Product } from 'src/app/utils/models/product';
@@ -10,6 +12,7 @@ import { Product } from 'src/app/utils/models/product';
   styleUrls: ['./customer-home.component.scss'],
 })
 export class CustomerHomeComponent implements OnInit {
+  userId = this.authService.getUserId();
   recentlyViewedProducts: any = [];
   isLoading = true;
   itemList: any;
@@ -17,8 +20,12 @@ export class CustomerHomeComponent implements OnInit {
   productViewRecentlyList: Array<Product | any> = [];
   constructor(
     private customerService: CustomerService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private cartService : CartService,
+    private authService : AuthService
+  ) {
+    this.searchQuery()
+  }
   async ngOnInit() {
     // this.vendorService.getVendorProduct()
     // this.vendorService.getVendorAllProduct()
@@ -55,6 +62,11 @@ export class CustomerHomeComponent implements OnInit {
     //   }
     // });
     // console.log("productViewRecentlyList", this.productViewRecentlyList)
+    if(this.userId){
+
+      this.fillCart(this.userId)
+    }
+
     const snap = await this.customerService.getViewRecently()
     if (snap.exists()) {
       const res = snap.data();
@@ -88,5 +100,31 @@ export class CustomerHomeComponent implements OnInit {
     }
     // this.customerService.recentlyViewing(productId)
     this.router.navigate([`${PAGE.PRODUCT_DETAIL}/${productId}`]);
+  }
+  async fillCart(userId:string){
+    const snap = await this.cartService.getCartDataFirebase(userId);
+    if(snap.exists()){
+      const info = snap.data()   
+      localStorage.setItem('cartData', JSON.stringify(info));
+    }
+ 
+  }
+  async searchQuery(){
+    const querySnapshot = await this.customerService.searchQuery("o");
+    querySnapshot.forEach((doc) => {
+      console.log("serch",doc.data());
+      if(doc.data()){
+
+        const ref = doc.data()
+        console.log("serch",ref)
+        // this.reviewArray.push(ref)
+        // // this.item.comment = ref['comment']
+        // this.updateReviewArray()
+        // console.log(this.reviewArray);
+      }
+      // const transactionId = doc.id
+    //  this.orderArray.push({ ...doc.data(), transactionId})
+    //  console.log(this.orderArray);
+      })
   }
 }

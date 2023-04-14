@@ -38,4 +38,9 @@ this.productList.splice(this.productList.findIndex(a => a.productId == productId
 
 
   }
+  productDetail(productId: string) {
+ 
+    // this.customerService.recentlyViewing(productId)
+    this.router.navigate([`${PAGE.VENDOR_PRODUCT_DETAIL}/${productId}`]);
+  }
 }

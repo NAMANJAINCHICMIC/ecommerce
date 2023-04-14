@@ -12,11 +12,11 @@ import { Cart } from 'src/app/utils/models/product';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-product-detail',
-  templateUrl: './product-detail.component.html',
-  styleUrls: ['./product-detail.component.scss'],
+  selector: 'app-vendor-product-detail',
+  templateUrl: './vendor-product-detail.component.html',
+  styleUrls: ['./vendor-product-detail.component.scss']
 })
-export class ProductDetailComponent implements OnInit {
+export class VendorProductDetailComponent implements OnInit {
   isLoading = true;
 rating = 0;
 numbers = [1, 2, 3, 4, 5];
@@ -27,15 +27,11 @@ numbers = [1, 2, 3, 4, 5];
   cartData?: Cart | null;
   reviewArray : Array<any> =[]
 
-  constructor(
-    private fireStorage: AngularFireStorage,
-    private router: Router,
-    private toastr: ToastrService,
-    private http: HttpClient,
+  constructor(  
     private customerService: CustomerService,
-    private authService: AuthService,
     private cartService: CartService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router : Router
   ) {}
   async ngOnInit(): Promise<void> {
     this.productId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -46,7 +42,7 @@ numbers = [1, 2, 3, 4, 5];
         this.info = snap.data();
         this.item = snap.data();
         this.item.productId = this.productId;
-        this.mergeItemAndCartData();
+       
         // console.log(this.info)
       }
     }
@@ -63,48 +59,12 @@ numbers = [1, 2, 3, 4, 5];
         this.updateReviewArray()
         console.log(this.reviewArray);
       }
-      // const transactionId = doc.id
-    //  this.orderArray.push({ ...doc.data(), transactionId})
-    //  console.log(this.orderArray);
+     
       })
   }
 
-  onAdd(item: any) {
-    if (+item.available > item.quantity) {
-      // console.log(item)
-      item.quantity += 1;
 
-      this.cartService.addOrUpdate(item);
-    } else {
-      Swal.fire('No more stock is available for the Product');
-      // this.toastr.info("No more stock is available for the Product")
-    }
-  }
-  onRemove(item: any) {
-    item.quantity -= 1;
-    this.cartService.removeItem(item);
-  }
 
-  fetchCartData() {
-    this.cartData = this.cartService.getCartDataConverted();
-  }
-
-  mergeItemAndCartData() {
-    this.fetchCartData();
-
-    let count = 0;
-    const id = this.item?.productId;
-
-    if (this.cartData) {
-      const itemDetailsObj = this.cartData?.items[id];
-      if (itemDetailsObj?.quantity) {
-        count = this.cartData?.items[id]?.quantity;
-      }
-    }
-    // console.log("run")
-    this.item.quantity = count;
-    // console.log(this.foodList)
-  }
   async updateReviewArray(){
 for(let i in this.reviewArray){
 //  console.log(this.reviewArray[i].comment)
@@ -141,7 +101,7 @@ for(let i in this.reviewArray){
       return 'star_border';
     }
   }
-  homePage(){
-    this.router.navigate([PAGE.HOME]);
+  editProduct(productId:string){
+    this.router.navigate([`${PAGE.UPDATE_ITEM}/${productId}`]);
   }
 }

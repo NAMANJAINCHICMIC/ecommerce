@@ -30,6 +30,10 @@ export class CustomerService {
 
     return await getDoc(doc(db, 'user', this.userId)) 
   }
+  async getCustomerProfileByUserId(userId:string){
+
+    return await getDoc(doc(db, 'user', userId)) 
+  }
   async updateCustomerProfile(data:any ){    
     if(this.userId){
       const ref = doc(db,`user`, this.userId);   
@@ -110,6 +114,15 @@ recentlyViewing(productId:string ) {
   ref.set(productId);
   
 }
+cartData(data:any ) {
+  if (!this.userId) {
+      this.userId = this.authService.getUserId();
+  }
+  // const ref = this.db.doc(`user/${this.userId}/vendor/${this.userId}`);   
+  const ref = this.db.doc(`cartData/${this.userId}`);
+  ref.set(data);
+  
+}
 getUniqueCustomerOrder(){
   const querySnapshot = query(collection(db, "transaction") , where('customerId', '==', this.userId ,))
   return getDocs(querySnapshot);
@@ -169,5 +182,16 @@ getRecentlyViewed() {
  getProductById(productId: string) {
   return this.db.collection('product').doc(productId)
 }
-
+getReviewsByProductId(productId: string | null){
+  const querySnapshot = query(collection(db, "reviews") , where('productId', '==', productId ,))
+  return getDocs(querySnapshot);
+}
+ searchQuery(productName: string){
+  const querySnapshot = query(collection(db, "product"),where('productName', '>', productName), where('productName', '<', `${productName}z`))
+  return getDocs(querySnapshot);
+  // const collectionRef = firebase.firestore().collection('collectionName');
+  // const query = collectionRef.where('fieldName', 'contains', 'searchQuery');
+  // const querySnapshot = query(collection(db, "transaction") , where('vendorArray', 'array-contains', this.userId));
+  // return getDocs(querySnapshot);
+}
 }

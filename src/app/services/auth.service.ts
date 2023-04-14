@@ -29,6 +29,12 @@ export class AuthService {
     getUserId() {
         return localStorage.getItem('userId')
     }
+    storeUserName(userName: string) {
+        localStorage.setItem('userName', userName)
+    }
+    getUserName() {
+        return localStorage.getItem('userName')
+    }
     storeRole(role: string) {
         localStorage.setItem('role', role)
     }

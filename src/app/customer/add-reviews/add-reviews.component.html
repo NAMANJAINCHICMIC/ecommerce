@@ -1,62 +1,72 @@
 <!-- <app-header></app-header> -->
-<div id="" style="height: 90vh;" class="d-flex align-items-center justify-content-center spinner-container" *ngIf="isLoading">
+<div id="" style="height: 90vh;" class="d-flex align-items-center justify-content-center spinner-container"
+    *ngIf="isLoading">
     <mat-spinner class="spinner"></mat-spinner>
 </div>
 <div style="background-color: #eee;" *ngIf="!isLoading">
-   
-   <div style="height: 90vh;" class="d-flex align-items-center justify-content-center spinner-container">
 
-  
-            <div class="card mb-3 mx-auto" style="max-width: 700px;" >
-                <div class="row g-0 justify-content-between">
-                    <div class="col-md-4">
-                        <img class="item-image" style="max-width:100%;"  [src]="item?.pathToPic">
-                       
-                    </div>
-                   
-                    <div class="col-md-8" style="border:0px solid gray"> 
-                        <div class="card-body p-4 ">
-                            <div class="row card-title " id="productName" >
-                                <h1 id="title">
-            
-                                     {{item?.productName}}
-                                </h1>
-                            </div>
-                            <div class="row" id="productPrice" >
-                                <h2 id="price">
-            
-                                    ₹ {{item?.price}}
-                                </h2>
-                            </div>
-                            <div class="row" id="productdetail" >
-                                <p id="detail">
-            
-                                     {{item?.detail}}
-                                </p>
-                            </div>
-                            <!-- <div class="row">
+    <div style="height: 90vh;" class="d-flex align-items-center justify-content-center spinner-container">
 
-                                <button mat-icon-button  *ngFor="let ratingId of ratingArr; index as i" [id]="'star_'+i" (click)="onClick(i+1)" matTooltipPosition="above">
-                                    <mat-icon>
-                                      {{showIcon(i)}}
-                                    </mat-icon>
-                                  </button>
-                                  <mat-error *ngIf="starCount == null || starCount == 0">
-                                    Star count is <strong>required</strong> and cannot be zero
-                                  </mat-error>
-                                  <p class="body-2">
-                                      Your rated <span class="body-2">{{rating}}</span> / <span class="body-2">{{starCount}}</span>
-                                  </p>
-                                  
-                            </div> -->
-                           <div class="row">
-                            <textarea id ="userComment" rows="4" cols="50" name="comment"> Enter your comment for this product here...</textarea>
-                           </div>
+
+        <div class="card mb-3 mx-auto" style="max-width: 700px;">
+            <div class="row g-0 justify-content-between">
+                <div class="col-md-4">
+                    <img class="item-image" style="max-width:100%;" [src]="item?.pathToPic">
+
+                </div>
+
+                <div class="col-md-8" style="border:0px solid gray">
+                    <div class="card-body p-4 ">
+                        <div class="row card-title " id="productName">
+                            <h1 id="title">
+
+                                {{item?.productName}}
+                            </h1>
+                        </div>
+                        <div class="row" id="productPrice">
+                            <h2 id="price">
+
+                                ₹ {{item?.price}}
+                            </h2>
+                        </div>
+                        <div class="row" id="productdetail">
+                            <p id="detail">
+
+                                {{item?.detail}}
+                            </p>
                         </div>
                     </div>
                 </div>
-                
+                <div class="card" style="max-height: fit-content">
+                    <form  #myForm="ngForm">
+
+                        <div class="card-title pb-0 mb-0">
+                            <h2>
+                                Please give Your Rating to this product...
+                            </h2>
+                        </div>
+                        <div class="row card-body m-0 p-0">
+                            <button mat-icon-button *ngFor="let ratingId of ratingArr; index as i" [id]="'star_'+i"
+                                (click)="onClick(i+1)" matTooltipPosition="above">
+                                <mat-icon color="yellow" style="color: #ff9900;">
+                                    {{showIcon(i)}}
+                                </mat-icon>
+                            </button>
+
+                        </div>
+                        <div class="card-body">
+                            <label for="inputName">Enter your comment for this product here...</label>
+                            <textarea id="userComment" rows="4" cols="50" name="comment"
+                                placeholder="Enter your comment" ngModel> </textarea>
+                        </div>
+                        <div class="card-body">
+                            <button type="submit" class=""  (click)="onSubmit(myForm)">Submit</button>
+                        </div>
+                    </form>
+
+
                 </div>
             </div>
-            
-  
+
+        </div>
+    </div>
