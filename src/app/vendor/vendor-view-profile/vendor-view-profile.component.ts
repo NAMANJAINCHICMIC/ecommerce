@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DocumentData } from 'firebase/firestore';
 import { VendorService } from 'src/app/services/vendor.service';
-import { defaultImage } from 'src/app/utils/constants/constant';
+import { PAGE, defaultImage } from 'src/app/utils/constants/constant';
 
 @Component({
   selector: 'app-vendor-view-profile',
@@ -13,7 +14,7 @@ export class VendorViewProfileComponent implements OnInit {
   myself:any;
  defaultImage = defaultImage;
  info:DocumentData = [];
-  constructor(private vendorService : VendorService){}
+  constructor(private vendorService : VendorService , private router : Router){}
   async ngOnInit(): Promise<void> {
     const snap = await this.vendorService.getVendorProfile( );
     if (snap.exists()) {
@@ -27,4 +28,8 @@ export class VendorViewProfileComponent implements OnInit {
   //   // console.log(this.myself);
   // })
   // }
-}}
+}
+updateProfile(){
+  this.router.navigate([PAGE.UPDATE_VENDOR_PROFILE]);
+}
+}

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { DocumentData } from 'firebase/firestore';
 import { ToastrService } from 'ngx-toastr';
 import { CustomerService } from 'src/app/services/customer.service';
+import { PAGE } from 'src/app/utils/constants/constant';
 
 @Component({
   selector: 'app-customer-update-profile',
@@ -72,5 +73,7 @@ onSubmit(){
   this.showError = true;
 }
 }
-
+profilePage(){
+  this.router.navigate([PAGE.PROFILE]);
+}
 }

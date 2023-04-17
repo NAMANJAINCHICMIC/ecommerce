@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
 import { PAGE } from 'src/app/utils/constants/constant';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-order-page',
@@ -9,12 +11,16 @@ import { PAGE } from 'src/app/utils/constants/constant';
   styleUrls: ['./order-page.component.scss']
 })
 export class OrderPageComponent implements OnInit {
+  @ViewChild('htmlData') htmlData!: ElementRef;
   orders: any;
   orderArray: any = [];
   orderDetail: any = [];
   isLoading: boolean = true;
   isLoaded: boolean = false;
   innerObjectKeys : any =[];
+  page = 1;
+  itemsPerPage = 6;
+  totalItems ?: number; 
   constructor(private customerService: CustomerService , private router : Router) {    
     // this.fetchOrderData();
    
@@ -66,8 +72,25 @@ querySnapshot.forEach((doc) => {
      this.orderDetail.push(obj)
     }
     this.orderDetail.reverse();
+    this.totalItems = this.orderDetail.length
   }
   addReviews(productId:string){
     this.router.navigate([`${PAGE.ADD_REVIEWS}/${productId}`]);
+  }
+  handlePageChange(event : number) {
+    // console.log(event);
+    this.page = event;
+  }
+  public openPDF(): void {
+    let DATA: any = document.getElementById('htmlData');
+    html2canvas(DATA).then((canvas) => {
+      let fileWidth = 208;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+      const FILEURI = canvas.toDataURL('image/png');
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+      PDF.save('ecommerce-invoice.pdf');
+    });
   }
 }

@@ -17,7 +17,12 @@ export class CustomerHomeComponent implements OnInit {
   isLoading = true;
   itemList: any;
   productList: Array<Product | any> = [];
+  allProductList: Array<Product | any> = [];
+  searchedProductList: Array<Product | any> = [];
   productViewRecentlyList: Array<Product | any> = [];
+  page = 1;
+  itemsPerPage = 6;
+  totalItems : any; 
   constructor(
     private customerService: CustomerService,
     private router: Router,
@@ -32,10 +37,16 @@ export class CustomerHomeComponent implements OnInit {
     const querySnapshot = await this.customerService.getAllProducts();
     querySnapshot.forEach((doc) => {
       const productId = doc.id;
-      this.productList.push({ ...doc.data(), productId });
-      console.log(this.productList);
+      this.allProductList.push({ ...doc.data(), productId });
+      // this.productList.push({ ...doc.data(), productId });
     });
+    this.productList = this.allProductList
+    console.log(this.productList);
     this.isLoading = false;
+    this.customerService.searchString.subscribe((res:string )=>{
+      this.filterProductList(res)
+    })
+    this.totalItems = this.productList.length
     // const querySnapshotRecentlyViewed =
     //   await this.customerService.getRecentlyViewed();
     // querySnapshotRecentlyViewed.forEach(async (doc) => {
@@ -65,7 +76,7 @@ export class CustomerHomeComponent implements OnInit {
     if(this.userId){
 
       this.fillCart(this.userId)
-    }
+    
 
     const snap = await this.customerService.getViewRecently()
     if (snap.exists()) {
@@ -83,14 +94,11 @@ export class CustomerHomeComponent implements OnInit {
         }
         this.productViewRecentlyList.reverse();
       }
-      // if (this.recentlyViewedProducts.length > 2) {
-      //   this.customerService.deleteRecentlyViewed(
-      //     this.recentlyViewedProducts[0]
-      //   );
-      // }
+    
     }
     console.log("productViewRecentlyList", this.productViewRecentlyList)
   }
+}
   productDetail(productId: string) {
     this.customerService.addRecentlyViewed(productId);
     if (this.recentlyViewedProducts.length > 2) {
@@ -117,14 +125,19 @@ export class CustomerHomeComponent implements OnInit {
 
         const ref = doc.data()
         console.log("serch",ref)
-        // this.reviewArray.push(ref)
-        // // this.item.comment = ref['comment']
-        // this.updateReviewArray()
-        // console.log(this.reviewArray);
+        
       }
-      // const transactionId = doc.id
-    //  this.orderArray.push({ ...doc.data(), transactionId})
-    //  console.log(this.orderArray);
+  
       })
+  }
+  filterProductList(data:string){
+    this.searchedProductList = this.allProductList.filter(obj => {
+      return obj.productName.includes(data);
+    });
+    this.productList = this.searchedProductList
+  }
+  handlePageChange(event : number) {
+    // console.log(event);
+    this.page = event;
   }
 }

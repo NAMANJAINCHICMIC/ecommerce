@@ -17,16 +17,18 @@ import { CartComponent } from './cart/cart.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { PaymentComponent } from './payment/payment.component';
 import { OrderPageComponent } from './order-page/order-page.component';
-
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 import { AddReviewsComponent } from './add-reviews/add-reviews.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 const material =[
   MatIconModule,
   MatSelectModule,
   MatFormFieldModule,
   MatButtonModule,
   MatToolbarModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatPaginatorModule
 ]
 
 @NgModule({
@@ -40,7 +42,8 @@ const material =[
     CartComponent,
     PaymentComponent,
     OrderPageComponent,
-    AddReviewsComponent
+    AddReviewsComponent,
+   
   ],
   imports: [
     CommonModule,
@@ -48,7 +51,7 @@ const material =[
     ReactiveFormsModule,
     FormsModule,
     material,
-   
+    NgxPaginationModule
   ],
   exports : [
     material

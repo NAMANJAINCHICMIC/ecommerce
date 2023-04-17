@@ -17,6 +17,7 @@ import { VendorUpdateProfileComponent } from './vendor-update-profile/vendor-upd
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { VendorOrdersComponent } from './vendor-orders/vendor-orders.component';
 import { VendorProductDetailComponent } from './vendor-product-detail/vendor-product-detail.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 const material =[
   MatIconModule,
   MatSelectModule,
@@ -42,7 +43,7 @@ const material =[
   imports: [
     CommonModule,
     VendorRoutingModule,
-
+    NgxPaginationModule,
     ReactiveFormsModule,
     FormsModule,
     material

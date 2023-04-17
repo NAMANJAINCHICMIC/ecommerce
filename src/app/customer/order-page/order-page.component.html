@@ -14,10 +14,19 @@
                 <h3>You haven't ordered anything yet.</h3>
             </div>
 
-            <div *ngFor="let order of orderDetail">
-                <div class="card mx-auto" style="max-width: 700px;">
+            <div *ngFor="let order of orderDetail| paginate
+            : {
+                itemsPerPage: itemsPerPage,
+                currentPage: page,
+                totalItems: totalItems
+              }">
+                <div class="card mx-auto" style="max-width: 800px;" id="htmlData" >
                     <div class="card-header">
                         <strong>Order # {{order.transactionId}}</strong> placed on {{order.transactionTime}}
+                        <div class=" text-right justify-content-end">
+                            <!-- <button class="btn btn-success btn-block" (click)="openPDF()">Download PDF</button> -->
+                            <mat-icon (click)="openPDF()" >download</mat-icon>
+                        </div>
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">ID: {{order.transactionId}}</h5>
@@ -37,6 +46,11 @@
                         <hr> <strong>Total amount paid: ₹{{order.totalAmt}}</strong> (inclusive of 18 %GST)
                     </div>
                 </div>
+            </div>
+            <div class="align-middle justify-content-center text-center" *ngIf="orderDetail.length > itemsPerPage" >
+                <pagination-controls class="align-middle justify-content-center align-items-center m-3 "  previousLabel="Prev"
+                nextLabel="Next"  (pageChange)="handlePageChange($event)"
+                 ></pagination-controls>
             </div>
         </div>
     </div>

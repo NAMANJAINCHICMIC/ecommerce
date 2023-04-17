@@ -25,7 +25,7 @@ addItem(){
 viewProfile(){
   this.router.navigate([PAGE.VENDOR_PROFILE]);
 }
-updateProfile(){
-  this.router.navigate([PAGE.UPDATE_VENDOR_PROFILE]);
+orders(){
+  this.router.navigate([PAGE.VENDOR_ORDERS]);
 }
 }

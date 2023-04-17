@@ -104,4 +104,7 @@ for(let i in this.reviewArray){
   editProduct(productId:string){
     this.router.navigate([`${PAGE.UPDATE_ITEM}/${productId}`]);
   }
+  homePage(){
+    this.router.navigate([PAGE.HOME]);
+  }
 }

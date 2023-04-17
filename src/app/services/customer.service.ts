@@ -7,7 +7,7 @@ import { db } from 'src/environment';
 import { PAGE } from '../utils/constants/constant';
 import { AuthService } from './auth.service';
 import Swal from 'sweetalert2';
-import { Observable, switchMap, combineLatest } from 'rxjs';
+import { Observable, switchMap, combineLatest, Subject } from 'rxjs';
 import { Product } from '../utils/models/product';
 // import firebase from 'firebase/app';
 // import 'firebase/firestore';
@@ -17,7 +17,7 @@ import { Product } from '../utils/models/product';
   providedIn: 'root'
 })
 export class CustomerService {
- 
+  searchString = new Subject<string>();
   userId = this.authService.userId;
   constructor(private fireStorage : AngularFireStorage ,private router: Router , private authService : AuthService ,private db : AngularFirestore) {
     if(!this.userId){
@@ -135,10 +135,7 @@ getUniqueCustomerOrder(){
       this.db.doc(`recentlyViewed/${userId}`).update({  myArray: arrayUnion(productId) });
     }
     else{
-
-      // this.db.doc(`recentlyViewed/${userId}`).set({ productId , timestamp });
-      const ref =  this.db.doc(`recentlyViewed/${userId}`)
-      
+      const ref =  this.db.doc(`recentlyViewed/${userId}`);  
       ref.set({  myArray: arrayUnion(productId) });
     }
 
@@ -151,11 +148,6 @@ deleteRecentlyViewed(productId: string){
 }
 getRecentlyViewed() {
   const userId = this.authService.getUserId();
-  // const docRef = this.db.collection('recentlyViewed').doc(this.userId );
-  // docRef.update({
-  //   myArray: arrayUnion('newElement')
-  // })
-  // const querySnapshot =  query(collection(db, `recentlyViewed`) , orderBy('timestamp', 'desc'),limit(5))
   const querySnapshot =  query(collection(db, `recentlyViewed`))
  return  getDocs(querySnapshot)
 
@@ -163,22 +155,7 @@ getRecentlyViewed() {
   async getViewRecently(){
   return await getDoc(doc(db, 'recentlyViewed', this.userId))
 }
-//   async getRecentProduct(){
-//     let recentArray: never[] = []
-//   const recentlyViewedCollection = await this.getRecentlyViewed()
-//   const productIds$ = recentlyViewedCollection.forEach((doc) => {
-//     const transactionId = doc.id
-//     const ref = doc.data();
-//     recentArray = ref['myArray']
-   
-//     })
-//   const s =   switchMap(actions => {
-//       const productIds = recentArray
-//       return combineLatest(productIds.map((productId:string) => this.getProductById(productId)));
-//     })
-//   // return productIds$;
-//   return s;
-// }
+
  getProductById(productId: string) {
   return this.db.collection('product').doc(productId)
 }
@@ -189,9 +166,6 @@ getReviewsByProductId(productId: string | null){
  searchQuery(productName: string){
   const querySnapshot = query(collection(db, "product"),where('productName', '>', productName), where('productName', '<', `${productName}z`))
   return getDocs(querySnapshot);
-  // const collectionRef = firebase.firestore().collection('collectionName');
-  // const query = collectionRef.where('fieldName', 'contains', 'searchQuery');
-  // const querySnapshot = query(collection(db, "transaction") , where('vendorArray', 'array-contains', this.userId));
-  // return getDocs(querySnapshot);
+
 }
 }

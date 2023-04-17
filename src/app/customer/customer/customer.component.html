@@ -3,14 +3,17 @@
     <span (click)="homePage()">My App</span>
     <span class="example-spacer"></span>
     <span>
-      <div class="input-group rounded ">
-        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" id="search" #search
-          aria-describedby="search-addon"  />
-        <span class="input-group-text border-0" id="search-addon">
-      
-          <mat-icon>search</mat-icon>
-        </span>
-      </div>
+      <form  #myForm = "ngForm">
+          <div class="input-group rounded "  >
+
+          <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" id="search" #search
+          aria-describedby="search-addon" ngModel name = "search" />
+          <span class="input-group-text border-0" id="search-addon" (click)="emitValue(myForm.value.search)">
+            
+            <mat-icon >search</mat-icon>
+          </span>
+        </div>
+        </form>
     </span>
     <span class="example-spacer"></span>
     <span class="float-right justify-content-end ">
@@ -20,8 +23,9 @@
       <button class="btn" (click)="myCart()">My Cart</button>
       <button class="btn" (click)="myOrders()">My Orders</button>
       <button class="btn" (click)="viewProfile()">View Profile</button>
-      <button class="btn" (click)="updateProfile()">Update Profile</button>
-      <button class="btn" (click)="signOut()">Log Out</button>
+      <!-- <button class="btn" (click)="updateProfile()">Update Profile</button> -->
+      <button class="btn" (click)="signOut()" *ngIf="!this.authService.isNotLoggedIn()">Log Out</button>
+      <button class="btn" (click)="signIn()" *ngIf="this.authService.isNotLoggedIn()">Sign In</button>
     </span>
   </mat-toolbar>
 <router-outlet></router-outlet>

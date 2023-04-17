@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { PAGE } from 'src/app/utils/constants/constant';
-
+import Swal from 'sweetalert2'
 @Component({
   selector: 'app-phone-login',
   templateUrl: './phone-login.component.html',
@@ -74,7 +74,15 @@ this.displayOtpPage = true
                     }
                     this.displayOtpPage = false;
     })
-    .catch( (error:any) => console.log(error, "Incorrect code entered?"));
+    .catch( (error:any) =>{
+      Swal.fire(
+				'Error!',
+				'Incorrect code entered?',
+				'error'
+			)
+      console.log(error, "Incorrect code entered?")
+    }
+    );
   }
   loginForm = new FormGroup(
     {     
@@ -92,29 +100,7 @@ get controlName(){
 get controlNameVerify(){
   return this.verificationForm.controls;
 }
-// onClick(){
-//   this.router.navigate([PAGE.SIGN_IN]);
-// }
-onSubmit(){
-  if (this.loginForm.valid ) {
-    console.log('form submitted');
-  console.log(this.loginForm.value);
-  // this.authService.register(this.loginForm).subscribe((res)=>{
-  //   this.toastr.info(res.message);
-  //       if(res.success){
-  
-  //         this.loginForm.reset();
-  //         this.mainService.userRole = res.data.userRole;
-  //         this.authService.storeToken(res.data.token);
-  //         this.router.navigate([PAGE.HOME]);
-  //       }
-  //     })
-} else {
-  // validate all form fields
-  console.log("show errors")
-  // this.showError = true;
-}
+
 }
 
 
-}

@@ -12,11 +12,12 @@ import { CartComponent } from './cart/cart.component';
 import { PaymentComponent } from './payment/payment.component';
 import { OrderPageComponent } from './order-page/order-page.component';
 import { AddReviewsComponent } from './add-reviews/add-reviews.component';
+import { CustomerGuard } from '../utils/guards/customer.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'customer/home',
     pathMatch: 'full',
   },
 
@@ -37,30 +38,37 @@ const routes: Routes = [
       {
         path: `view-details`,
         component: CustomerViewProfileComponent,
+        canActivate: [CustomerGuard]
       },
       {
         path: `update-details`,
         component: CustomerUpdateProfileComponent,
+        canActivate: [CustomerGuard]
       },
       {
         path: `my-cart`,
         component: CartComponent,
+        canActivate: [CustomerGuard]
       },
       {
         path: `my-orders`,
         component: OrderPageComponent,
+        canActivate: [CustomerGuard]
       },
       {
         path: `payment-gateway`,
         component: PaymentComponent,
+        canActivate: [CustomerGuard]
       },
       {
         path: `product-detail/:id`,
         component: ProductDetailComponent,
+        canActivate: [CustomerGuard]
       },
       {
         path: `add-reviews/:id`,
         component: AddReviewsComponent,
+        canActivate: [CustomerGuard]
       },
     ],
   },

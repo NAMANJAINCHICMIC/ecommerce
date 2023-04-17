@@ -12,7 +12,10 @@ import { Product } from 'src/app/utils/models/product';
 export class VendorHomeComponent implements OnInit {
   isLoading = true;
   itemList :any;
-  productList :Array<Product |any > = []
+  productList :Array<Product |any > = [];
+  page = 1;
+  itemsPerPage = 6;
+  totalItems ?: number; 
   constructor(private vendorService: VendorService ,private router: Router ){}
   async ngOnInit() {
 // this.vendorService.getVendorProduct()
@@ -26,6 +29,7 @@ querySnapshot.forEach((doc) => {
 
 });
     this.isLoading = false;
+    this.totalItems = this.productList.length
   }
   editProduct(productId:string){
     this.router.navigate([`${PAGE.UPDATE_ITEM}/${productId}`]);
@@ -42,5 +46,9 @@ this.productList.splice(this.productList.findIndex(a => a.productId == productId
  
     // this.customerService.recentlyViewing(productId)
     this.router.navigate([`${PAGE.VENDOR_PRODUCT_DETAIL}/${productId}`]);
+  }
+  handlePageChange(event : number) {
+    // console.log(event);
+    this.page = event;
   }
 }

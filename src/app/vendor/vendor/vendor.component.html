@@ -1,13 +1,13 @@
 <mat-toolbar color="accent">
    
-    <span>My App</span>
+    <span (click)="homePage()" >My App</span>
     <span class="example-spacer"></span>
     <span class="float-right justify-content-end ">
 
       <button class="btn" (click)="homePage()">Home</button>
       <button  class="btn"  (click)="addItem()">Add Item</button>
+      <button  class="btn" (click)="orders()">My Orders</button>
       <button  class="btn" (click)="viewProfile()">View Profile</button>
-      <button  class="btn" (click)="updateProfile()">Update Profile</button>
   
       <button  class="btn" (click)="signOut()">Log Out</button>
     </span>

@@ -71,5 +71,7 @@ onSubmit(){
   this.showError = true;
 }
 }
-
+profilePage(){
+  this.router.navigate([PAGE.VENDOR_PROFILE]);
+}
 }

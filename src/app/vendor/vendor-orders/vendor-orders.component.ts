@@ -16,6 +16,9 @@ export class VendorOrdersComponent implements OnInit {
   isLoaded: boolean = false;
   innerObjectKeys: any = [];
   userId = this.authService.getUserId();
+  page = 1;
+  itemsPerPage = 6;
+  totalItems ?: number; 
   constructor(
     private vendorService: VendorService,
     private authService: AuthService
@@ -71,8 +74,12 @@ export class VendorOrdersComponent implements OnInit {
       this.orderDetail.push(obj);
     }
     this.orderDetail.reverse();
+    this.totalItems = this.orderDetail.length
   }
-
+  handlePageChange(event : number) {
+    // console.log(event);
+    this.page = event;
+  }
   // getCartTotalAmount(price: number, add: boolean): number {
   //   let amt: number;
 

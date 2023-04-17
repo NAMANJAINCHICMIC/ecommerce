@@ -2,27 +2,29 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './auth/page-not-found/page-not-found.component';
 import { AuthGuard } from './utils/guards/auth.guard';
+import { VendorGuard } from './utils/guards/vendor.guard';
+import { SignInGuard } from './utils/guards/sign-in.guard';
 
 const routes: Routes = [
   {
     path:'',
-    redirectTo:'auth',
+    redirectTo:'customer',
     pathMatch:'full'
   },
   {
     path:'auth',
     loadChildren:()=>import('./auth/auth.module').then(m=>m.AuthModule),
-    // canActivate: [AuthGuard]
+    canActivate: [SignInGuard]
   },
   {
     path:'vendor',
     loadChildren:()=>import('./vendor/vendor.module').then(m=>m.VendorModule),
-    canActivate: [AuthGuard]
+    canActivate: [VendorGuard]
   },
   {
     path:'customer',
     loadChildren:()=>import('./customer/customer.module').then(m=>m.CustomerModule),
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   },
   {
     path: '**',
