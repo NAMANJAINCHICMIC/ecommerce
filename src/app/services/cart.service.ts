@@ -1,30 +1,27 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Cart, ItemDetails } from '../utils/models/product';
 import { AuthService } from './auth.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import {  collection, setDoc, deleteDoc, doc, getDoc } from 'firebase/firestore';
+import {  deleteDoc, doc, getDoc } from 'firebase/firestore';
 import { db } from 'src/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CartService implements OnInit {
+export class CartService  {
   cartObj :Cart | null = null;
   itemsArray: ItemDetails[] = [];
-  // itemDetails: ItemDetails;
-  // uid: string;
-  // postPath: string;
-  // getPath: string;
   cartDataSub = new BehaviorSubject<Cart|null>(null);
   onCartPageSub = new BehaviorSubject<boolean>(false);
   onConfirmOrderPageSub = new BehaviorSubject<boolean>(false);
   userId = this.authService.getUserId();
-  constructor( private authService : AuthService ,private db : AngularFirestore) {}
+  constructor( private authService : AuthService ,private db : AngularFirestore) {
 
-  ngOnInit() {
     this.cartObj = this.getCartDataConverted();
   }
+
+
   addOrUpdate(item: any) {
     // get cart data from local storage
   console.log(item)

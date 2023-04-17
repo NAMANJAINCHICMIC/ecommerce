@@ -15,8 +15,8 @@ export class OrderPageComponent implements OnInit {
   orders: any;
   orderArray: any = [];
   orderDetail: any = [];
-  isLoading: boolean = true;
-  isLoaded: boolean = false;
+  isLoading = true;
+  isLoaded = false;
   innerObjectKeys : any =[];
   page = 1;
   itemsPerPage = 6;
@@ -43,12 +43,12 @@ querySnapshot.forEach((doc) => {
     return Number(price) * Number(quantity);
   }
   listDetails(){
-    for (let order of this.orderArray){
+    for (const order of this.orderArray){
       console.log(order)
     this.innerObjectKeys = Object.keys(order.productDetails.items);
       console.log(this.innerObjectKeys);
       const oiArray: any[] = [];
-      for(let oi of this.innerObjectKeys){
+      for(const oi of this.innerObjectKeys){
 
         const orderObj = {
           
@@ -82,13 +82,13 @@ querySnapshot.forEach((doc) => {
     this.page = event;
   }
   public openPDF(): void {
-    let DATA: any = document.getElementById('htmlData');
+    const DATA: any = document.getElementById('htmlData');
     html2canvas(DATA).then((canvas) => {
-      let fileWidth = 208;
-      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+      const fileWidth = 208;
+      const fileHeight = (canvas.height * fileWidth) / canvas.width;
       const FILEURI = canvas.toDataURL('image/png');
-      let PDF = new jsPDF('p', 'mm', 'a4');
-      let position = 0;
+      const PDF = new jsPDF('p', 'mm', 'a4');
+      const position = 0;
       PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
       PDF.save('ecommerce-invoice.pdf');
     });

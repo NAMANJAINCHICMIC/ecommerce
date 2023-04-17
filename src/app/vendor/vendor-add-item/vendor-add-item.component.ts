@@ -1,13 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { VendorService } from 'src/app/services/vendor.service';
-import { PAGE } from 'src/app/utils/constants/constant';
-import { environment } from 'src/environment';
 
 @Component({
   selector: 'app-vendor-add-item',
@@ -21,18 +16,11 @@ export class VendorAddItemComponent {
   imgPath='';
   picUpladed = false;
   showError= false;
- 
-  
 
-  constructor(private fireStorage : AngularFireStorage ,private router: Router ,private toastr: ToastrService, private http: HttpClient, private vendorService : VendorService , private authService :AuthService){
-
-  }
-  
-
-  
+  constructor(private fireStorage : AngularFireStorage, private vendorService : VendorService , private authService :AuthService){
+  } 
     addProductForm = new FormGroup(
-        {
-       
+        {     
           productName: new FormControl('', [Validators.required ]),
         price: new FormControl('',[ Validators.required ]),     
         available: new FormControl('',[ Validators.required ]),     
@@ -49,17 +37,7 @@ get controlName(){
 
 onSubmit(){
   if (this.addProductForm.valid ) {
-   this.vendorService.addNewProduct(this.addProductForm.value)
-  // this.mainService.addFood(this.addProductForm.value).subscribe(
-  //   (res:any)=>{
-  //     this.toastr.info(res.message);
-  //     if(res.success){
-
-  //       this.router.navigate([PAGE.HOME]);
-  //     }
-  //   }
-  // );
-
+   this.vendorService.addNewProduct(this.addProductForm.value);
 } else {
   console.log("show errors")
   this.showError = true;
@@ -74,20 +52,7 @@ onSubmit(){
    this.imgPath  = await uploadItem.ref.getDownloadURL()
     this.addProductForm.controls['pathToPic'].patchValue(this.imgPath)
 console.log(this.imgPath)
-  }
-  // this.uploadImage = event.target.files[0]
-//  const formData = new FormData()
-//   formData.append('file',this.uploadImage)
-
-//  this.mainService.foodImageUpload(formData).subscribe((res:any)=>{
-//   // console.log(res.data.pathToPic);
-//   // this.addProductForm.value.pathToPic =  environment.AUTH_API +res.data.pathToPic
-//   this.addProductForm.controls['pathToPic'].patchValue(`${environment.AUTH_API}${res.data?.pathToPic}`)
+  } 
 this.picUpladed = true;
-// },
-//   (error:any) => {
-//     this.toastr.error(error,'error');
-//   })
-
 }
 }

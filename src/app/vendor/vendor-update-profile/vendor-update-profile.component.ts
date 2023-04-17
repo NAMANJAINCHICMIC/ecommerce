@@ -5,8 +5,8 @@ import { Router } from '@angular/router';
 import { DocumentData } from 'firebase/firestore';
 import { ToastrService } from 'ngx-toastr';
 import { VendorService } from 'src/app/services/vendor.service';
-import { defaultImage, PAGE } from 'src/app/utils/constants/constant';
-import { environment } from 'src/environment';
+import { PAGE } from 'src/app/utils/constants/constant';
+
 
 @Component({
   selector: 'app-vendor-update-profile',

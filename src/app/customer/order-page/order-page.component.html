@@ -6,11 +6,11 @@
                 <span class="fs-2">My orders</span>
             </div>
 
-            <div *ngIf="isLoading == true">
+            <div *ngIf="isLoading === true">
                 <!-- <mat-spinner class="spinner"></mat-spinner> -->
             </div>
 
-            <div class="text-center" *ngIf="orderDetail.length == 0">
+            <div class="text-center" *ngIf="orderDetail.length === 0">
                 <h3>You haven't ordered anything yet.</h3>
             </div>
 

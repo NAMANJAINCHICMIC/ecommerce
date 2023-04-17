@@ -9,10 +9,10 @@ import { PAGE } from 'src/app/utils/constants/constant';
   styleUrls: ['./cart-footer.component.scss']
 })
 export class CartFooterComponent {
-  isCartEmpty: boolean = true;
+  isCartEmpty = true;
   totalAmt?: number;
   totalItems?: number;
-  goToOrders: boolean = false;
+  goToOrders = false;
 
 
   constructor(

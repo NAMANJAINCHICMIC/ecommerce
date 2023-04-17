@@ -8,5 +8,5 @@ export class WindowService {
   get windowRef() {
     return window
   }
-  constructor() { }
+
 }

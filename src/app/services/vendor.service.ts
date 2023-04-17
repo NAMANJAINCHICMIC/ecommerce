@@ -24,74 +24,45 @@ export class VendorService {
   async uploadImage(path: any , file : any ){
 return await this.fireStorage.upload(path,file)
   }
-  async addNewProduct(data:any){
-    // if(!this.userId){
-    //     this.userId = this.getUserId();
-    // }
-    //     // const ref = this.db.doc(`user/${this.userId}/vendor/${this.userId}`);   
-        const ref = doc(collection(db,`product`));   
-          
+  async addNewProduct(data:any){ 
+        const ref = doc(collection(db,`product`));      
              await setDoc(ref,data)
         this.router.navigate([PAGE.VENDOR_HOME]);
     //     this.getUserData()
 }
-  async updateProduct(data:any , productId:string|null){
-    
+  async updateProduct(data:any , productId:string|null){  
     if(productId){
       const ref = doc(db,`product`, productId);   
-
       await updateDoc(ref,data)
   this.router.navigate([PAGE.VENDOR_HOME]);
-    }
-    
+    } 
     //     this.getUserData()
   }
  
-  async deleteProduct( productId:string){
-    
+  async deleteProduct( productId:string){  
       const ref = doc(db,`product`, productId);   
-
       await deleteDoc(ref)
   // this.router.navigate([PAGE.VENDOR_HOME]);
-    
   }
   async getVendorAllProduct(){
 
 const querySnapshot = await getDocs(collection(db, "product"));
 querySnapshot.forEach((doc) => {
   // console.log(`${doc.id} => ${doc.data()}`);
-  const info = doc.data()
- 
+  const info = doc.data();
  if(info['userId'] == this.userId){
   console.log(info);
  }
 });
 }
-// getVendorProduct(){
-//   this.userId = this.authService.getUserId();
-// const productDetail  = this.db.collection('product', ref => ref.where('userId', '==', this.userId));
 
-// productDetail.get().forEach((doc) => { 
-//   const info = doc.docs.forEach((document)=>{
-//    document.data() 
-//   console.log(document.data())
-//   console.log(document.id)
-//   })
-// });
-
-// }
 getUniqueVendor(){
   const querySnapshot = query(collection(db, "product") , where('userId', '==', this.userId))
   return getDocs(querySnapshot);
 }
   async getUniqueProduct(productId : string){
 return await getDoc(doc(db, 'product', productId))
-  // const snap = await getDoc(doc(db, 'product', productId))
-    
-  //   if (snap.exists()) {
-  //       const info = snap.data()      
-  //       console.log(info)   
-  //   }
+ 
 }
   async getVendorProfile(){
   return await getDoc(doc(db, 'vendor', this.userId)) 
@@ -104,8 +75,7 @@ async updateVendorProfile(data:any ){
     await updateDoc(ref,data)
 this.router.navigate([PAGE.VENDOR_HOME]);
   }
-  
-  //     this.getUserData()
+
 }
   async getUniqueVendorOrder(){
   const querySnapshot = query(collection(db, "transaction") , where('vendorArray', 'array-contains', this.userId));
@@ -116,5 +86,4 @@ getReviewsByProductId(productId: string | null){
   const querySnapshot = query(collection(db, "reviews") , where('productId', '==', productId ,))
   return getDocs(querySnapshot);
 }
-
 }

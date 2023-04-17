@@ -1,15 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { AUTH_URL, environment, auth } from 'src/environment';
+import { doc, getDoc,  } from "firebase/firestore";
+import { AUTH_URL,  auth } from 'src/environment';
 import { PAGE } from '../utils/constants/constant';
 // import { AngularFireStore } from '@angular/fire/store';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from 'src/environment';
-import { getAuth, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
 @Injectable({
     providedIn: 'root'
 })

@@ -1,15 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DocumentData } from 'firebase/firestore';
-import { ToastrService } from 'ngx-toastr';
-import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { PAGE, defaultImage } from 'src/app/utils/constants/constant';
 import { Cart } from 'src/app/utils/models/product';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-vendor-product-detail',
@@ -66,7 +61,7 @@ numbers = [1, 2, 3, 4, 5];
 
 
   async updateReviewArray(){
-for(let i in this.reviewArray){
+for(const i in this.reviewArray){
 //  console.log(this.reviewArray[i].comment)
  
    const snap = await this.customerService.getCustomerProfileByUserId(this.reviewArray[i].userId);

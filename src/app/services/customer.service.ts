@@ -2,26 +2,21 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore  } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Router } from '@angular/router';
-import { getDoc, doc, updateDoc, collection, getDocs, query, where, orderBy, limit , FieldValue , arrayUnion , arrayRemove, setDoc} from 'firebase/firestore';
+import { getDoc, doc, updateDoc, collection, getDocs, query, where , arrayUnion , arrayRemove, setDoc} from 'firebase/firestore';
 import { db } from 'src/environment';
 import { PAGE } from '../utils/constants/constant';
 import { AuthService } from './auth.service';
 import Swal from 'sweetalert2';
-import { Observable, switchMap, combineLatest, Subject } from 'rxjs';
-import { Product } from '../utils/models/product';
-// import firebase from 'firebase/app';
-// import 'firebase/firestore';
+import {  Subject } from 'rxjs';
 
-// const arrayUnion = firebase.firestore.FieldValue.arrayUnion;
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
   searchString = new Subject<string>();
   userId = this.authService.userId;
-  constructor(private fireStorage : AngularFireStorage ,private router: Router , private authService : AuthService ,private db : AngularFirestore) {
+  constructor(private router: Router , private authService : AuthService ,private db : AngularFirestore) {
     if(!this.userId){
-
       this.userId = authService.getUserId();
     }
    }
@@ -58,7 +53,7 @@ async getUniqueProduct(productId : string){
         // console.log("data",data)
         // console.log("count",count)
         if(count >= data){
-          const ref = doc(db,`product`, productId);   
+          // const ref = doc(db,`product`, productId);   
           const available = count - data
           // console.log("available",available)
           // await updateDoc(ref,['available']:available)
@@ -103,7 +98,6 @@ async addNewReview(data:any){
         
            await setDoc(ref,data)
       // this.router.navigate([PAGE.VENDOR_HOME]);
-
 }
 recentlyViewing(productId:string ) {
   if (!this.userId) {
@@ -129,7 +123,7 @@ getUniqueCustomerOrder(){
 }
   async addRecentlyViewed(productId: string): Promise<void> {
   const userId = this.authService.getUserId();
-  const timestamp = new Date().getTime();
+  // const timestamp = new Date().getTime();
   const snap = await this.getViewRecently();
     if (snap.exists()){
       this.db.doc(`recentlyViewed/${userId}`).update({  myArray: arrayUnion(productId) });
@@ -138,16 +132,14 @@ getUniqueCustomerOrder(){
       const ref =  this.db.doc(`recentlyViewed/${userId}`);  
       ref.set({  myArray: arrayUnion(productId) });
     }
-
     this.db.doc(`recentlyViewed/${userId}`).update({  myArray: arrayUnion(productId) });
-
 }
 deleteRecentlyViewed(productId: string){
   const userId = this.authService.getUserId();
   this.db.doc(`recentlyViewed/${userId}`).update({  myArray: arrayRemove(productId) });
 }
 getRecentlyViewed() {
-  const userId = this.authService.getUserId();
+  // const userId = this.authService.getUserId();
   const querySnapshot =  query(collection(db, `recentlyViewed`))
  return  getDocs(querySnapshot)
 

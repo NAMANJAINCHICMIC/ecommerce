@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 export class CartComponent implements OnInit{
   
   cartArray: any[] = [];
-  isCartEmpty: boolean = false;
+  isCartEmpty = false;
   orderDetails:any={};
     cartObj: Cart | null;
     totalAmt?: number;
@@ -51,7 +51,7 @@ export class CartComponent implements OnInit{
         this.isCartEmpty = true;
         const itemD = this.cartObj.items;
   
-        for (let item in itemD) {
+        for (const item in itemD) {
           const itemObj = itemD[item];
   // console.log("itemObj",itemObj)
   

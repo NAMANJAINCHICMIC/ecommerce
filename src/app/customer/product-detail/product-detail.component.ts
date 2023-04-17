@@ -106,7 +106,7 @@ numbers = [1, 2, 3, 4, 5];
     // console.log(this.foodList)
   }
   async updateReviewArray(){
-for(let i in this.reviewArray){
+for(const i in this.reviewArray){
 //  console.log(this.reviewArray[i].comment)
  
    const snap = await this.customerService.getCustomerProfileByUserId(this.reviewArray[i].userId);

@@ -1,4 +1,3 @@
-import { transition } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -109,9 +108,9 @@ export class PaymentComponent implements OnInit {
         }
         // console.log("data",data);
 
-        let boolUpdateProduct: boolean = true;
-        let boolTransaction: boolean = true;
-        for (let order of this.orderArray) {
+        let boolUpdateProduct = true;
+        let boolTransaction = true;
+        for (const order of this.orderArray) {
           const data = order.quantity
           const productId = order.productId
           boolUpdateProduct = await this.customerService.updateProduct(data, productId)
@@ -162,7 +161,7 @@ export class PaymentComponent implements OnInit {
     if (this.cartObj != null && this.cartObj.items != undefined) {
       const itemD = this.cartObj.items;
 
-      for (let item in itemD) {
+      for (const item in itemD) {
         const itemObj = itemD[item];
 
         const obj = {
@@ -201,23 +200,5 @@ export class PaymentComponent implements OnInit {
   confirm() {
     this.makePayment(this.totalAmt)
   }
-  // xyz(){
-  //   const itemD = this.cartObj.items;
-  
-  //       for (let item in itemD) {
-  //         const itemObj = itemD[item];
-  // // console.log("itemObj",itemObj)
-  
-  //         const obj = {
-  //           productId: itemObj.productId,
-  //           productName: itemObj.productName,
-  //           userId: itemObj.userId,
-  //           price: itemObj.price,
-  //           pathToPic: itemObj.pathToPic,
-  //           quantity: itemObj.quantity,
-  //           available: itemObj.available
-  //         };
-  
-  //         this.cartArray.push(obj);
-  // }
+
 }

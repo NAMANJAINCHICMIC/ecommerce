@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-
-
 import { PhoneLoginComponent } from './phone-login/phone-login.component';
-import { AuthInterceptor } from '../utils/interceptors/auth.interceptor';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { AuthGuard } from '../utils/guards/auth.guard';
 

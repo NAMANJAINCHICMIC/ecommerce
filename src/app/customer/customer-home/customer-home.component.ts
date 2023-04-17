@@ -28,12 +28,8 @@ export class CustomerHomeComponent implements OnInit {
     private router: Router,
     private cartService : CartService,
     private authService : AuthService
-  ) {
-    this.searchQuery()
-  }
-  async ngOnInit() {
-    // this.vendorService.getVendorProduct()
-    // this.vendorService.getVendorAllProduct()
+  ) {}
+  async ngOnInit() {  
     const querySnapshot = await this.customerService.getAllProducts();
     querySnapshot.forEach((doc) => {
       const productId = doc.id;
@@ -47,44 +43,16 @@ export class CustomerHomeComponent implements OnInit {
       this.filterProductList(res)
     })
     this.totalItems = this.productList.length
-    // const querySnapshotRecentlyViewed =
-    //   await this.customerService.getRecentlyViewed();
-    // querySnapshotRecentlyViewed.forEach(async (doc) => {
-    //   const transactionId = doc.id;
-    //   const ref = doc.data();
-    //   if (ref) {
-    //     this.recentlyViewedProducts = ref['myArray'];
-    //     console.log("recentlyViewedProducts",this.recentlyViewedProducts);
-    //     for(let productId of this.recentlyViewedProducts){
-    //       const snap = await this.customerService.getUniqueProduct(productId);   
-    //       // console.log("info",snap.data());   
-    //       if(snap.exists()){
-    //         const info = snap.data()   
-    //         info['productId']= productId
-    //         this.productViewRecentlyList.push( info );
-    //       }
-    //       this.productViewRecentlyList.reverse();
-    //     }
-    //     if (this.recentlyViewedProducts.length > 2) {
-    //       this.customerService.deleteRecentlyViewed(
-    //         this.recentlyViewedProducts[0]
-    //       );
-    //     }
-    //   }
-    // });
-    // console.log("productViewRecentlyList", this.productViewRecentlyList)
+   // Fill Cart and Recently View items
     if(this.userId){
-
-      this.fillCart(this.userId)
-    
-
+      this.fillCart(this.userId)    
     const snap = await this.customerService.getViewRecently()
     if (snap.exists()) {
       const res = snap.data();
       console.log(res)
       this.recentlyViewedProducts = res['myArray'];
       console.log("recentlyViewedProducts",this.recentlyViewedProducts);
-      for(let productId of this.recentlyViewedProducts){
+      for(const productId of this.recentlyViewedProducts){
         const snap = await this.customerService.getUniqueProduct(productId);   
         // console.log("info",snap.data());   
         if(snap.exists()){
@@ -93,8 +61,7 @@ export class CustomerHomeComponent implements OnInit {
           this.productViewRecentlyList.push( info );
         }
         this.productViewRecentlyList.reverse();
-      }
-    
+      }    
     }
     console.log("productViewRecentlyList", this.productViewRecentlyList)
   }
@@ -117,19 +84,7 @@ export class CustomerHomeComponent implements OnInit {
     }
  
   }
-  async searchQuery(){
-    const querySnapshot = await this.customerService.searchQuery("o");
-    querySnapshot.forEach((doc) => {
-      console.log("serch",doc.data());
-      if(doc.data()){
-
-        const ref = doc.data()
-        console.log("serch",ref)
-        
-      }
   
-      })
-  }
   filterProductList(data:string){
     this.searchedProductList = this.allProductList.filter(obj => {
       return obj.productName.includes(data);

@@ -50,7 +50,7 @@
 
                         <div class="btn-group" *ngIf="item?.available !='0'">
                             <div class="row justify-content-end align-items-bottom" id="productdetailbtn"
-                                *ngIf="item?.quantity == 0">
+                                *ngIf="item?.quantity === 0">
                                 <button mat-raised-button color="accent" (click)="onAdd(item)">Add To Cart</button>
 
                             </div>

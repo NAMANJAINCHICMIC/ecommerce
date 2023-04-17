@@ -18,21 +18,18 @@ export class CustomerUpdateProfileComponent  implements OnInit{
   async ngOnInit(): Promise<void> {
     const snap = await this.customerService.getCustomerProfile( );
     if (snap.exists()) {
-             this.info = snap.data()      
-             
+             this.info = snap.data()                 
             console.log(this.info)   
         }
         this.customerForm = new FormGroup(
-          {
-           
+          {      
             email: new FormControl(this.info['email'], [Validators.required,Validators.email]),
             phone: new FormControl(this.info['phone'],[Validators.required , Validators.minLength(10),Validators.pattern("^[6-9]\\d{9}$")]),
             address: new FormControl(this.info['address'],Validators.required ),
             firstName: new FormControl(this.info['firstName'],Validators.required),
             lastName: new FormControl(this.info['lastName'],Validators.required),
             role: new FormControl('customer')
-            // category: new FormControl('',Validators.required ),
-            // pathToProfilePic: new FormControl('', ),
+     
           }
         )
       }

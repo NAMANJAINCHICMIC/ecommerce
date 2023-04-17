@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { PAGE, defaultImage } from 'src/app/utils/constants/constant';
-import { Cart } from 'src/app/utils/models/product';
+
 
 @Component({
   selector: 'app-add-reviews',
@@ -20,12 +20,12 @@ export class AddReviewsComponent implements OnInit {
   userId:string|null ;
   item: any;
   defaultImage = defaultImage;
-  snackBarDuration: number = 2000;
+  snackBarDuration = 2000;
   ratingArr: Array<any>= [];
  
 
-  rating:number = 3;
-  starCount:number = 5;
+  rating = 3;
+  starCount = 5;
 
   constructor(private fireStorage : AngularFireStorage ,private router: Router ,private toastr: ToastrService, private http: HttpClient, private customerService : CustomerService , private authService :AuthService , private cartService : CartService , private activatedRoute : ActivatedRoute){
     this.userId = this.authService.getUserId();

@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import * as firebase from 'firebase/compat';
 // import {auth} from 'firebase/firestore';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { WindowService } from 'src/app/services/window.service';
-import { PhoneNumber } from 'src/app/utils/models/phoneNumber';
-import { environment } from 'src/environment';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -29,17 +26,18 @@ displayOtpPage = false;
     this.windowRef = this.win.windowRef
     this.windowRef.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container',{
       'size': 'normal',
-      'callback': (response:any) => {
-        // reCAPTCHA solved, allow signInWithPhoneNumber.
-        // ...    
-      },
-      'expired-callback': () => {
-        // Response expired. Ask user to solve reCAPTCHA again.
-        // ...
-      }
+      // 'callback': (response:any) => {
+      //   // reCAPTCHA solved, allow signInWithPhoneNumber.
+      //   // ...    
+      // },
+      // 'expired-callback': () => {
+      //   // Response expired. Ask user to solve reCAPTCHA again.
+      //   // ...
+      // }
     },auth)
-    this.windowRef.recaptchaVerifier.render().then((widgetId:any) => { 
-    });
+    this.windowRef.recaptchaVerifier.render();
+    // this.windowRef.recaptchaVerifier.render().then((widgetId:any) => { 
+    // });
   }
   sendLoginCode() {
     const auth = getAuth();

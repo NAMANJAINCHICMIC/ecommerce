@@ -8,7 +8,7 @@
                 <section class="section" id="starters" style="scroll-margin-top: 0rem;">
                     <div class="items-div" >                 
                         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                            <div class="text-center" *ngIf="productList.length == 0">
+                            <div class="text-center" *ngIf="productList.length === 0">
                                 <h3>Not Found any product !!</h3>
                             </div>
                             <div class="col" *ngFor="let item of productList| paginate

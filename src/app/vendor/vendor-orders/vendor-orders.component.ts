@@ -12,8 +12,8 @@ export class VendorOrdersComponent implements OnInit {
   orders: any;
   orderArray: any = [];
   orderDetail: any = [];
-  isLoading: boolean = true;
-  isLoaded: boolean = false;
+  isLoading = true;
+  isLoaded = false;
   innerObjectKeys: any = [];
   userId = this.authService.getUserId();
   page = 1;
@@ -43,13 +43,13 @@ export class VendorOrdersComponent implements OnInit {
     return Number(price) * Number(quantity);
   }
   listDetails() {
-    for (let order of this.orderArray) {
+    for (const order of this.orderArray) {
       console.log(order);
       this.innerObjectKeys = Object.keys(order.productDetails.items);
       console.log(this.innerObjectKeys);
       const oiArray: any[] = [];
-      let amt: number = 0;
-      for (let oi of this.innerObjectKeys) {
+      let amt = 0;
+      for (const oi of this.innerObjectKeys) {
         if (order.productDetails.items[oi].userId == this.userId) {
           const orderObj = {
             productName: order.productDetails.items[oi].productName,
