@@ -15,9 +15,9 @@ export class CartService  {
   cartDataSub = new BehaviorSubject<Cart|null>(null);
   onCartPageSub = new BehaviorSubject<boolean>(false);
   onConfirmOrderPageSub = new BehaviorSubject<boolean>(false);
-  userId = this.authService.getUserId();
+  userId = this.authService.userId;
   constructor( private authService : AuthService ,private db : AngularFirestore) {
-
+    this.userId = this.authService.getUserId();
     this.cartObj = this.getCartDataConverted();
   }
 
@@ -144,31 +144,26 @@ export class CartService  {
       return localStorage.getItem('cartData');
     }
     getCartDataObservable() {
-      // if (localStorage.getItem('cartData')) {
-        
-      //   this.cartDataSub.next(JSON.parse(this.getCartData()||'{}'));
-      // }else{
-
-      //   this.cartDataSub.next(this.cartObj);
-      // }
       this.cartDataSub.next((localStorage.getItem('cartData') ) ? (JSON.parse(this.getCartData() || '{}') ): this.cartObj);
       return this.cartDataSub.asObservable();
     }
+    clearCartDataSub(){
+      this.cartDataSub = new BehaviorSubject<Cart|null>(null);
+    }
+    //add cart data to firebase
     async cartData(data:any ) { 
           const userId = this.authService.getUserId();
       const ref = this.db.doc(`cartData/${userId}`);
       ref.set(data);  
     }
-
-    async deleteCart( userId:string){
-    
+//delete cart data from firebase
+    async deleteCart( userId:string){ 
       const ref = doc( db ,`cartData`, userId);   
-
       await deleteDoc(ref)
-
   }
+  //get cart data from firebase
   async getCartDataFirebase(userId:string){
-   
-    return await getDoc(doc(db, 'cartData', userId))
+    this.userId = this.authService.getUserId();
+    return await getDoc(doc(db, 'cartData', this.userId))
   }
 }

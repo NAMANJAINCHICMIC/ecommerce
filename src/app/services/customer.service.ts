@@ -1,163 +1,187 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore  } from '@angular/fire/compat/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Router } from '@angular/router';
-import { getDoc, doc, updateDoc, collection, getDocs, query, where , arrayUnion , arrayRemove, setDoc} from 'firebase/firestore';
+import {
+  getDoc,
+  doc,
+  updateDoc,
+  collection,
+  getDocs,
+  query,
+  where,
+  arrayUnion,
+  arrayRemove,
+  setDoc,
+} from 'firebase/firestore';
 import { db } from 'src/environment';
 import { PAGE } from '../utils/constants/constant';
 import { AuthService } from './auth.service';
 import Swal from 'sweetalert2';
-import {  Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CustomerService {
   searchString = new Subject<string>();
   userId = this.authService.userId;
-  constructor(private router: Router , private authService : AuthService ,private db : AngularFirestore) {
-    if(!this.userId){
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private db: AngularFirestore
+  ) {
+   
       this.userId = authService.getUserId();
-    }
-   }
-
-  async getCustomerProfile(){
-
-    return await getDoc(doc(db, 'user', this.userId)) 
-  }
-  async getCustomerProfileByUserId(userId:string){
-
-    return await getDoc(doc(db, 'user', userId)) 
-  }
-  async updateCustomerProfile(data:any ){    
-    if(this.userId){
-      const ref = doc(db,`user`, this.userId);   
-  
-      await updateDoc(ref,data)
-  this.router.navigate([PAGE.VENDOR_HOME]);
-    }   
-}
-getAllProducts(){
-  const querySnapshot = query(collection(db, "product"))
-  return getDocs(querySnapshot);
-}
-async getUniqueProduct(productId : string){
-  return await getDoc(doc(db, 'product', productId))
    
   }
-  async updateProduct(data:any , productId:string){
-    const snap = await this.getUniqueProduct( productId);
+  //customer profile fn
+  async getCustomerProfile() {
+    this.userId = this.authService.getUserId();
+    return await getDoc(doc(db, 'user', this.userId));
+  }
+  async getCustomerProfileByUserId(userId: string) {
+    return await getDoc(doc(db, 'user', userId));
+  }
+  async updateCustomerProfile(data: any) {
+    this.userId = this.authService.getUserId();
+    if (this.userId) {
+      const ref = doc(db, `user`, this.userId);
+
+      await updateDoc(ref, data);
+      this.router.navigate([PAGE.VENDOR_HOME]);
+    }
+  }
+  //product detail fn
+  getAllProducts() {
+    const querySnapshot = query(collection(db, 'product'));
+    return getDocs(querySnapshot);
+  }
+  async getUniqueProduct(productId: string) {
+    return await getDoc(doc(db, 'product', productId));
+  }
+
+  // update the quantity of the product
+  async updateProduct(data: any, productId: string) {
+    const snap = await this.getUniqueProduct(productId);
     if (snap.exists()) {
-             const info = snap.data()      
-        const count = info['available']
-        // console.log("data",data)
-        // console.log("count",count)
-        if(count >= data){
-          // const ref = doc(db,`product`, productId);   
-          const available = count - data
-          // console.log("available",available)
-          // await updateDoc(ref,['available']:available)
-          const docRef = this.db.collection('product').doc(productId);
-          docRef.update({
-            available: `${available.toString()}`
-          })
-          return true;
-        }else{
-          Swal.fire(
-"product is out of stock!!","You Are Late!"
-)
-// this.toastr.info("No more stock is available for the Product")
-}
-}
-return false;
-  }
-
- transactionDone(data: any , transactionId : string) {
-    if (!this.userId) {
-        this.userId = this.authService.getUserId();
+      const info = snap.data();
+      const count = info['available'];
+     
+      if (count >= data) {   
+        const available = count - data;
+        const docRef = this.db.collection('product').doc(productId);
+        docRef.update({
+          available: `${available.toString()}`,
+        });
+        return true;
+      } else {
+        Swal.fire('product is out of stock!!', 'You Are Late!');
+        // this.toastr.info("No more stock is available for the Product")
+      }
     }
-    // const ref = this.db.doc(`user/${this.userId}/vendor/${this.userId}`);   
+    return false;
+  }
+//transaction fn
+  transactionDone(data: any, transactionId: string) {
+   
     const ref = this.db.doc(`transaction/${transactionId}`);
-    ref.set(data);
-    // this.router.navigate([PAGE.VENDOR_HOME]);
-    // this.getUserData()
-}
- reviews(data: any , transactionId : string) {
-    if (!this.userId) {
-        this.userId = this.authService.getUserId();
-    }
-    // const ref = this.db.doc(`user/${this.userId}/vendor/${this.userId}`);   
-    const ref = this.db.doc(`reviews/${transactionId}`);
-    ref.set(data);
-    // this.router.navigate([PAGE.VENDOR_HOME]);
-    // this.getUserData()
-}
-async addNewReview(data:any){
- 
-      const ref = doc(collection(db,`reviews`));   
-        
-           await setDoc(ref,data)
-      // this.router.navigate([PAGE.VENDOR_HOME]);
-}
-recentlyViewing(productId:string ) {
-  if (!this.userId) {
-      this.userId = this.authService.getUserId();
+    ref.set(data);  
   }
-  // const ref = this.db.doc(`user/${this.userId}/vendor/${this.userId}`);   
-  const ref = this.db.doc(`recentlyView/${this.userId}`);
-  ref.set(productId);
-  
-}
-cartData(data:any ) {
-  if (!this.userId) {
-      this.userId = this.authService.getUserId();
+  //add Reviews and rating
+  async addNewReview(data: any) {
+    const ref = doc(collection(db, `reviews`));
+    await setDoc(ref, data);
   }
-  // const ref = this.db.doc(`user/${this.userId}/vendor/${this.userId}`);   
-  const ref = this.db.doc(`cartData/${this.userId}`);
-  ref.set(data);
-  
-}
-getUniqueCustomerOrder(){
-  const querySnapshot = query(collection(db, "transaction") , where('customerId', '==', this.userId ,))
-  return getDocs(querySnapshot);
-}
+  getReviewsByProductId(productId: string | null) {
+    const querySnapshot = query(
+      collection(db, 'reviews'),
+      where('productId', '==', productId)
+    );
+    return getDocs(querySnapshot);
+  }
+
   async addRecentlyViewed(productId: string): Promise<void> {
-  const userId = this.authService.getUserId();
-  // const timestamp = new Date().getTime();
-  const snap = await this.getViewRecently();
-    if (snap.exists()){
-      this.db.doc(`recentlyViewed/${userId}`).update({  myArray: arrayUnion(productId) });
+    const userId = this.authService.getUserId();
+    // this.userId = this.authService.getUserId();
+    // const timestamp = new Date().getTime();
+    const snap = await this.getViewRecently();
+    if (snap.exists()) {
+      this.db
+        .doc(`recentlyViewed/${userId}`)
+        .update({ myArray: arrayUnion(productId) });
+    } else {
+      const ref = this.db.doc(`recentlyViewed/${userId}`);
+      ref.set({ myArray: arrayUnion(productId) });
     }
-    else{
-      const ref =  this.db.doc(`recentlyViewed/${userId}`);  
-      ref.set({  myArray: arrayUnion(productId) });
-    }
-    this.db.doc(`recentlyViewed/${userId}`).update({  myArray: arrayUnion(productId) });
+    this.db
+      .doc(`recentlyViewed/${userId}`)
+      .update({ myArray: arrayUnion(productId) });
+  }
+  deleteRecentlyViewed(productId: string) {
+    const userId = this.authService.getUserId();
+    this.db
+      .doc(`recentlyViewed/${userId}`)
+      .update({ myArray: arrayRemove(productId) });
+  }
+  async getViewRecently() {
+    this.userId = this.authService.getUserId();
+    return await getDoc(doc(db, 'recentlyViewed', this.userId));
+  }
+  //order functions
+  getUniqueCustomerOrder() {
+    this.userId = this.authService.getUserId();
+    const querySnapshot = query(
+      collection(db, 'transaction'),
+      where('customerId', '==', this.userId)
+    );
+    return getDocs(querySnapshot);
+  }
+  cancelOrderStatus(transactionId: string) {
+    this.db
+      .collection('transaction')
+      .doc(transactionId)
+      .update({ orderStatus: 'Cancelled' });
+  }
+  returnOrderStatus(transactionId: string) {
+    this.db
+      .collection('transaction')
+      .doc(transactionId)
+      .update({ orderStatus: 'Returned' });
+  }
 }
-deleteRecentlyViewed(productId: string){
-  const userId = this.authService.getUserId();
-  this.db.doc(`recentlyViewed/${userId}`).update({  myArray: arrayRemove(productId) });
-}
-getRecentlyViewed() {
-  // const userId = this.authService.getUserId();
-  const querySnapshot =  query(collection(db, `recentlyViewed`))
- return  getDocs(querySnapshot)
 
-}
-  async getViewRecently(){
-  return await getDoc(doc(db, 'recentlyViewed', this.userId))
-}
+ // getRecentlyViewed() {
+  //   const querySnapshot = query(collection(db, `recentlyViewed`));
+  //   return getDocs(querySnapshot);
+  // }
 
- getProductById(productId: string) {
-  return this.db.collection('product').doc(productId)
-}
-getReviewsByProductId(productId: string | null){
-  const querySnapshot = query(collection(db, "reviews") , where('productId', '==', productId ,))
-  return getDocs(querySnapshot);
-}
- searchQuery(productName: string){
-  const querySnapshot = query(collection(db, "product"),where('productName', '>', productName), where('productName', '<', `${productName}z`))
-  return getDocs(querySnapshot);
+    // reviews(data: any, transactionId: string) {
+  //   if (!this.userId) {
+  //     this.userId = this.authService.getUserId();
+  //   }
+  
+  //   const ref = this.db.doc(`reviews/${transactionId}`);
+  //   ref.set(data);
+   
+  // }
+  // cartData(data: any) {
+  //   if (!this.userId) {
+  //     this.userId = this.authService.getUserId();
+  //   }
+  //   const ref = this.db.doc(`cartData/${this.userId}`);
+  //   ref.set(data);
+  // }
+ 
+  // recentlyViewing(productId: string) {
+  //   if (!this.userId) {
+  //     this.userId = this.authService.getUserId();
+  //   }
+  //   const ref = this.db.doc(`recentlyView/${this.userId}`);
+  //   ref.set(productId);
+  // }
 
-}
-}
+    // getProductById(productId: string) {
+  //   return this.db.collection('product').doc(productId);
+  // }
+ 

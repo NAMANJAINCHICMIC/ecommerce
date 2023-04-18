@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart.service';
 import { PAGE } from 'src/app/utils/constants/constant';
@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
-export class CartComponent implements OnInit{
+export class CartComponent implements OnInit {
   
   cartArray: any[] = [];
   isCartEmpty = false;
@@ -18,7 +18,7 @@ export class CartComponent implements OnInit{
     cartObj: Cart | null;
     totalAmt?: number;
     totalItems?: number;
-
+    subscriptionHandler:any;
     constructor(
       private cartService: CartService,
       private router: Router,
@@ -26,7 +26,7 @@ export class CartComponent implements OnInit{
     ) {
       this.cartObj = JSON.parse(this.cartService.getCartData()||'{}');
 
-      this.cartService.getCartDataObservable().subscribe((data:any) => {
+       this.cartService.getCartDataObservable().subscribe((data:any) => {
         // here data is cart data object
         // console.log("obs",Object.keys(data.items))
         if (data && Object.keys(data.items).length > 0) {
@@ -111,6 +111,11 @@ export class CartComponent implements OnInit{
       this.cartService.clearCart();
     }
 
+    placeOrder(){
+      this.router.navigate([PAGE.PAYMENT_GATEWAY]);
+    }
+}
+
     // orderDetailsChanged() {
 
     //   this.orderDetails.list=[];
@@ -129,7 +134,3 @@ export class CartComponent implements OnInit{
     //   this.clearCart()
     //   this.router.navigate([PAGE.ORDERS]);
     // }
-    placeOrder(){
-      this.router.navigate([PAGE.PAYMENT_GATEWAY]);
-    }
-}

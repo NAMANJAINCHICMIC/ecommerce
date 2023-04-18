@@ -61,6 +61,9 @@ export class CustomerUpdateProfileComponent  implements OnInit{
 get controlName(){
   return this.customerForm.controls;
 }
+profilePage(){
+  this.router.navigate([PAGE.PROFILE]);
+}
 onSubmit(){
   if (this.customerForm.valid ) {
    this.customerService.updateCustomerProfile(this.customerForm.value ) 
@@ -69,8 +72,5 @@ onSubmit(){
   console.log("show errors")
   this.showError = true;
 }
-}
-profilePage(){
-  this.router.navigate([PAGE.PROFILE]);
 }
 }

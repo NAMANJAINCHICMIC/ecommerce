@@ -21,6 +21,22 @@
                 totalItems: totalItems
               }">
                 <div class="card mx-auto" style="max-width: 800px;" id="htmlData" >
+                    <div class="card-header" *ngIf="order?.orderStatus ==='Placed'" style="background-color:yellow" (click)="cancelOrderStatus(order.transactionId)" >
+                        <strong>Order Status : {{order?.orderStatus}}</strong> 
+                       
+                    </div>
+                    <div class="card-header" *ngIf="order?.orderStatus ==='Delivered'" style="background-color: green" (click)="returnOrderStatus(order.transactionId)" >
+                        <strong>Order Status : {{order?.orderStatus}}</strong> 
+                       
+                    </div>
+                    <div class="card-header" *ngIf="order?.orderStatus ==='Cancelled'" style="background-color: red" >
+                        <strong>Order Status : {{order?.orderStatus}}</strong> 
+                       
+                    </div>
+                    <div class="card-header" *ngIf="order?.orderStatus ==='Returned'" style="background-color: red" >
+                        <strong>Order Status : {{order?.orderStatus}}</strong> 
+                       
+                    </div>
                     <div class="card-header">
                         <strong>Order # {{order.transactionId}}</strong> placed on {{order.transactionTime}}
                         <div class=" text-right justify-content-end">

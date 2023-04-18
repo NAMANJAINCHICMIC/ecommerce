@@ -33,7 +33,6 @@ export class PaymentComponent implements OnInit {
     const snap = await this.customerService.getCustomerProfile();
     if (snap.exists()) {
       this.info = snap.data()
-
       console.log(this.info)
     }
     this.customerForm = new FormGroup(
@@ -79,15 +78,6 @@ export class PaymentComponent implements OnInit {
   get controlName() {
     return this.customerForm.controls;
   }
-  // onSubmit(){
-  //   if (this.customerForm.valid ) {
-  //    this.customerService.updateCustomerProfile(this.customerForm.value ) 
-
-  // } else {
-  //   console.log("show errors")
-  //   this.showError = true;
-  // }
-  // }
 
   makePayment(amount: any) {
 
@@ -104,7 +94,8 @@ export class PaymentComponent implements OnInit {
           customerId: this.authService.getUserId(),
           transactionTime: new Date().toLocaleString(),
           totalAmt: this.totalAmt,
-          vendorArray: this.vendorArray
+          vendorArray: this.vendorArray,
+          orderStatus: 'Placed'
         }
         // console.log("data",data);
 

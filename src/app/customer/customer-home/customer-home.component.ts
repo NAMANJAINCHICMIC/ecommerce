@@ -12,6 +12,7 @@ import { Product } from 'src/app/utils/models/product';
   styleUrls: ['./customer-home.component.scss'],
 })
 export class CustomerHomeComponent implements OnInit {
+  // userId:any;
   userId = this.authService.getUserId();
   recentlyViewedProducts: any = [];
   isLoading = true;
@@ -22,14 +23,34 @@ export class CustomerHomeComponent implements OnInit {
   productViewRecentlyList: Array<Product | any> = [];
   page = 1;
   itemsPerPage = 6;
-  totalItems : any; 
+  totalItems :any;
+  totalCartItems : any; 
+  isCartEmpty!: boolean;
+  totalAmt: any;
   constructor(
     private customerService: CustomerService,
     private router: Router,
     private cartService : CartService,
     private authService : AuthService
-  ) {}
+  ) {
+    this.userId = this.authService.getUserId();
+  //   this.cartService.getCartDataObservable().subscribe((data : any) => {
+    
+  //     // here data is cart data object
+  //   console.log("data",data)
+  //   if (data && Object.keys(data.items).length > 0) {
+  //     this.isCartEmpty = false;
+  //     this.totalAmt = data.totalAmt;
+  //     this.totalCartItems = Object.keys(data.items).length;
+  //   }else{
+  //     this.isCartEmpty = true;
+  //   }
+  
+  // });
+  }
   async ngOnInit() {  
+    this.userId = this.authService.getUserId();
+    //get products list
     const querySnapshot = await this.customerService.getAllProducts();
     querySnapshot.forEach((doc) => {
       const productId = doc.id;
@@ -39,6 +60,7 @@ export class CustomerHomeComponent implements OnInit {
     this.productList = this.allProductList
     console.log(this.productList);
     this.isLoading = false;
+    // get searched product list
     this.customerService.searchString.subscribe((res:string )=>{
       this.filterProductList(res)
     })
@@ -79,7 +101,9 @@ export class CustomerHomeComponent implements OnInit {
   async fillCart(userId:string){
     const snap = await this.cartService.getCartDataFirebase(userId);
     if(snap.exists()){
-      const info = snap.data()   
+      const info = snap.data()  
+      this.totalAmt=info['totalAmt'];
+      this.totalCartItems=Object.keys(info['items']).length;
       localStorage.setItem('cartData', JSON.stringify(info));
     }
  
@@ -87,7 +111,7 @@ export class CustomerHomeComponent implements OnInit {
   
   filterProductList(data:string){
     this.searchedProductList = this.allProductList.filter(obj => {
-      return obj.productName.includes(data);
+      return obj.productName.includes(data.toLowerCase()&& data.toUpperCase());
     });
     this.productList = this.searchedProductList
   }

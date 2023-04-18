@@ -51,15 +51,6 @@ export class AddReviewsComponent implements OnInit {
         }
         }
 
-
-
- 
-
-  // onRatingChanged(rating: number){
-  //   console.log(rating);
-  //   this.rating = rating;
-  // }
-
  
   onClick(rating:number) {
     console.log(rating)

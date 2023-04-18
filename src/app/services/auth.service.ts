@@ -22,6 +22,7 @@ export class AuthService {
 
 
     }
+    // locolStorage Fn
     storeUserId(userId: string) {
         localStorage.setItem('userId', userId)
     }
@@ -49,7 +50,7 @@ export class AuthService {
     isNotLoggedIn(): boolean {
         return !localStorage.getItem('token')
     }
-
+//user profile
     enterProfile(data: any) {
         return this.http.post(
             AUTH_URL + 'user.json',
@@ -79,24 +80,7 @@ export class AuthService {
         // this.router.navigate([PAGE.VENDOR_HOME]);
         this.getUserData()
     }
-    async getProfile() {
-        if (!this.userId) {
-            this.userId = this.getUserId();
-        }
-        // console.log(this.userId)
-        // const data = this.db.collection('user/');
-        // console.log(data)
-        // const querySnapshot = await getDocs(collection(db, "user"));
-        const querySnapshot = await getDocs(collection(db, this.userId, 'customer', this.userId));
-        console.log(querySnapshot);
-        querySnapshot.forEach((doc) => {
-            console.log(`${doc.id} =>  `);
-            //   console.log(`${doc.id} => ${doc.data() }`);
-            console.log(doc.data());
-            console.log(doc.exists);
-        });
-
-    }
+   
     signOutFn() {
         // const auth = getAuth();
         localStorage.clear();
@@ -110,9 +94,9 @@ export class AuthService {
         this.router.navigate([PAGE.SIGN_IN]);
     }
     async getUserData() {
-        if (!this.userId) {
+        // if (!this.userId) {
             this.userId = this.getUserId();
-        }
+        // }
         console.log(this.userId)
         //  return getDocs(collection(db, this.userId ,'vendor',this.userId));
         //  return getDoc(doc(db, this.userId ,'vendor',this.userId));
@@ -147,3 +131,11 @@ export class AuthService {
         }
     }
 }
+ // async getProfile() {
+    //         this.userId = this.getUserId();
+    //     const querySnapshot = await getDocs(collection(db, this.userId, 'customer', this.userId));
+    //     console.log(querySnapshot);
+    //     querySnapshot.forEach((doc) => { 
+    //         console.log(doc.data());
+    //     });
+    // }

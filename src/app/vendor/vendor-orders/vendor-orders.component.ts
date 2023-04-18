@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { VendorService } from 'src/app/services/vendor.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-vendor-orders',
@@ -24,6 +25,17 @@ export class VendorOrdersComponent implements OnInit {
     private authService: AuthService
   ) {}
   async ngOnInit(): Promise<void> {
+    // const querySnapshot = await this.vendorService.getUniqueVendorOrder();
+    // querySnapshot.forEach((doc) => {
+    //   console.log(doc.data());
+    //   const transactionId = doc.id;
+    //   this.orderArray.push({ ...doc.data(), transactionId });
+    //   console.log(this.orderArray);
+    // });
+    // this.listDetails();
+  await  this.getUniqueVendorOrder();
+  }
+  async getUniqueVendorOrder(){
     const querySnapshot = await this.vendorService.getUniqueVendorOrder();
     querySnapshot.forEach((doc) => {
       console.log(doc.data());
@@ -32,13 +44,7 @@ export class VendorOrdersComponent implements OnInit {
       console.log(this.orderArray);
     });
     this.listDetails();
-    //   const productId = doc.id
-    //  this.productList.push({ ...doc.data(), productId})
-    //  console.log(this.productList);
-
-    // throw new Error('Method not implemented.');
   }
-
   getItemTotalAmount(price: number, quantity: number) {
     return Number(price) * Number(quantity);
   }
@@ -68,6 +74,7 @@ export class VendorOrdersComponent implements OnInit {
         customerDetail:order.customerDetail,
         // totalAmt: amt,
         // totalAmt: order.totalAmt,
+        orderStatus:order.orderStatus,
         orderedItems: oiArray,
         totalAmt: amt,
       };
@@ -91,4 +98,22 @@ export class VendorOrdersComponent implements OnInit {
   //   }
   //   return amt;
   // }
+  deliverOrderStatus(transactionId:string){
+    Swal.fire({
+      title: 'Is this order delivered?',
+      showDenyButton: true,
+      // showCancelButton: true,
+      confirmButtonText: 'Yes',
+      denyButtonText: `Not yet`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.vendorService.deliverOrderStatus(transactionId);
+        Swal.fire('Delivered!', '', 'success')
+        this.orderArray.length = 0;
+        this.orderDetail.length = 0;
+         this.getUniqueVendorOrder();
+      } 
+    })
+  }
 }
