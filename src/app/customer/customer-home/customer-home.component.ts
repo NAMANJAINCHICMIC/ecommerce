@@ -67,7 +67,7 @@ export class CustomerHomeComponent implements OnInit {
     this.totalItems = this.productList.length
    // Fill Cart and Recently View items
     if(this.userId){
-      this.fillCart(this.userId)    
+      // this.fillCart(this.userId)    
     const snap = await this.customerService.getViewRecently()
     if (snap.exists()) {
       const res = snap.data();
@@ -98,16 +98,16 @@ export class CustomerHomeComponent implements OnInit {
     // this.customerService.recentlyViewing(productId)
     this.router.navigate([`${PAGE.PRODUCT_DETAIL}/${productId}`]);
   }
-  async fillCart(userId:string){
-    const snap = await this.cartService.getCartDataFirebase(userId);
-    if(snap.exists()){
-      const info = snap.data()  
-      this.totalAmt=info['totalAmt'];
-      this.totalCartItems=Object.keys(info['items']).length;
-      localStorage.setItem('cartData', JSON.stringify(info));
-    }
+  // async fillCart(userId:string){
+  //   const snap = await this.cartService.getCartDataFirebase(userId);
+  //   if(snap.exists()){
+  //     const info = snap.data()  
+  //     this.totalAmt=info['totalAmt'];
+  //     this.totalCartItems=Object.keys(info['items']).length;
+  //     localStorage.setItem('cartData', JSON.stringify(info));
+  //   }
  
-  }
+  // }
   
   filterProductList(data:string){
     this.searchedProductList = this.allProductList.filter(obj => {

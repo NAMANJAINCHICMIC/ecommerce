@@ -48,7 +48,7 @@ export class CartComponent implements OnInit {
    
     populateCartData() {
       if (this.cartObj  && this.cartObj.items ) {
-        this.isCartEmpty = true;
+        // this.isCartEmpty = true;
         const itemD = this.cartObj.items;
   
         for (const item in itemD) {
