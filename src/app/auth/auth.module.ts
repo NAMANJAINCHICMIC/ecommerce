@@ -9,6 +9,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
+import { OtpPageComponent } from './otp-page/otp-page.component';
+import { CustomerSignUpComponent } from './customer-sign-up/customer-sign-up.component';
+import { VendorSignUpComponent } from './vendor-sign-up/vendor-sign-up.component';
 const material =[
   MatIconModule,
   MatSelectModule,
@@ -21,6 +24,9 @@ const material =[
     
     PhoneLoginComponent,
          ProfilePageComponent,
+         OtpPageComponent,
+         CustomerSignUpComponent,
+         VendorSignUpComponent,
    
   ],
   imports: [

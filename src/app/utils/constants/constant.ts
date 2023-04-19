@@ -1,6 +1,9 @@
 export const PAGE = {
     SIGN_IN:'auth/sign-in',
     PROFILE:'auth/profile',
+    OTP_PAGE:'auth/otp-page',
+    CUSTOMER_SIGN_UP:'auth/customer-sign-up',
+    VENDOR_SIGN_UP:'auth/vendor-sign-up',
     HOME:'customer/customer/home',
     MY_CART:'customer/customer/my-cart',
     MY_ORDERS:'customer/customer/my-orders',

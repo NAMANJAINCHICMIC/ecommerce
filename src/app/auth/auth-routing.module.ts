@@ -3,6 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { PhoneLoginComponent } from './phone-login/phone-login.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { AuthGuard } from '../utils/guards/auth.guard';
+import { OtpPageComponent } from './otp-page/otp-page.component';
+import { CustomerSignUpComponent } from './customer-sign-up/customer-sign-up.component';
+import { VendorSignUpComponent } from './vendor-sign-up/vendor-sign-up.component';
 
 
 
@@ -16,14 +19,29 @@ const routes: Routes = [
     path: 'sign-in',
     component: PhoneLoginComponent,
     // component: SignInComponent,
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
  
 },
 {
   path:'profile',
   component:ProfilePageComponent,
-  canActivate: [AuthGuard]
-}
+  // canActivate: [AuthGuard]
+},
+{
+  path:'otp-page',
+  component:OtpPageComponent,
+  // canActivate: [AuthGuard]
+},
+{
+  path:'customer-sign-up',
+  component:CustomerSignUpComponent,
+  // canActivate: [AuthGuard]
+},
+{
+  path:'vendor-sign-up',
+  component:VendorSignUpComponent,
+  // canActivate: [AuthGuard]
+},
 // {
 //     path: 'sign-up',
 //     component: SignUpComponent,

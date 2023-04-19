@@ -58,27 +58,39 @@ export class AuthService {
 
         );
     }
-    profileDetail(data: any) {
+    async profileDetail(data: any) {
         if (!this.userId) {
             this.userId = this.getUserId();
         }
-        const ref = this.db.doc(`user/${this.userId}`);
-        // const ref = this.db.doc(`user/${this.userId}/customer/${this.userId}`);   
-        ref.set(data);
-        // const reference =  this.db.doc(`recentlyViewed/${this.userId}`)
-        // reference.set(null);
+        const boolValue = await this.checkUserExist(data.phone)
+        if(!boolValue){
+        const ref = this.db.doc(`user/${data.phone}`);
+        // const ref = this.db.doc(`user/${this.userId}`);
        
-        this.getUserData() 
+        ref.set(data);
+       
+       
+        // this.getUserData() 
+    }else{
+        this.router.navigate([PAGE.SIGN_IN]);
     }
-    vendorProfileDetail(data: any) {
+    }
+    async vendorProfileDetail(data: any) {
         if (!this.userId) {
             this.userId = this.getUserId();
         }
-        // const ref = this.db.doc(`user/${this.userId}/vendor/${this.userId}`);   
-        const ref = this.db.doc(`vendor/${this.userId}`);
+    console.log(data.phone)
+    const boolValue = await this.checkUserExist(data.phone)
+    if(!boolValue){
+
+        const ref = this.db.doc(`vendor/${data.phone}`);
         ref.set(data);
-        // this.router.navigate([PAGE.VENDOR_HOME]);
-        this.getUserData()
+    
+        // this.getUserData()
+    }else{
+        this.router.navigate([PAGE.SIGN_IN]);
+    }
+        // const ref = this.db.doc(`vendor/${this.userId}`);
     }
    
     signOutFn() {
@@ -126,7 +138,28 @@ export class AuthService {
                 this.router.navigate([PAGE.VENDOR_HOME]);
             } else {
                 console.log("No Document exists")
-                this.router.navigate([PAGE.PROFILE]);
+                // this.router.navigate([PAGE.PROFILE]);
+            }
+        }
+    }
+    async checkUserExist(phone:any){
+        let snap = await getDoc(doc(db, 'user', phone))
+        // const snap = await getDocs(collection(db, this.userId ,'vendor',this.userId));
+        console.log(snap)
+        if (snap.exists()) {
+            return true;
+            // this.router.navigate([PAGE.SIGN_IN]);
+        }else{
+
+            snap = await getDoc(doc(db, 'vendor', phone))
+            if (snap.exists()){
+                return true;
+               
+            } else {
+
+                console.log("New User")
+                return false;
+                // this.router.navigate([PAGE.PROFILE]);
             }
         }
     }

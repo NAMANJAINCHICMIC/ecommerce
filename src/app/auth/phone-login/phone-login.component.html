@@ -13,7 +13,7 @@
         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
           <div class="card" style="border-radius: 15px;">
             <div class="card-body p-5">
-              <h2 class="text-uppercase text-center mb-5">Authentication Form</h2>
+              <h2 class="text-uppercase text-center mb-5">Sign In with Mobile Number</h2>
   <form [formGroup]="loginForm" class="align-self-center"(ngSubmit)="sendLoginCode()" [hidden]="displayOtpPage" >
      
       <div class="form-group align-self-center m-2">
@@ -35,10 +35,15 @@
         </div>
          
         </div>
-        <div id="recaptcha-container"></div>
-    
+        <div id="recaptcha-container-3"  ></div>
+    <div class="d-flex align-items-center justify-content-center pb-4" >
+
       <button type="submit" class="btn btn-primary m-2">Submit</button>
-      
+    </div>
+      <div class="d-flex align-items-center justify-content-center pb-4">
+        <p class="mb-0 me-2">Don't have an account?</p>
+        <button type="button" class="btn btn-outline-danger" (click)="signUpPage()" >Create new</button>
+      </div>
     </form>
     <form [formGroup]="verificationForm" class="align-self-center"(ngSubmit)="verifyLoginCode()" [hidden]="!displayOtpPage" >
         <div class="form-group align-self-center m-2">

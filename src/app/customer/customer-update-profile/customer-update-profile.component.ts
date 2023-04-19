@@ -62,7 +62,7 @@ get controlName(){
   return this.customerForm.controls;
 }
 profilePage(){
-  this.router.navigate([PAGE.PROFILE]);
+  this.router.navigate([PAGE.CUSTOMER_PROFILE]);
 }
 onSubmit(){
   if (this.customerForm.valid ) {

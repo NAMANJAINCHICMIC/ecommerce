@@ -1,0 +1,102 @@
+
+
+<section class="vh-100" style="background-color: #ff4081;">
+    <div class="container h-100 mb-0 ">
+      <div class="row d-flex justify-content-center align-items-center h-100 mb-0 ">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card shadow-2-strong" style="border-radius: 1rem;">
+            <div class="card-body p-3 mb-0 text-center">
+              <div class="row">
+                <h3>Choose Your Role</h3>
+              </div>
+              <div class="row">
+                <div class="">
+                  <button mat-raised-button color="primary" (click)="onCustomer()">Customer</button>
+            
+                  <button mat-raised-button color="warn" (click)="onVendor()">Vendor</button>
+                </div>
+              </div>
+            </div>
+      
+            <div class="card-body p-3 mb-0 text-center"  >
+            <!-- <div class="card-body p-3 mb-0 text-center" *ngIf="showVendor" > -->
+              <h2 class="text-uppercase text-center mb-2">Enter Your Profile</h2>
+  
+              <form [formGroup]="vendorForm" class="align-self-center justify-content-center"
+                (ngSubmit)="onVendorSubmit()">
+                
+               
+                <div class="form-row align-self-center justify-content-center"
+              >
+                  <div class="col mb-3">
+                    <label for="inputFirmname">Firm Name</label>
+                    <input type="text" class="form-control " formControlName="firmName"
+                    [ngClass]="{'is-invalid': vendorControlName.firmName.errors && (vendorControlName.firmName.touched || vendorControlName.firmName.dirty), 'is-valid':vendorControlName.firmName.valid}"
+                    placeholder="Firm name">
+                    <div *ngIf="vendorControlName.firmName.invalid && showError " class="alert alert-danger">
+                      <div *ngIf="vendorControlName.firmName.errors?.['required']">
+                        Firm Name is required.
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row align-self-center justify-content-center">
+                  <div class="col mb-3">
+                    <label for="inputEmail">Email</label>
+                    <input type="email" class="form-control col col-12" id="inputEmail"
+                      [ngClass]="{'is-invalid': vendorControlName.email.errors && (vendorControlName.email.touched || vendorControlName.email.dirty), 'is-valid':vendorControlName.email.valid}"
+                      formControlName="email" placeholder="Email">
+                    <div *ngIf="vendorControlName.email.invalid && showError " class="alert alert-danger">
+                      Email is required.
+                    </div>
+  
+                  </div>
+                  <div class="col mb-3">
+                    <label for="inputphone">Mobile Number</label>
+                    <input type="text" class="form-control col col-12" id="inputphone" formControlName="phone"
+                      [ngClass]="{'is-invalid': vendorControlName.phone.errors && (vendorControlName.phone.touched || vendorControlName.phone.dirty), 'is-valid':vendorControlName.phone.valid}"
+                      placeholder="Mobile Number" pattern="[0-9]*"
+                      oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                    <div *ngIf="vendorControlName.phone.invalid && showError " class="alert alert-danger">
+                      <div *ngIf="vendorControlName.phone.errors?.['required']">
+                        Mobile Number is required.
+                      </div>
+                      <div *ngIf="vendorControlName.phone.errors?.['minlength']">
+                        Mobile Number must be 10 digit long.
+                      </div>
+                      <div *ngIf="vendorControlName.phone.errors?.['pattern']">
+                        Enter valid Mobile Number.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-outline mb-4">
+                  <label for="inputAddress">Address</label>
+                  <input type="text" class="form-control col col-12" formControlName="address"
+                    [ngClass]="{'is-invalid': vendorControlName.address.errors && (vendorControlName.address.touched || vendorControlName.address.dirty), 'is-valid':vendorControlName.address.valid}"
+                    placeholder="Address">
+                  <div *ngIf="vendorControlName.address.invalid && showError " class="alert alert-danger">
+                    <div *ngIf="vendorControlName.address.errors?.['required']">
+                      Address is required.
+                    </div>
+                  </div>
+                </div>
+                <div id="recaptcha-container-2" ></div>
+
+                <div class="form-row align-self-center justify-content-center">
+                 
+                  <button class="btn btn-primary " type="submit">Submit</button>
+                </div>
+                <div class="d-flex align-items-center justify-content-center pb-3 mt-3">
+                    <p class="mb-0 me-2">Already have an account?</p>
+                    <button type="button" class="btn btn-outline-danger" (click)="signInPage()" >Sign In</button>
+                  </div>
+              </form>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
