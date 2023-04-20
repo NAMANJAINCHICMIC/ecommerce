@@ -18,6 +18,7 @@ displayOtpPage = false;
   windowRef: any;
   verificationCode?: string;
   user: any;
+  showError= false;
 phoneNumber?:string;
   constructor(private win: WindowService , private http: HttpClient ,private router: Router , private authService : AuthService) { }
 
@@ -40,6 +41,8 @@ phoneNumber?:string;
     // });
   }
   async sendLoginCode() {
+    if (this.loginForm.valid ) {
+      this.showError=false;  
     const auth = getAuth();
     const appVerifier = this.windowRef.recaptchaVerifier;
     const num = '+91'+this.loginForm.value.phone;
@@ -77,9 +80,14 @@ phoneNumber?:string;
     this.router.navigate([PAGE.PROFILE])
    }
   }
+}else{
+  this.showError=true;
+}
 }
 
   verifyLoginCode() {
+    if (this.verificationForm.valid ) {
+      this.showError=false;
     this.windowRef.confirmationResult
                   .confirm(this.verificationForm.value.otp)
                   // .confirm(this.verificationCode)
@@ -109,7 +117,10 @@ phoneNumber?:string;
       console.log(error, "Incorrect code entered?")
     }
     );
+  }else{
+    this.showError=true;
   }
+}
   loginForm = new FormGroup(
     {     
       phone: new FormControl('',[Validators.required , Validators.minLength(10),Validators.pattern(REGEX.MOBILE_NUMBER)]),   

@@ -15,7 +15,7 @@
                                             [src]="picUpladed?this.addFoodForm.value.pathToPic:'../assets/images/food.png'"
                                                 alt="avatar" class="rounded-circle img-fluid" style="width: 150px;"> -->
                                             <img 
-                                                [src]="picUpladed?imgPath: '../assets/noImage.jpeg'" alt="avatar"
+                                                [src]="picUpladed?imgPath: defaultImage" alt="avatar"
                                                 class="" style="width: 150px;">
 
                                             <!-- <h5 class="my-3">{{ foodItem?.foodName}} {{ foodItem?.lastName}}</h5> -->
@@ -83,7 +83,7 @@
                                         <label for="inputName">Price</label>
 
                                         <input type="text" class="form-control " 
-                                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                        appReplaceNumber
                                             [ngClass]="{'is-invalid': controlName.price.errors && (controlName.price.touched || controlName.price.dirty), 'is-valid':controlName.price.valid}"
                                             formControlName="price" placeholder="Rs">
                                         <div *ngIf="controlName.price.invalid && showError "
@@ -102,7 +102,7 @@
                                         <label for="inputName">Available Quantity </label>
 
                                         <input type="text" class="form-control " 
-                                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                        appReplaceNumber
                                             [ngClass]="{'is-invalid': controlName.available.errors && (controlName.available.touched || controlName.available.dirty), 'is-valid':controlName.available.valid}"
                                             formControlName="available" placeholder="Available Quantity">
                                         <div *ngIf="controlName.available.invalid && showError "

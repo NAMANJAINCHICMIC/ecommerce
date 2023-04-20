@@ -12,6 +12,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { OtpPageComponent } from './otp-page/otp-page.component';
 import { CustomerSignUpComponent } from './customer-sign-up/customer-sign-up.component';
 import { VendorSignUpComponent } from './vendor-sign-up/vendor-sign-up.component';
+import { SharedModule } from '../shared/shared.module';
 const material =[
   MatIconModule,
   MatSelectModule,
@@ -31,7 +32,7 @@ const material =[
   ],
   imports: [
     CommonModule,
-
+SharedModule,
     ReactiveFormsModule,
     FormsModule, AuthRoutingModule, HttpClientModule, 
     material

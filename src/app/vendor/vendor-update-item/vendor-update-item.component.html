@@ -55,7 +55,7 @@
                                         <label for="inputName">Price</label>
 
                                         <input type="text" class="form-control " 
-                                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                        
                                             [ngClass]="{'is-invalid': controlName.price.errors && (controlName.price.touched || controlName.price.dirty), 'is-valid':controlName.price.valid}"
                                             formControlName="price" placeholder="Rs">
                                         <div *ngIf="controlName.price.invalid && showError "
@@ -92,7 +92,7 @@
                                         <label for="inputName">Available Quantity </label>
 
                                         <input type="text" class="form-control " 
-                                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                        appReplaceNumber
                                             [ngClass]="{'is-invalid': controlName.available.errors && (controlName.available.touched || controlName.available.dirty), 'is-valid':controlName.available.valid}"
                                             formControlName="available" placeholder="Available Quantity">
                                         <div *ngIf="controlName.available.invalid && showError "

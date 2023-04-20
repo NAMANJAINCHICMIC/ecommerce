@@ -18,6 +18,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { VendorOrdersComponent } from './vendor-orders/vendor-orders.component';
 import { VendorProductDetailComponent } from './vendor-product-detail/vendor-product-detail.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { SharedModule } from '../shared/shared.module';
 const material =[
   MatIconModule,
   MatSelectModule,
@@ -31,6 +32,7 @@ const material =[
 
 @NgModule({
   declarations: [
+    
     VendorHomeComponent,
     VendorComponent,
     VendorAddItemComponent,
@@ -46,7 +48,8 @@ const material =[
     NgxPaginationModule,
     ReactiveFormsModule,
     FormsModule,
-    material
+    material,
+    SharedModule
   ],
   exports : [
     material

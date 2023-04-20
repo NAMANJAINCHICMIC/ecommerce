@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { WindowService } from 'src/app/services/window.service';
 import { PAGE, REGEX } from 'src/app/utils/constants/constant';
 import Swal from 'sweetalert2';
-
+import { ReplaceNumberDirective } from 'src/app/utils/directives/replace-number.directive';
 @Component({
   selector: 'app-customer-sign-up',
   templateUrl: './customer-sign-up.component.html',
@@ -21,7 +21,7 @@ phoneNumber ?:string
    'Vendor',
    'Customer'
   ]
-  replace = REGEX;
+  replaceWithNumber = REGEX.REPLACE;
   windowRef :any;
   constructor(private router: Router ,private toastr: ToastrService, private http: HttpClient,private authService: AuthService , private win : WindowService ){}
   ngOnInit(){

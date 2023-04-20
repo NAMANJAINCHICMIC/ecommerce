@@ -69,8 +69,9 @@
                     <label for="inputphone">Mobile Number</label>
                     <input type="text" class="form-control col col-12" id="inputphone" formControlName="phone"
                       [ngClass]="{'is-invalid': controlName.phone.errors && (controlName.phone.touched || controlName.phone.dirty), 'is-valid':controlName.phone.valid}"
-                      placeholder="Mobile Number" pattern="[0-9]*"
-                      oninput="this.value = this.value.replace( /[^0-9]/g  , '')">
+                      placeholder="Mobile Number" pattern="[0-9]*" appReplaceNumber
+                     >  
+                     <!-- oninput="this.value = this.value.replace( /[^0-9]/g  , '')" -->
                     <div *ngIf="controlName.phone.invalid && showError " class="alert alert-danger">
                       <div *ngIf="controlName.phone.errors?.['required']">
                         Mobile Number is required.

@@ -3,6 +3,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { VendorService } from 'src/app/services/vendor.service';
+import { defaultImage } from 'src/app/utils/constants/constant';
 
 @Component({
   selector: 'app-vendor-add-item',
@@ -16,7 +17,7 @@ export class VendorAddItemComponent {
   imgPath='';
   picUpladed = false;
   showError= false;
-
+  defaultImage = defaultImage;
   constructor(private fireStorage : AngularFireStorage, private vendorService : VendorService , private authService :AuthService){
   } 
     addProductForm = new FormGroup(

@@ -13,7 +13,9 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore/'; 
 import { AngularFireStorageModule } from '@angular/fire/compat/storage/'; 
 import { environment } from 'src/environment';
-import { AuthInterceptor } from './utils/interceptors/auth.interceptor';
+import { ReplaceNumberDirective } from './utils/directives/replace-number.directive';
+
+
 const material =[
   MatIconModule,
   MatSelectModule,
@@ -22,7 +24,9 @@ const material =[
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+ 
+ 
   ],
   imports: [
     BrowserModule,
@@ -38,7 +42,10 @@ const material =[
     BrowserAnimationsModule,
     material
   ],
-  exports:[material],
+  exports:[material
+
+
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

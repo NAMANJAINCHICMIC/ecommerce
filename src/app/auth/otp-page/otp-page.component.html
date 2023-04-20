@@ -11,7 +11,7 @@
                         <div class="d-flex">
                           <input type="text" class="form-control col col-12" id="inputotp" formControlName="otp"
                             [ngClass]="{'is-invalid': controlNameVerify.otp.errors && (controlNameVerify.otp.touched || controlNameVerify.otp.dirty), 'is-valid':controlNameVerify.otp.valid}"
-                            placeholder="otp" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            placeholder="otp" appReplaceNumber >
                           <div *ngIf="controlNameVerify.otp.invalid && (controlNameVerify.otp.dirty || controlNameVerify.otp.touched)"
                             class="alert alert-danger">
                             <div *ngIf="controlNameVerify.otp.errors?.['required']">
