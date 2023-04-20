@@ -6,7 +6,8 @@ import { getAuth, RecaptchaVerifier } from 'firebase/auth';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { WindowService } from 'src/app/services/window.service';
-import { PAGE } from 'src/app/utils/constants/constant';
+import { PAGE, REGEX } from 'src/app/utils/constants/constant';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-customer-sign-up',
@@ -14,13 +15,13 @@ import { PAGE } from 'src/app/utils/constants/constant';
   styleUrls: ['./customer-sign-up.component.scss']
 })
 export class CustomerSignUpComponent implements OnInit {
-number :any
+phoneNumber ?:string
   showError= false;
   categories = [
    'Vendor',
    'Customer'
   ]
-
+  replace = REGEX;
   windowRef :any;
   constructor(private router: Router ,private toastr: ToastrService, private http: HttpClient,private authService: AuthService , private win : WindowService ){}
   ngOnInit(){
@@ -39,7 +40,7 @@ number :any
       firstName: new FormControl('', [Validators.required , Validators.minLength(3)]),
       lastName: new FormControl('', [Validators.required , Validators.minLength(3)]),
       email: new FormControl('', [Validators.required,Validators.email]),
-      phone: new FormControl('',[Validators.required , Validators.minLength(10),Validators.pattern("^[6-9]\\d{9}$")]),
+      phone: new FormControl('',[Validators.required , Validators.minLength(10),Validators.pattern(REGEX.MOBILE_NUMBER)]),
       address: new FormControl('',Validators.required ),
       role: new FormControl('customer')
       // category: new FormControl('',Validators.required ),
@@ -65,6 +66,7 @@ this.router.navigate([PAGE.CUSTOMER_SIGN_UP]);
   // this.authService.storeUserName(`${this.registrationForm.value.firstName} ${this.registrationForm.value.lastName}`)
 // this.authService.profileDetail(this.registrationForm.value)
 const boolValue = await this.authService.checkUserExist(this.registrationForm.value.phone)
+if(boolValue != null){
 if(!boolValue){
   console.log('form submitted');
   this.win.sendLoginCode(this.registrationForm.value.phone,this.windowRef).then(result => {
@@ -73,19 +75,35 @@ if(!boolValue){
     this.win.windowRefrence.confirmationResult = result;
       if(this.windowRef.confirmationResult){
   // this.displayOtpPage = true
-  this.number = this.registrationForm.value.phone
-  this.authService.userId = this.number
-  this.authService.storeUserId(this.number);
-  this.authService.profileDetail(this.registrationForm.value)
+  this.phoneNumber = ''+this.registrationForm.value.phone
+  this.authService.userId = this.phoneNumber
+  this.authService.storeUserId(this.phoneNumber);
+  this.authService.profileDetail(this.registrationForm)
   this.router.navigate([PAGE.OTP_PAGE]);
       }
   })
-  .catch( error => console.log(error) );
+  .catch( error =>{
+    console.log(error) 
+    Swal.fire(
+      `Error ${error.code}`,
+      error.message,
+      'error'
+      )
+    } 
+  );
 }else{
   console.log("user already exist!")
+    Swal.fire(
+      'Error!',
+      'user already exist!',
+      'info'
+    )
   this.router.navigate([PAGE.SIGN_IN]);
 }
-
+}
+}
+else{
+  this.showError=true;
 }
 }
 onVendor(){

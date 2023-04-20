@@ -21,3 +21,8 @@ export const PAGE = {
     VENDOR_PRODUCT_DETAIL:'vendor/vendor/vendor-product-detail'
 }
 export const defaultImage = '../assets/noImage.jpeg';
+export const REGEX={
+    REPLACE:/[^0-9]/g,
+    OTP: /[^0-9]/ ,
+    MOBILE_NUMBER: "^[6-9]\\d{9}$"
+}

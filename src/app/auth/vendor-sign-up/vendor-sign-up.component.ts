@@ -6,7 +6,8 @@ import { getAuth, RecaptchaVerifier } from 'firebase/auth';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { WindowService } from 'src/app/services/window.service';
-import { PAGE } from 'src/app/utils/constants/constant';
+import { PAGE, REGEX } from 'src/app/utils/constants/constant';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-vendor-sign-up',
@@ -14,7 +15,7 @@ import { PAGE } from 'src/app/utils/constants/constant';
   styleUrls: ['./vendor-sign-up.component.scss']
 })
 export class VendorSignUpComponent implements OnInit {
-  number :any
+  phoneNumber ?:string;
   showError= false;
   categories = [
    'Vendor',
@@ -38,7 +39,7 @@ export class VendorSignUpComponent implements OnInit {
     {
      
       email: new FormControl('', [Validators.required,Validators.email]),
-      phone: new FormControl('',[Validators.required , Validators.minLength(10),Validators.pattern("^[6-9]\\d{9}$")]),
+      phone: new FormControl('',[Validators.required , Validators.minLength(10),Validators.pattern(REGEX.MOBILE_NUMBER)]),
       address: new FormControl('',Validators.required ),
       firmName: new FormControl('' ,Validators.required),
       role: new FormControl('vendor')
@@ -62,7 +63,8 @@ onVendor(){
   async onVendorSubmit(){
 if(this.vendorForm.valid){
 console.log(this.vendorForm.value);
-const boolValue = await this.authService.checkUserExist(this.vendorForm.value.phone)
+const boolValue = await this.authService.checkUserExist(this.vendorForm.value.phone);
+if(boolValue != null){
 if(!boolValue){
 this.win.sendLoginCode(this.vendorForm.value.phone,this.windowRef).then(result => {
   console.log(result)
@@ -70,19 +72,34 @@ this.win.sendLoginCode(this.vendorForm.value.phone,this.windowRef).then(result =
   this.win.windowRefrence.confirmationResult = result;
     if(this.windowRef.confirmationResult){
 // this.displayOtpPage = true
-this.number = this.vendorForm.value.phone
-this.authService.userId = this.number
-this.authService.storeUserId(this.number);
-this.authService.vendorProfileDetail(this.vendorForm.value)
+this.phoneNumber = ''+this.vendorForm.value.phone
+this.authService.userId = this.phoneNumber
+this.authService.storeUserId(this.phoneNumber);
+this.authService.vendorProfileDetail(this.vendorForm)
 this.router.navigate([PAGE.OTP_PAGE]);
     }
 })
-.catch( error => console.log(error) );
+.catch( error =>{
+  console.log(error) 
+  Swal.fire(
+    `Error ${error.code}`,
+    error.message,
+    'error'
+    )
+  } 
+);
 }else{
   console.log("user already exist!")
+  Swal.fire(
+    'Error!',
+    'user already exist!',
+    'info'
+  )
   this.router.navigate([PAGE.SIGN_IN]);
 }
-
+}
+}else{
+  this.showError=true;
 }
 }
 signInPage(){

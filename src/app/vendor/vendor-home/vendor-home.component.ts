@@ -20,7 +20,8 @@ export class VendorHomeComponent implements OnInit {
   async ngOnInit() {
 // this.vendorService.getVendorProduct()
 // this.vendorService.getVendorAllProduct()
-const querySnapshot = await this.vendorService.getUniqueVendor()
+const querySnapshot = await this.vendorService.getUniqueVendor();
+if(querySnapshot){
 querySnapshot.forEach((doc) => {
 
   const productId = doc.id
@@ -28,6 +29,7 @@ querySnapshot.forEach((doc) => {
  console.log(this.productList);
 
 });
+}
     this.isLoading = false;
     this.totalItems = this.productList.length
   }

@@ -53,6 +53,7 @@ export class VendorUpdateItemComponent implements OnInit {
     console.log( this.productId);
     if( this.productId){
       const snap = await this.vendorService.getUniqueProduct( this.productId);
+      if(snap){
       if (snap.exists()) {
                this.info = snap.data()      
               console.log(this.info)   
@@ -70,6 +71,7 @@ export class VendorUpdateItemComponent implements OnInit {
             }
           )
     }
+  }
     // const snap = await getDoc(doc(db, 'product', productId))
     
   //   if (snap.exists()) {

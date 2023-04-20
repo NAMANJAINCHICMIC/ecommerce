@@ -9,6 +9,9 @@ import { PAGE } from '../utils/constants/constant';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from 'src/environment';
 import { signOut } from "firebase/auth";
+import { FormGroup } from '@angular/forms';
+import Swal from 'sweetalert2';
+import { catchError, throwError } from 'rxjs';
 @Injectable({
     providedIn: 'root'
 })
@@ -51,46 +54,45 @@ export class AuthService {
         return !localStorage.getItem('token')
     }
 //user profile
-    enterProfile(data: any) {
-        return this.http.post(
-            AUTH_URL + 'user.json',
-            data
+   
+    async profileDetail(data: FormGroup) {
+        if (!this.userId) {
+            this.userId = this.getUserId();
+        }
+        const boolValue = await this.checkUserExist(data.value.phone)
+        if(boolValue != null){
 
-        );
+            if(!boolValue){
+                const ref = this.db.doc(`user/${data.value.phone}`);
+                // const ref = this.db.doc(`user/${this.userId}`);
+                
+                ref.set(data.value);
+                
+                
+                // this.getUserData() 
+            }else{
+                this.router.navigate([PAGE.SIGN_IN]);
+            }
+        }
     }
-    async profileDetail(data: any) {
+    async vendorProfileDetail(data: FormGroup) {
         if (!this.userId) {
             this.userId = this.getUserId();
         }
-        const boolValue = await this.checkUserExist(data.phone)
-        if(!boolValue){
-        const ref = this.db.doc(`user/${data.phone}`);
-        // const ref = this.db.doc(`user/${this.userId}`);
-       
-        ref.set(data);
-       
-       
-        // this.getUserData() 
-    }else{
-        this.router.navigate([PAGE.SIGN_IN]);
-    }
-    }
-    async vendorProfileDetail(data: any) {
-        if (!this.userId) {
-            this.userId = this.getUserId();
-        }
-    console.log(data.phone)
-    const boolValue = await this.checkUserExist(data.phone)
+    console.log(data.value.phone)
+    const boolValue = await this.checkUserExist(data.value.phone);
+    if(boolValue != null){
     if(!boolValue){
 
-        const ref = this.db.doc(`vendor/${data.phone}`);
-        ref.set(data);
+        const ref = this.db.doc(`vendor/${data.value.phone}`);
+        ref.set(data.value);
     
         // this.getUserData()
     }else{
         this.router.navigate([PAGE.SIGN_IN]);
     }
         // const ref = this.db.doc(`vendor/${this.userId}`);
+        }
     }
    
     signOutFn() {
@@ -99,10 +101,16 @@ export class AuthService {
         signOut(auth).then(() => {
             // Sign-out successful.
             console.log("sign-out")
-        }).catch((error) => {
-            // An error happened.
-            console.log(error)
-        });
+        }).catch((err) => {
+                console.log('err',err);
+                // alert( err.message)
+                Swal.fire(
+                    `Error ${err.code}`,
+                    err.message,
+                    'error'
+                    )
+            });
+       
         this.router.navigate([PAGE.SIGN_IN]);
     }
     async getUserData() {
@@ -113,7 +121,8 @@ export class AuthService {
         //  return getDocs(collection(db, this.userId ,'vendor',this.userId));
         //  return getDoc(doc(db, this.userId ,'vendor',this.userId));
 
-        let snap = await getDoc(doc(db, 'user', this.userId))
+        await getDoc(doc(db, 'user', this.userId)).then(
+            async (snap)=>{
         // const snap = await getDocs(collection(db, this.userId ,'vendor',this.userId));
         console.log(snap)
         if (snap.exists()) {
@@ -127,7 +136,8 @@ export class AuthService {
             this.router.navigate([PAGE.HOME]);
         }
         else {
-            snap = await getDoc(doc(db, 'vendor', this.userId))
+             getDoc(doc(db, 'vendor', this.userId)).then(
+                async (snap)=>{
             if (snap.exists()) {
                 console.log(snap.data())
 
@@ -140,28 +150,71 @@ export class AuthService {
                 console.log("No Document exists")
                 // this.router.navigate([PAGE.PROFILE]);
             }
+        }).catch((err) => {
+            console.log('err',err);
+            // alert( err.message)
+            Swal.fire(
+                `Error ${err.code}`,
+                err.message,
+                'error'
+                )
+        })
         }
+    }).catch((err) => {
+        console.log('err',err);
+        // alert( err.message)
+        Swal.fire(
+            `Error ${err.code}`,
+            err.message,
+            'error'
+            )
+    })
     }
     async checkUserExist(phone:any){
-        let snap = await getDoc(doc(db, 'user', phone))
-        // const snap = await getDocs(collection(db, this.userId ,'vendor',this.userId));
-        console.log(snap)
-        if (snap.exists()) {
-            return true;
-            // this.router.navigate([PAGE.SIGN_IN]);
-        }else{
+   return  await getDoc(doc(db, 'user', phone)).then(
+        async (snap)=>{
+    console.log(snap)
+    if (snap.exists()) {
+        return true;
+        // this.router.navigate([PAGE.SIGN_IN]);
+    }else{
 
-            snap = await getDoc(doc(db, 'vendor', phone))
+       return await getDoc(doc(db, 'vendor', phone)).then((snap)=>{
+
             if (snap.exists()){
                 return true;
                
             } else {
-
+    
                 console.log("New User")
                 return false;
                 // this.router.navigate([PAGE.PROFILE]);
             }
-        }
+        }).catch((err) => {
+            console.log('err',err);
+            // alert( err.message)
+            Swal.fire(
+                `Error ${err.code}`,
+                err.message,
+                'error'
+                )
+        })
+    }
+}
+           
+        ).catch((err) => {
+            console.log('err',err)
+            // alert( err.message)
+            Swal.fire(
+                `Error ${err.code}`,
+                err.message,
+                'error'
+                )
+        })
+       
+        // const snap = await getDocs(collection(db, this.userId ,'vendor',this.userId));
+        
+       
     }
 }
  // async getProfile() {

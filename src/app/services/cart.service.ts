@@ -151,7 +151,7 @@ export class CartService  {
       this.cartDataSub = new BehaviorSubject<Cart|null>(null);
     }
     //add cart data to firebase
-    async cartData(data:any ) { 
+    async cartData(data:Cart|null ) { 
           const userId = this.authService.getUserId();
       const ref = this.db.doc(`cartData/${userId}`);
       ref.set(data);  
@@ -162,7 +162,7 @@ export class CartService  {
       await deleteDoc(ref)
   }
   //get cart data from firebase
-  async getCartDataFirebase(userId:string){
+  async getCartDataFirebase(){
     this.userId = this.authService.getUserId();
     return await getDoc(doc(db, 'cartData', this.userId))
   }

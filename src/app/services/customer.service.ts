@@ -19,6 +19,7 @@ import { PAGE } from '../utils/constants/constant';
 import { AuthService } from './auth.service';
 import Swal from 'sweetalert2';
 import { Subject } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -43,12 +44,12 @@ export class CustomerService {
   async getCustomerProfileByUserId(userId: string) {
     return await getDoc(doc(db, 'user', userId));
   }
-  async updateCustomerProfile(data: any) {
+  async updateCustomerProfile(data: FormGroup) {
     this.userId = this.authService.getUserId();
     if (this.userId) {
       const ref = doc(db, `user`, this.userId);
 
-      await updateDoc(ref, data);
+      await updateDoc(ref, data.value);
       this.router.navigate([PAGE.VENDOR_HOME]);
     }
   }
@@ -63,7 +64,8 @@ export class CustomerService {
 
   // update the quantity of the product
   async updateProduct(data: any, productId: string) {
-    const snap = await this.getUniqueProduct(productId);
+await this.getUniqueProduct(productId).then(
+      async (snap)=>{
     if (snap.exists()) {
       const info = snap.data();
       const count = info['available'];
@@ -81,24 +83,62 @@ export class CustomerService {
       }
     }
     return false;
+  }).catch((err) => {
+    console.log('err',err);
+    // alert( err.message)
+    Swal.fire(
+      `Error ${err.code}`,
+      err.message,
+      'error'
+      )
+    })
   }
 //transaction fn
   transactionDone(data: any, transactionId: string) {
    
     const ref = this.db.doc(`transaction/${transactionId}`);
-    ref.set(data);  
+    ref.set(data).catch((err) => {
+      console.log('err',err);
+      // alert( err.message)
+      Swal.fire(
+          `Error ${err.code}`,
+          err.message,
+          'error'
+          )
+  });  
   }
   //add Reviews and rating
-  async addNewReview(data: any) {
+  async addNewReview(data: {
+    comment: any;
+    rating: number;
+    productId: string | null;
+    userId: string | null;
+}) {
     const ref = doc(collection(db, `reviews`));
-    await setDoc(ref, data);
+    await setDoc(ref, data).catch((err) => {
+      console.log('err',err);
+      // alert( err.message)
+      Swal.fire(
+          `Error ${err.code}`,
+          err.message,
+          'error'
+          )
+  });
   }
   getReviewsByProductId(productId: string | null) {
     const querySnapshot = query(
       collection(db, 'reviews'),
       where('productId', '==', productId)
     );
-    return getDocs(querySnapshot);
+    return getDocs(querySnapshot).catch((err) => {
+      console.log('err',err);
+      // alert( err.message)
+      Swal.fire(
+          `Error ${err.code}`,
+          err.message,
+          'error'
+          )
+  });
   }
 
   async addRecentlyViewed(productId: string): Promise<void> {
@@ -106,27 +146,69 @@ export class CustomerService {
     // this.userId = this.authService.getUserId();
     // const timestamp = new Date().getTime();
     const snap = await this.getViewRecently();
+    if(snap){
     if (snap.exists()) {
       this.db
         .doc(`recentlyViewed/${userId}`)
-        .update({ myArray: arrayUnion(productId) });
+        .update({ myArray: arrayUnion(productId) }).catch((err) => {
+          console.log('err',err);
+          // alert( err.message)
+          Swal.fire(
+              `Error ${err.code}`,
+              err.message,
+              'error'
+              )
+      });
     } else {
       const ref = this.db.doc(`recentlyViewed/${userId}`);
-      ref.set({ myArray: arrayUnion(productId) });
+      ref.set({ myArray: arrayUnion(productId) }).catch((err) => {
+        console.log('err',err);
+        // alert( err.message)
+        Swal.fire(
+            `Error ${err.code}`,
+            err.message,
+            'error'
+            )
+    });
     }
+  }
     this.db
       .doc(`recentlyViewed/${userId}`)
-      .update({ myArray: arrayUnion(productId) });
+      .update({ myArray: arrayUnion(productId) }).catch((err) => {
+        console.log('err',err);
+        // alert( err.message)
+        Swal.fire(
+            `Error ${err.code}`,
+            err.message,
+            'error'
+            )
+    });
   }
   deleteRecentlyViewed(productId: string) {
     const userId = this.authService.getUserId();
     this.db
       .doc(`recentlyViewed/${userId}`)
-      .update({ myArray: arrayRemove(productId) });
+      .update({ myArray: arrayRemove(productId) }).catch((err) => {
+        console.log('err',err);
+        // alert( err.message)
+        Swal.fire(
+            `Error ${err.code}`,
+            err.message,
+            'error'
+            )
+    });
   }
   async getViewRecently() {
     this.userId = this.authService.getUserId();
-    return await getDoc(doc(db, 'recentlyViewed', this.userId));
+    return await getDoc(doc(db, 'recentlyViewed', this.userId)).catch((err) => {
+      console.log('err',err);
+      // alert( err.message)
+      Swal.fire(
+          `Error ${err.code}`,
+          err.message,
+          'error'
+          )
+  });
   }
   //order functions
   getUniqueCustomerOrder() {

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { DocumentData } from 'firebase/firestore';
 import { ToastrService } from 'ngx-toastr';
 import { CustomerService } from 'src/app/services/customer.service';
-import { PAGE } from 'src/app/utils/constants/constant';
+import { PAGE, REGEX } from 'src/app/utils/constants/constant';
 
 @Component({
   selector: 'app-customer-update-profile',
@@ -24,7 +24,7 @@ export class CustomerUpdateProfileComponent  implements OnInit{
         this.customerForm = new FormGroup(
           {      
             email: new FormControl(this.info['email'], [Validators.required,Validators.email]),
-            phone: new FormControl(this.info['phone'],[Validators.required , Validators.minLength(10),Validators.pattern("^[6-9]\\d{9}$")]),
+            phone: new FormControl(this.info['phone'],[Validators.required , Validators.minLength(10),Validators.pattern(REGEX.MOBILE_NUMBER)]),
             address: new FormControl(this.info['address'],Validators.required ),
             firstName: new FormControl(this.info['firstName'],Validators.required),
             lastName: new FormControl(this.info['lastName'],Validators.required),
@@ -47,7 +47,7 @@ export class CustomerUpdateProfileComponent  implements OnInit{
       {
        
         email: new FormControl('', [Validators.required,Validators.email]),
-        phone: new FormControl('',[Validators.required , Validators.minLength(10),Validators.pattern("^[6-9]\\d{9}$")]),
+        phone: new FormControl('',[Validators.required , Validators.minLength(10),Validators.pattern(REGEX.MOBILE_NUMBER)]),
         address: new FormControl('',Validators.required ),
         firstName: new FormControl('' ,Validators.required),
         lastName: new FormControl('' ,Validators.required),
@@ -66,7 +66,7 @@ profilePage(){
 }
 onSubmit(){
   if (this.customerForm.valid ) {
-   this.customerService.updateCustomerProfile(this.customerForm.value ) 
+   this.customerService.updateCustomerProfile(this.customerForm ) 
 
 } else {
   console.log("show errors")

@@ -40,11 +40,16 @@ export class OrderPageComponent implements OnInit {
   async getUniqueCustomerOrder(){
   const querySnapshot = await this.customerService.getUniqueCustomerOrder();
 querySnapshot.forEach((doc) => {
+  // console.log("dummy");
   // console.log(doc.data());
   const transactionId = doc.id
  this.orderArray.push({ ...doc.data(), transactionId})
- console.log(this.orderArray);
-  })
+//  console.log(this.orderArray);
+//  this.listDetails()
+})
+// if(querySnapshot.docChanges()){
+//   // this.listDetails()
+// }
   this.listDetails()
 }
   getItemTotalAmount(price: number, quantity: number) {

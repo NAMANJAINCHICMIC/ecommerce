@@ -6,7 +6,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { PAGE } from 'src/app/utils/constants/constant';
+import { PAGE, REGEX } from 'src/app/utils/constants/constant';
 import Swal from 'sweetalert2'
 @Component({
   selector: 'app-phone-login',
@@ -18,7 +18,7 @@ displayOtpPage = false;
   windowRef: any;
   verificationCode?: string;
   user: any;
-number:any;
+phoneNumber?:string;
   constructor(private win: WindowService , private http: HttpClient ,private router: Router , private authService : AuthService) { }
 
   ngOnInit() {
@@ -45,6 +45,8 @@ number:any;
     const num = '+91'+this.loginForm.value.phone;
     const exist = await this.authService.checkUserExist(this.loginForm.value.phone);
     console.log(exist)
+    if(exist != null){
+  
    if(exist ){
      signInWithPhoneNumber(auth,num, appVerifier)
                  .then(result => {
@@ -54,12 +56,28 @@ number:any;
      this.displayOtpPage = true
                      }
                  })
-                 .catch( error => console.log(error) );
-   }else{
+                 .catch( error =>{
+                  console.log(error) 
+                  Swal.fire(
+                    `Error ${error.code}`,
+                    error.message,
+                    'error'
+                    )
+                  } 
+                );
+   }
+   else{
     console.log("user does not exist!")
+    Swal.fire(
+      'Error!',
+      'user does not exist!',
+      'info'
+    )
+    
     this.router.navigate([PAGE.PROFILE])
    }
   }
+}
 
   verifyLoginCode() {
     this.windowRef.confirmationResult
@@ -68,10 +86,11 @@ number:any;
                   .then( (result:any) => {
                     console.log(result)
                     this.user = result.user;
-                    this.number = this.loginForm.value.phone?.toString()
-                    this.authService.userId = this.number
+                 
+                    this.phoneNumber = ''+this.loginForm.value.phone
+                    this.authService.userId = this.phoneNumber
                     // this.authService.storeUserId(result.user.uid);
-                    this.authService.storeUserId(this.number);
+                    this.authService.storeUserId(this.phoneNumber);
                     this.authService.storeToken(result.user.accessToken)
                     // if(result._tokenResponse.isNewUser){
                     //   this.router.navigate([PAGE.PROFILE])
@@ -93,7 +112,7 @@ number:any;
   }
   loginForm = new FormGroup(
     {     
-      phone: new FormControl('',[Validators.required , Validators.minLength(10),Validators.pattern("^[6-9]\\d{9}$")]),   
+      phone: new FormControl('',[Validators.required , Validators.minLength(10),Validators.pattern(REGEX.MOBILE_NUMBER)]),   
     }
   )
   verificationForm = new FormGroup(

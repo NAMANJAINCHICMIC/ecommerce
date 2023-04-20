@@ -6,6 +6,8 @@ import { AuthGuard } from '../utils/guards/auth.guard';
 import { OtpPageComponent } from './otp-page/otp-page.component';
 import { CustomerSignUpComponent } from './customer-sign-up/customer-sign-up.component';
 import { VendorSignUpComponent } from './vendor-sign-up/vendor-sign-up.component';
+import { AuthInterceptor } from '../utils/interceptors/auth.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 
@@ -55,7 +57,7 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   providers: [
-    // {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}
+    //{provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}
   ]
 })
 export class AuthRoutingModule { }

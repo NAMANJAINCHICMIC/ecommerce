@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DocumentData } from 'firebase/firestore';
 import { ToastrService } from 'ngx-toastr';
 import { VendorService } from 'src/app/services/vendor.service';
-import { PAGE } from 'src/app/utils/constants/constant';
+import { PAGE, REGEX } from 'src/app/utils/constants/constant';
 
 
 @Component({
@@ -18,6 +18,7 @@ export class VendorUpdateProfileComponent  implements OnInit{
   showError= false;
   async ngOnInit(): Promise<void> {
     const snap = await this.vendorService.getVendorProfile( );
+    if(snap)
     if (snap.exists()) {
              this.info = snap.data()      
              
@@ -27,7 +28,7 @@ export class VendorUpdateProfileComponent  implements OnInit{
           {
            
             email: new FormControl(this.info['email'], [Validators.required,Validators.email]),
-            phone: new FormControl(this.info['phone'],[Validators.required , Validators.minLength(10),Validators.pattern("^[6-9]\\d{9}$")]),
+            phone: new FormControl(this.info['phone'],[Validators.required , Validators.minLength(10),Validators.pattern(REGEX.MOBILE_NUMBER)]),
             address: new FormControl(this.info['address'],Validators.required ),
             firmName: new FormControl(this.info['firmName'],Validators.required),
             role: new FormControl('vendor')
@@ -49,7 +50,7 @@ export class VendorUpdateProfileComponent  implements OnInit{
       {
        
         email: new FormControl('', [Validators.required,Validators.email]),
-        phone: new FormControl('',[Validators.required , Validators.minLength(10),Validators.pattern("^[6-9]\\d{9}$")]),
+        phone: new FormControl('',[Validators.required , Validators.minLength(10),Validators.pattern(REGEX.MOBILE_NUMBER)]),
         address: new FormControl('',Validators.required ),
         firmName: new FormControl('' ,Validators.required),
         role: new FormControl('vendor')
@@ -64,7 +65,7 @@ get controlName(){
 }
 onSubmit(){
   if (this.vendorForm.valid ) {
-   this.vendorService.updateVendorProfile(this.vendorForm.value ) 
+   this.vendorService.updateVendorProfile(this.vendorForm) 
 
 } else {
   console.log("show errors")

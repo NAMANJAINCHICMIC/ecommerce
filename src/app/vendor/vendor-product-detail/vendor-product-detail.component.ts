@@ -5,6 +5,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { PAGE, defaultImage } from 'src/app/utils/constants/constant';
 import { Cart } from 'src/app/utils/models/product';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-vendor-product-detail',
@@ -32,30 +33,42 @@ numbers = [1, 2, 3, 4, 5];
     this.productId = this.activatedRoute.snapshot.paramMap.get('id');
     console.log(this.productId);
     if (this.productId) {
-      const snap = await this.customerService.getUniqueProduct(this.productId);
+      await this.customerService.getUniqueProduct(this.productId).then(
+        async (snap)=>{
       if (snap.exists()) {
         this.info = snap.data();
         this.item = snap.data();
         this.item.productId = this.productId;
        
         // console.log(this.info)
-      }
+      }    }).catch((err) => {
+        console.log('err',err);
+        // alert( err.message)
+        Swal.fire(
+            `Error ${err.code}`,
+            err.message,
+            'error'
+            )
+    })
     }
     this.isLoading = false;
 
     const querySnapshot = await this.customerService.getReviewsByProductId(this.productId);
-    querySnapshot.forEach((doc) => {
-      console.log(doc.data());
-      if(doc.data()){
+    if(querySnapshot){
 
-        const ref = doc.data()
-        this.reviewArray.push(ref)
-        // this.item.comment = ref['comment']
-        this.updateReviewArray()
-        console.log(this.reviewArray);
-      }
-     
+      querySnapshot.forEach((doc) => {
+        console.log(doc.data());
+        if(doc.data()){
+          
+          const ref = doc.data()
+          this.reviewArray.push(ref)
+          // this.item.comment = ref['comment']
+          this.updateReviewArray()
+          console.log(this.reviewArray);
+        }
+        
       })
+    }
   }
 
 
@@ -64,7 +77,9 @@ numbers = [1, 2, 3, 4, 5];
 for(const i in this.reviewArray){
 //  console.log(this.reviewArray[i].comment)
  
-   const snap = await this.customerService.getCustomerProfileByUserId(this.reviewArray[i].userId);
+   await this.customerService.getCustomerProfileByUserId(this.reviewArray[i].userId).then(
+    async (snap)=>{
+
  
    if (snap.exists()) {
               this.info = snap.data() ;
@@ -73,13 +88,22 @@ for(const i in this.reviewArray){
              this.reviewArray[i].fullName = `${this.info['firstName']} ${this.info['lastName']}`;
             }
             this.rating += +this.reviewArray[i].rating;
+          }).catch((err) => {
+            console.log('err',err);
+            // alert( err.message)
+            Swal.fire(
+              `Error ${err.code}`,
+              err.message,
+              'error'
+              )
+            })
   }
   const len = this.reviewArray.length
   if(len){
 
     this.rating /=  len
   }
-  }
+}
   ratingArr: Array<any>= [];
 
   showIcon(index:number) {

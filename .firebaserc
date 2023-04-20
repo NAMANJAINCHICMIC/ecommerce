@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "ecommerce-d831d"
+  },
+  "targets": {
+    "ecommerce-d831d": {
+      "hosting": {
+        "ecommerce": [
+          "ecommerce-d831d"
+        ]
+      }
+    }
   }
 }

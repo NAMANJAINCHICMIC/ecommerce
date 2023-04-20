@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './auth/page-not-found/page-not-found.component';
 import { VendorGuard } from './utils/guards/vendor.guard';
 import { SignInGuard } from './utils/guards/sign-in.guard';
+import { AuthInterceptor } from './utils/interceptors/auth.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 const routes: Routes = [
   {
@@ -33,6 +35,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers:[{provide: HTTP_INTERCEPTORS,useClass:AuthInterceptor, multi:true}]
 })
 export class AppRoutingModule { }

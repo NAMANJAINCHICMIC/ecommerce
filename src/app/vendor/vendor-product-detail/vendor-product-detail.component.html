@@ -15,7 +15,7 @@
         <div class="card mb-3 mt-3 mx-auto " style="max-width: 700px;">
             <div class="row g-0 justify-content-between">
                 <div class="col-md-4">
-                    <img class="item-image" style="max-width:100%;" [ngClass]="{'not-available': item?.available =='0'}"
+                    <img class="item-image" style="max-width:100%;" [ngClass]="{'not-available': +item?.available === 0}"
                         [src]="item?.pathToPic">
 
                 </div>
@@ -59,7 +59,7 @@
                             </p>
                         </div>
 
-                        <div *ngIf="item?.available =='0'">
+                        <div *ngIf="+item?.available === 0">
                             <span class="not-available-text">Not Available.</span>
                         </div>
                         <!-- <div class="btn-toolbar" role="toolbar" *ngIf="item.quantity > 0">

@@ -5,13 +5,21 @@ import {
   HttpEvent,
   HttpInterceptor
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 
-@Injectable()
+
+@Injectable({
+  providedIn:'root'
+})
 export class AuthInterceptor implements HttpInterceptor {
-
+  
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    return next.handle(request);
+    console.log('hello')
+    return next.handle(request)
+    .pipe(catchError((error)=> {
+      console.log(error,"jai mata di")
+      return throwError(error)
+    }))
   }
 }

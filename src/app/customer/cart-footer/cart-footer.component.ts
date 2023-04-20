@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { PAGE } from 'src/app/utils/constants/constant';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cart-footer',
@@ -82,7 +83,9 @@ export class CartFooterComponent implements OnInit{
     
   }
   async fillCart(userId:string){
-    const snap = await this.cartService.getCartDataFirebase(userId);
+    await this.cartService.getCartDataFirebase().then(
+      async (snap)=>{
+  
     if(snap.exists()){
       const info = snap.data()  
       this.totalAmt=info['totalAmt'];
@@ -94,8 +97,16 @@ export class CartFooterComponent implements OnInit{
           this.isCartEmpty = true;
         }
  
+  }).catch((err) => {
+    console.log('err',err);
+    // alert( err.message)
+    Swal.fire(
+        `Error ${err.code}`,
+        err.message,
+        'error'
+        )
+})
   }
-
 
   onContinue() {
     this.router.navigate([PAGE.MY_CART]);

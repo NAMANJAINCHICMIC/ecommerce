@@ -53,6 +53,7 @@ numbers = [1, 2, 3, 4, 5];
     this.isLoading = false;
 
     const querySnapshot = await this.customerService.getReviewsByProductId(this.productId);
+    if(querySnapshot){
     querySnapshot.forEach((doc) => {
       console.log(doc.data());
       if(doc.data()){
@@ -68,6 +69,7 @@ numbers = [1, 2, 3, 4, 5];
     //  console.log(this.orderArray);
       })
   }
+}
 
   onAdd(item: any) {
     if (+item.available > item.quantity) {

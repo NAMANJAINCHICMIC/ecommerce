@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CustomerService } from 'src/app/services/customer.service';
-import { PAGE } from 'src/app/utils/constants/constant';
+import { PAGE, REGEX } from 'src/app/utils/constants/constant';
 import { Cart } from 'src/app/utils/models/product';
 
 @Component({
@@ -64,7 +64,7 @@ export class PaymentComponent implements OnInit {
       {
 
         email: new FormControl('', [Validators.required, Validators.email]),
-        phone: new FormControl('', [Validators.required, Validators.minLength(10), Validators.pattern("^[6-9]\\d{9}$")]),
+        phone: new FormControl('', [Validators.required, Validators.minLength(10), Validators.pattern(REGEX.MOBILE_NUMBER)]),
         address: new FormControl('', Validators.required),
         firstName: new FormControl('', Validators.required),
         lastName: new FormControl('', Validators.required),
@@ -104,7 +104,9 @@ export class PaymentComponent implements OnInit {
         for (const order of this.orderArray) {
           const data = order.quantity
           const productId = order.productId
-          boolUpdateProduct = await this.customerService.updateProduct(data, productId)
+        const  newBoolUpdateProduct = await this.customerService.updateProduct(data, productId)
+        if (newBoolUpdateProduct!= null)
+        boolUpdateProduct = newBoolUpdateProduct
           if (!boolUpdateProduct) {
             boolTransaction = false
           }

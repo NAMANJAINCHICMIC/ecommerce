@@ -14,7 +14,7 @@ import { Product } from 'src/app/utils/models/product';
 export class CustomerHomeComponent implements OnInit {
   // userId:any;
   userId = this.authService.getUserId();
-  recentlyViewedProducts: any = [];
+  recentlyViewedProducts: Array<any> = [];
   isLoading = true;
   itemList: any;
   productList: Array<Product | any> = [];
@@ -68,7 +68,8 @@ export class CustomerHomeComponent implements OnInit {
    // Fill Cart and Recently View items
     if(this.userId){
       // this.fillCart(this.userId)    
-    const snap = await this.customerService.getViewRecently()
+    const snap = await this.customerService.getViewRecently();
+    if (snap){
     if (snap.exists()) {
       const res = snap.data();
       console.log(res)
@@ -86,7 +87,8 @@ export class CustomerHomeComponent implements OnInit {
       }    
     }
     console.log("productViewRecentlyList", this.productViewRecentlyList)
-  }
+  }}
+  
 }
   productDetail(productId: string) {
     this.customerService.addRecentlyViewed(productId);

@@ -17,6 +17,7 @@ export class VendorViewProfileComponent implements OnInit {
   constructor(private vendorService : VendorService , private router : Router){}
   async ngOnInit(): Promise<void> {
     const snap = await this.vendorService.getVendorProfile( );
+    if(snap)
     if (snap.exists()) {
              this.info = snap.data()      
              this.myself = snap.data()      

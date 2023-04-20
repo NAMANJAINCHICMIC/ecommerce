@@ -37,6 +37,7 @@ export class VendorOrdersComponent implements OnInit {
   }
   async getUniqueVendorOrder(){
     const querySnapshot = await this.vendorService.getUniqueVendorOrder();
+    if(querySnapshot)
     querySnapshot.forEach((doc) => {
       console.log(doc.data());
       const transactionId = doc.id;
