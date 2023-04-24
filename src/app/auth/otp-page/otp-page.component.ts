@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./otp-page.component.scss']
 })
 export class OtpPageComponent implements OnInit {
+  showError= false;
   windowRef: any;
   verificationCode?: string;
   constructor(private win: WindowService , private http: HttpClient ,private router: Router , private authService : AuthService) { 
@@ -33,6 +34,8 @@ export class OtpPageComponent implements OnInit {
     this.router.navigate([PAGE.PROFILE]);
   }
   verifyLoginCode() {
+    if (this.verificationForm.valid ) {
+      this.showError=false;  
     console.log(this.verificationForm.value.otp)
     const otpValue = this.verificationForm?.value?.otp
     if(this.windowRef.confirmationResult){
@@ -71,5 +74,8 @@ export class OtpPageComponent implements OnInit {
     )
     this.router.navigate([PAGE.SIGN_IN])
   }
-  }
+}else{
+  this.showError=true;
+}
+}
 }

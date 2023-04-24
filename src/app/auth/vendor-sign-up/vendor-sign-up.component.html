@@ -48,7 +48,13 @@
                       [ngClass]="{'is-invalid': vendorControlName.email.errors && (vendorControlName.email.touched || vendorControlName.email.dirty), 'is-valid':vendorControlName.email.valid}"
                       formControlName="email" placeholder="Email">
                     <div *ngIf="vendorControlName.email.invalid && showError " class="alert alert-danger">
-                      Email is required.
+                      <div *ngIf="vendorControlName.email.errors?.['required']">
+                        Email is required.
+                      </div>
+                      <div *ngIf="vendorControlName.email.errors?.['email']">
+                        Enter valid Email.
+                      </div>
+
                     </div>
   
                   </div>

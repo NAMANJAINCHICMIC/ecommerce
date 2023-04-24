@@ -62,6 +62,7 @@ onVendor(){
 
   async onVendorSubmit(){
 if(this.vendorForm.valid){
+  this.showError= false;
 console.log(this.vendorForm.value);
 const boolValue = await this.authService.checkUserExist(this.vendorForm.value.phone);
 if(boolValue != null){

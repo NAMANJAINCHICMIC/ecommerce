@@ -66,10 +66,11 @@ profilePage(){
 }
 onSubmit(){
   if (this.customerForm.valid ) {
+    this.showError = false;
    this.customerService.updateCustomerProfile(this.customerForm ) 
 
 } else {
-  console.log("show errors")
+  // console.log("show errors")
   this.showError = true;
 }
 }

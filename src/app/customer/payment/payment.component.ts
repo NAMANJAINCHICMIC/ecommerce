@@ -191,7 +191,12 @@ export class PaymentComponent implements OnInit {
     this.router.navigate([PAGE.MY_CART]);
   }
   confirm() {
+    if (this.customerForm.valid ) {
+      this.showError = false;
     this.makePayment(this.totalAmt)
+  } else {
+    // console.log("show errors")
+    this.showError = true;
   }
-
+}
 }

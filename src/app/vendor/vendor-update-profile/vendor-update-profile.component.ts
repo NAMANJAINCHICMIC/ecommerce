@@ -65,10 +65,11 @@ get controlName(){
 }
 onSubmit(){
   if (this.vendorForm.valid ) {
+    this.showError = false;
    this.vendorService.updateVendorProfile(this.vendorForm) 
 
 } else {
-  console.log("show errors")
+  // console.log("show errors")
   this.showError = true;
 }
 }

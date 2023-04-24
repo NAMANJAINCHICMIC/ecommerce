@@ -42,7 +42,7 @@
                                             class="alert alert-danger">
 
                                             <div *ngIf="controlName.productName.errors?.['required']">
-                                                Food Name is required.
+                                                Product Name is required.
                                             </div>
                                             
 
@@ -55,7 +55,7 @@
                                         <label for="inputName">Price</label>
 
                                         <input type="text" class="form-control " 
-                                        
+                                        appReplaceNumber
                                             [ngClass]="{'is-invalid': controlName.price.errors && (controlName.price.touched || controlName.price.dirty), 'is-valid':controlName.price.valid}"
                                             formControlName="price" placeholder="Rs">
                                         <div *ngIf="controlName.price.invalid && showError "

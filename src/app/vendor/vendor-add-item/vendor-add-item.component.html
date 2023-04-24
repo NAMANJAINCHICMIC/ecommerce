@@ -47,37 +47,14 @@
                                             class="alert alert-danger">
 
                                             <div *ngIf="controlName.productName.errors?.['required']">
-                                                Food Name is required.
+                                                Product Name is required.
                                             </div>
                                             
 
                                         </div>
                                     </div>
                                 </div> 
-                               
-                                <!-- <div class="form-row align-self-center justify-content-center">
-                                    <div class="form-outline mb-4 ">
-                                        <label class="row" for="inputName">Category</label>
-                                        <mat-form-field appearance="fill" class="">
-                                       
-                                        <mat-select required class="form-control "
-                                        [ngClass]="{'is-invalid': controlName.category.errors && (controlName.category.touched || controlName.category.dirty), 'is-valid':controlName.category.valid}"
-                                        formControlName="category">
-                                          <mat-option *ngFor="let food of categories" [value]="food">
-                                            {{food}}
-                                          </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                       
-                                        <div *ngIf="controlName.category.invalid && showError "
-                                            class="alert alert-danger">
-                                            <div *ngIf="controlName.category.errors?.['required']">
-                                                Category is required.
-                                            </div>                                      
-                                        </div>
-                                    </div>
-                                </div> 
-                                 -->
+                           
                                 <div class="form-row align-self-center justify-content-center">
                                     <div class="form-outline mb-4">
                                         <label for="inputName">Price</label>
@@ -92,8 +69,7 @@
                                             <div *ngIf="controlName.price.errors?.['required']">
                                                 Price is required.
                                             </div>
-                                            
-
+                                           
                                         </div>
                                     </div>
                                 </div> 
@@ -111,7 +87,7 @@
                                             <div *ngIf="controlName.available.errors?.['required']">
                                                 Available Quantity is required.
                                             </div>
-                                            
+                                           
 
                                         </div>
                                     </div>

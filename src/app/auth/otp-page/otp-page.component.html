@@ -8,17 +8,20 @@
                 <form [formGroup]="verificationForm" class="align-self-center"(ngSubmit)="verifyLoginCode()"  >
                     <div class="form-group align-self-center m-2">
                         <label for="inputotp">Enter your Verification Code Here</label>
-                        <div class="d-flex">
+                       
                           <input type="text" class="form-control col col-12" id="inputotp" formControlName="otp"
                             [ngClass]="{'is-invalid': controlNameVerify.otp.errors && (controlNameVerify.otp.touched || controlNameVerify.otp.dirty), 'is-valid':controlNameVerify.otp.valid}"
                             placeholder="otp" appReplaceNumber >
-                          <div *ngIf="controlNameVerify.otp.invalid && (controlNameVerify.otp.dirty || controlNameVerify.otp.touched)"
+                          <div *ngIf="controlNameVerify.otp.invalid &&  showError"
                             class="alert alert-danger">
                             <div *ngIf="controlNameVerify.otp.errors?.['required']">
                               OTP is required.
                             </div>
+                            <div *ngIf="controlNameVerify.otp.errors?.['minlength'] || controlNameVerify.otp.errors?.['maxlength']">
+                              OTP must be of 6 digit.
+                            </div>
                           </div>
-                        </div>
+                        
                       </div>
                     
                        
