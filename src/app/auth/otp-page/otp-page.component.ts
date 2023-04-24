@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 })
 export class OtpPageComponent implements OnInit {
   showError= false;
+  isSubmitting = false;
   windowRef: any;
   verificationCode?: string;
   constructor(private win: WindowService , private http: HttpClient ,private router: Router , private authService : AuthService) { 
@@ -39,6 +40,12 @@ export class OtpPageComponent implements OnInit {
     console.log(this.verificationForm.value.otp)
     const otpValue = this.verificationForm?.value?.otp
     if(this.windowRef.confirmationResult){
+      this.isSubmitting = true;
+      setTimeout(() => {
+        
+        this.isSubmitting = false;
+        // submitButton.disabled = false;
+      }, 2000);
     this.windowRef.confirmationResult
                   .confirm(otpValue)
                   // .confirm(this.verificationCode)
@@ -66,6 +73,7 @@ export class OtpPageComponent implements OnInit {
       console.log(error, "Incorrect code entered?")
     }
     );
+
   }else{
     Swal.fire(
       'Error!',

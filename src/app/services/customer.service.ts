@@ -125,10 +125,45 @@ await this.getUniqueProduct(productId).then(
           )
   });
   }
+  async updateReview(data: {
+    comment: any;
+    rating: number;
+    productId: string | null;
+    userId: string | null;
+},reviewId:string) {
+    const ref = doc(db, `reviews`,reviewId);
+    // const ref = doc(db, `user`, this.userId);
+
+    await updateDoc(ref, data).catch((err) => {
+      console.log('err',err);
+      // alert( err.message)
+      Swal.fire(
+          `Error ${err.code}`,
+          err.message,
+          'error'
+          )
+  });
+  }
   getReviewsByProductId(productId: string | null) {
     const querySnapshot = query(
       collection(db, 'reviews'),
       where('productId', '==', productId)
+    );
+    return getDocs(querySnapshot).catch((err) => {
+      console.log('err',err);
+      // alert( err.message)
+      Swal.fire(
+          `Error ${err.code}`,
+          err.message,
+          'error'
+          )
+  });
+  }
+  getReviewsByProductIdUserId(productId: string | null) {
+    this.userId = this.authService.getUserId();
+    const querySnapshot = query(
+      collection(db, 'reviews'),
+      where('productId', '==', productId),where('userId','==',this.userId)
     );
     return getDocs(querySnapshot).catch((err) => {
       console.log('err',err);

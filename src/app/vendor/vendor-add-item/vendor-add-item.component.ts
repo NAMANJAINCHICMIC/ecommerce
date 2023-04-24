@@ -11,7 +11,7 @@ import { defaultImage } from 'src/app/utils/constants/constant';
   styleUrls: ['./vendor-add-item.component.scss']
 })
 export class VendorAddItemComponent {
- 
+  isSubmitting = false;
   userId  = this.authService.getUserId()
   uploadImage : Blob | string=''
   imgPath='';
@@ -38,7 +38,12 @@ get controlName(){
 
 onSubmit(){
   if (this.addProductForm.valid ) {
+    this.isSubmitting = true;
    this.vendorService.addNewProduct(this.addProductForm.value);
+   setTimeout(() => {
+    this.isSubmitting = false;
+    // submitButton.disabled = false;
+  }, 2000);
 } else {
   console.log("show errors")
   this.showError = true;

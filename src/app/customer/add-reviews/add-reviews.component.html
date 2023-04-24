@@ -57,10 +57,13 @@
                         <div class="card-body">
                             <label for="inputName">Enter your comment for this product here...</label>
                             <textarea id="userComment" rows="4" cols="50" name="comment"
-                                placeholder="Enter your comment" ngModel> </textarea>
+                                placeholder="Enter your comment" [(ngModel)] = "this.reviewObj"> </textarea>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" *ngIf="!isEdit" >
                             <button type="submit" class=""  (click)="onSubmit(myForm)">Submit</button>
+                        </div>
+                        <div class="card-body" *ngIf="isEdit" >
+                            <button type="submit" class=""  (click)="onUpdate(myForm)">Update</button>
                         </div>
                     </form>
 

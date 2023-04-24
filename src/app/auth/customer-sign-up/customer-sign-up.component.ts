@@ -16,6 +16,7 @@ import { ReplaceNumberDirective } from 'src/app/utils/directives/replace-number.
 })
 export class CustomerSignUpComponent implements OnInit {
 phoneNumber ?:string
+isSubmitting = false;
   showError= false;
   categories = [
    'Vendor',
@@ -61,7 +62,7 @@ this.router.navigate([PAGE.CUSTOMER_SIGN_UP]);
 
   async onSubmit(){
   if (this.registrationForm.valid ) {
-    
+    this.isSubmitting = true;
   console.log(this.registrationForm.value);
   // this.authService.storeUserName(`${this.registrationForm.value.firstName} ${this.registrationForm.value.lastName}`)
 // this.authService.profileDetail(this.registrationForm.value)
@@ -91,6 +92,10 @@ if(!boolValue){
       )
     } 
   );
+  setTimeout(() => {
+    this.isSubmitting = false;
+    // submitButton.disabled = false;
+  }, 2000);
 }else{
   console.log("user already exist!")
     Swal.fire(
