@@ -1,10 +1,4 @@
 
-  <div *ngIf="user">
-    You have successfully logged in with your phone number!
-  
-    UserId: {{ user?.uid }}
-  
-  </div>
 
 
 <div class="mask d-flex align-items-center h-100 gradient-custom-3">
@@ -48,7 +42,7 @@
     <form [formGroup]="verificationForm" class="align-self-center"(ngSubmit)="verifyLoginCode()" [hidden]="!displayOtpPage" >
         <div class="form-group align-self-center m-2">
             <label for="inputotp">Enter your Verification Code Here</label>
-            <!-- <div class="d-flex"> -->
+   
               <input type="text" class="form-control col col-12" id="inputotp" formControlName="otp"
                 [ngClass]="{'is-invalid': controlNameVerify.otp.errors && (controlNameVerify.otp.touched || controlNameVerify.otp.dirty), 'is-valid':controlNameVerify.otp.valid}"
                 placeholder="otp" appReplaceNumber >
@@ -63,22 +57,11 @@
                
               </div>
             </div>
-          <!-- </div> -->
-        
-           
-   
-          <!-- <div id="recaptcha-container"></div> -->
+
       
         <button type="submit" class="btn btn-primary m-2">Submit</button>
         
       </form>
-    <!-- <div *ngIf="windowRef.confirmationResult">
-        <hr>
-        <label for="code">Enter your Verification Code Here</label><br>
-        <input type="text" name="code" [(ngModel)]="verificationCode">
-    
-        <button (click)="verifyLoginCode()">Verify</button>
-      </div> -->
 
   </div>
   </div>

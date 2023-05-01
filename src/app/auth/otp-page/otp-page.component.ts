@@ -44,24 +44,19 @@ export class OtpPageComponent implements OnInit {
       setTimeout(() => {
         
         this.isSubmitting = false;
-        // submitButton.disabled = false;
+      
       }, 2000);
     this.windowRef.confirmationResult
                   .confirm(otpValue)
-                  // .confirm(this.verificationCode)
+                 
                   .then( (result:any) => {
                     console.log(result)
                     console.log("user verified")
-                    // this.user = result.user;
+                   
                     this.authService.userId = result.user.uid
-                    // this.authService.storeUserId(result.user.uid);
+                    
                     this.authService.storeToken(result.user.accessToken)
-                    // if(result._tokenResponse.isNewUser){
-                    //   this.router.navigate([PAGE.PROFILE])
-                    // }else{
-                    //   // this.router.navigate([PAGE.HOME])
-                    //   // this.authService.getUserData();
-                    // }
+                  
                     this.authService.getUserData();
     })
     .catch( (error:any) =>{

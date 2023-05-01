@@ -40,7 +40,9 @@ SharedModule,
   ],
   exports:[
     material
+  ],
+  providers: [
+    
   ]
-  // providers: [AuthService],
 })
 export class AuthModule { }

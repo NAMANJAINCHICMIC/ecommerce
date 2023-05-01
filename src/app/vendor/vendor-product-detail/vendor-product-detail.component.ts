@@ -31,7 +31,7 @@ numbers = [1, 2, 3, 4, 5];
   ) {}
   async ngOnInit(): Promise<void> {
     this.productId = this.activatedRoute.snapshot.paramMap.get('id');
-    console.log(this.productId);
+    // console.log(this.productId);
     if (this.productId) {
       await this.customerService.getUniqueProduct(this.productId).then(
         async (snap)=>{
@@ -57,7 +57,7 @@ numbers = [1, 2, 3, 4, 5];
     if(querySnapshot){
 
       querySnapshot.forEach((doc) => {
-        console.log(doc.data());
+        // console.log(doc.data());
         if(doc.data()){
           
           const ref = doc.data()
@@ -89,7 +89,7 @@ for(const i in this.reviewArray){
             }
             this.rating += +this.reviewArray[i].rating;
           }).catch((err) => {
-            console.log('err',err);
+            // console.log('err',err);
             // alert( err.message)
             Swal.fire(
               `Error ${err.code}`,

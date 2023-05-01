@@ -10,8 +10,7 @@ import { PAGE } from 'src/app/utils/constants/constant';
 })
 export class VendorComponent {
   constructor(private authService : AuthService ,  private router:Router){
-    //  authService.getProfile()
-    //  authService.getUserData()
+ 
     }
 homePage(){
   this.router.navigate([PAGE.VENDOR_HOME]);

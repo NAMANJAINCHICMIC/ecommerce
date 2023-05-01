@@ -22,7 +22,7 @@ export class VendorUpdateProfileComponent  implements OnInit{
     if (snap.exists()) {
              this.info = snap.data()      
              
-            console.log(this.info)   
+            // console.log(this.info)   
         }
         this.vendorForm = new FormGroup(
           {

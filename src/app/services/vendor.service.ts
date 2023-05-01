@@ -41,9 +41,7 @@ export class VendorService {
     // }
   }
   //product fn
-  // async uploadImage(path: any, file: any) {
-  //   return await this.fireStorage.upload(path, file);
-  // }
+
   async addNewProduct(data: any) {
     const ref = doc(collection(db, `product`));
     await setDoc(ref, data);
@@ -54,7 +52,7 @@ export class VendorService {
     if (productId) {
       const ref = doc(db, `product`, productId);
       await updateDoc(ref, data).catch((err) => {
-        console.log('err',err);
+        // console.log('err',err);
         // alert( err.message)
         Swal.fire(
             `Error ${err.code}`,
@@ -70,7 +68,7 @@ export class VendorService {
   async deleteProduct(productId: string) {
     const ref = doc(db, `product`, productId);
     await deleteDoc(ref).catch((err) => {
-      console.log('err',err);
+      // console.log('err',err);
       // alert( err.message)
       Swal.fire(
           `Error ${err.code}`,
@@ -86,13 +84,13 @@ export class VendorService {
       // console.log(`${doc.id} => ${doc.data()}`);
       const info = doc.data();
       if (info['userId'] == this.userId) {
-        console.log(info);
+        // console.log(info);
       }
     });
   }
   async getUniqueProduct(productId: string) {
     return await getDoc(doc(db, 'product', productId)).catch((err) => {
-      console.log('err',err);
+      // console.log('err',err);
       // alert( err.message)
       Swal.fire(
           `Error ${err.code}`,
@@ -108,7 +106,7 @@ export class VendorService {
       where('userId', '==', this.userId)
     );
     return getDocs(querySnapshot).catch((err) => {
-      console.log('err',err);
+      // console.log('err',err);
       // alert( err.message)
       Swal.fire(
           `Error ${err.code}`,
@@ -120,7 +118,7 @@ export class VendorService {
 
   async getVendorProfile() {
     return await getDoc(doc(db, 'vendor', this.userId)).catch((err) => {
-      console.log('err',err);
+      // console.log('err',err);
       // alert( err.message)
       Swal.fire(
           `Error ${err.code}`,
@@ -134,7 +132,7 @@ export class VendorService {
       const ref = doc(db, `vendor`, this.userId);
 
       await updateDoc(ref, data.value).catch((err) => {
-        console.log('err',err);
+        // console.log('err',err);
         // alert( err.message)
         Swal.fire(
             `Error ${err.code}`,
@@ -152,7 +150,7 @@ export class VendorService {
       where('vendorArray', 'array-contains', this.userId)
     );
     return getDocs(querySnapshot).catch((err) => {
-      console.log('err',err);
+      // console.log('err',err);
       // alert( err.message)
       Swal.fire(
           `Error ${err.code}`,
@@ -166,7 +164,7 @@ export class VendorService {
       .collection('transaction')
       .doc(transactionId)
       .update({ orderStatus: 'Delivered' }).catch((err) => {
-        console.log('err',err);
+        // console.log('err',err);
         // alert( err.message)
         Swal.fire(
             `Error ${err.code}`,
@@ -182,7 +180,7 @@ export class VendorService {
       where('productId', '==', productId)
     );
     return getDocs(querySnapshot).catch((err) => {
-      console.log('err',err);
+      // console.log('err',err);
       // alert( err.message)
       Swal.fire(
           `Error ${err.code}`,

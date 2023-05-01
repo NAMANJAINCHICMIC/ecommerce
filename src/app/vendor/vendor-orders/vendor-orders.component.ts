@@ -25,14 +25,7 @@ export class VendorOrdersComponent implements OnInit {
     private authService: AuthService
   ) {}
   async ngOnInit(): Promise<void> {
-    // const querySnapshot = await this.vendorService.getUniqueVendorOrder();
-    // querySnapshot.forEach((doc) => {
-    //   console.log(doc.data());
-    //   const transactionId = doc.id;
-    //   this.orderArray.push({ ...doc.data(), transactionId });
-    //   console.log(this.orderArray);
-    // });
-    // this.listDetails();
+   
   await  this.getUniqueVendorOrder();
   }
   async getUniqueVendorOrder(){
@@ -73,8 +66,7 @@ export class VendorOrdersComponent implements OnInit {
         transactionId: order.transactionId,
         transactionTime: order.transactionTime,
         customerDetail:order.customerDetail,
-        // totalAmt: amt,
-        // totalAmt: order.totalAmt,
+       
         orderStatus:order.orderStatus,
         orderedItems: oiArray,
         totalAmt: amt,
@@ -88,17 +80,7 @@ export class VendorOrdersComponent implements OnInit {
     // console.log(event);
     this.page = event;
   }
-  // getCartTotalAmount(price: number, add: boolean): number {
-  //   let amt: number;
 
-  //   amt += price;
-  //   if (add == true) {
-  //     amt = Number(this.cartObj?.totalAmt) + Number(price);
-  //   } else {
-  //     amt = Number(this.cartObj?.totalAmt) - Number(price);
-  //   }
-  //   return amt;
-  // }
   deliverOrderStatus(transactionId:string){
     Swal.fire({
       title: 'Is this order delivered?',

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Router } from '@angular/router';
 import {
   getDoc,
@@ -84,7 +83,7 @@ await this.getUniqueProduct(productId).then(
     }
     return false;
   }).catch((err) => {
-    console.log('err',err);
+    // console.log('err',err);
     // alert( err.message)
     Swal.fire(
       `Error ${err.code}`,
@@ -98,7 +97,7 @@ await this.getUniqueProduct(productId).then(
    
     const ref = this.db.doc(`transaction/${transactionId}`);
     ref.set(data).catch((err) => {
-      console.log('err',err);
+      // console.log('err',err);
       // alert( err.message)
       Swal.fire(
           `Error ${err.code}`,
@@ -116,7 +115,7 @@ await this.getUniqueProduct(productId).then(
 }) {
     const ref = doc(collection(db, `reviews`));
     await setDoc(ref, data).catch((err) => {
-      console.log('err',err);
+      // console.log('err',err);
       // alert( err.message)
       Swal.fire(
           `Error ${err.code}`,
@@ -135,7 +134,7 @@ await this.getUniqueProduct(productId).then(
     // const ref = doc(db, `user`, this.userId);
 
     await updateDoc(ref, data).catch((err) => {
-      console.log('err',err);
+      // console.log('err',err);
       // alert( err.message)
       Swal.fire(
           `Error ${err.code}`,
@@ -150,7 +149,7 @@ await this.getUniqueProduct(productId).then(
       where('productId', '==', productId)
     );
     return getDocs(querySnapshot).catch((err) => {
-      console.log('err',err);
+      // console.log('err',err);
       // alert( err.message)
       Swal.fire(
           `Error ${err.code}`,
@@ -166,7 +165,7 @@ await this.getUniqueProduct(productId).then(
       where('productId', '==', productId),where('userId','==',this.userId)
     );
     return getDocs(querySnapshot).catch((err) => {
-      console.log('err',err);
+      // console.log('err',err);
       // alert( err.message)
       Swal.fire(
           `Error ${err.code}`,
@@ -186,7 +185,7 @@ await this.getUniqueProduct(productId).then(
       this.db
         .doc(`recentlyViewed/${userId}`)
         .update({ myArray: arrayUnion(productId) }).catch((err) => {
-          console.log('err',err);
+          // console.log('err',err);
           // alert( err.message)
           Swal.fire(
               `Error ${err.code}`,
@@ -197,7 +196,7 @@ await this.getUniqueProduct(productId).then(
     } else {
       const ref = this.db.doc(`recentlyViewed/${userId}`);
       ref.set({ myArray: arrayUnion(productId) }).catch((err) => {
-        console.log('err',err);
+        // console.log('err',err);
         // alert( err.message)
         Swal.fire(
             `Error ${err.code}`,
@@ -210,7 +209,7 @@ await this.getUniqueProduct(productId).then(
     this.db
       .doc(`recentlyViewed/${userId}`)
       .update({ myArray: arrayUnion(productId) }).catch((err) => {
-        console.log('err',err);
+        // console.log('err',err);
         // alert( err.message)
         Swal.fire(
             `Error ${err.code}`,
@@ -224,7 +223,7 @@ await this.getUniqueProduct(productId).then(
     this.db
       .doc(`recentlyViewed/${userId}`)
       .update({ myArray: arrayRemove(productId) }).catch((err) => {
-        console.log('err',err);
+        // console.log('err',err);
         // alert( err.message)
         Swal.fire(
             `Error ${err.code}`,
@@ -236,7 +235,7 @@ await this.getUniqueProduct(productId).then(
   async getViewRecently() {
     this.userId = this.authService.getUserId();
     return await getDoc(doc(db, 'recentlyViewed', this.userId)).catch((err) => {
-      console.log('err',err);
+      // console.log('err',err);
       // alert( err.message)
       Swal.fire(
           `Error ${err.code}`,

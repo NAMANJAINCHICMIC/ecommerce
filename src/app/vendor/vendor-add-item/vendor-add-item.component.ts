@@ -25,8 +25,7 @@ export class VendorAddItemComponent {
           productName: new FormControl('', [Validators.required ]),
         price: new FormControl('',[ Validators.required ]),     
         available: new FormControl('',[ Validators.required ]),     
-        // category: new FormControl('',Validators.required ),
-        // available: new FormControl(true),
+      
         userId: new FormControl(this.userId),
         detail: new FormControl('',[Validators.required ]),
         pathToPic: new FormControl('', Validators.required ),
@@ -42,7 +41,7 @@ onSubmit(){
    this.vendorService.addNewProduct(this.addProductForm.value);
    setTimeout(() => {
     this.isSubmitting = false;
-    // submitButton.disabled = false;
+    
   }, 2000);
 } else {
   console.log("show errors")

@@ -18,15 +18,14 @@ export class VendorHomeComponent implements OnInit {
   totalItems ?: number; 
   constructor(private vendorService: VendorService ,private router: Router ){}
   async ngOnInit() {
-// this.vendorService.getVendorProduct()
-// this.vendorService.getVendorAllProduct()
+
 const querySnapshot = await this.vendorService.getUniqueVendor();
 if(querySnapshot){
 querySnapshot.forEach((doc) => {
 
   const productId = doc.id
  this.productList.push({ ...doc.data(), productId})
- console.log(this.productList);
+//  console.log(this.productList);
 
 });
 }
@@ -45,8 +44,6 @@ this.productList.splice(this.productList.findIndex(a => a.productId == productId
 
   }
   productDetail(productId: string) {
- 
-    // this.customerService.recentlyViewing(productId)
     this.router.navigate([`${PAGE.VENDOR_PRODUCT_DETAIL}/${productId}`]);
   }
   handlePageChange(event : number) {

@@ -34,20 +34,20 @@ reviewId = '';
   }
   async ngOnInit(): Promise<void> {
     this.productId = this.activatedRoute.snapshot.paramMap.get('id');
-    console.log( this.productId);
+    // console.log( this.productId);
     if( this.productId){
       const querySnapshot = await this.customerService.getReviewsByProductIdUserId(this.productId);
       if(querySnapshot){
   
         querySnapshot.forEach((doc) => {
           this.reviewId = doc.id;
-          console.log(doc.data());
+          // console.log(doc.data());
           if(doc.data()){
             this.isEdit = true;
             const ref  = doc.data()
              this.reviewObj =ref['comment']
             this.rating = ref['rating']
-           console.log("review",this.reviewObj)
+          //  console.log("review",this.reviewObj)
           }
           
         })
@@ -59,7 +59,7 @@ reviewId = '';
                this.item = snap.data()      
                this.item.productId = this.productId;
               
-              // console.log(this.info)   
+             
           }
         }
         this.isLoading = false;
@@ -73,7 +73,7 @@ reviewId = '';
   onClick(rating:number) {
     console.log(rating)
    this.rating = rating
-    // this.ratingUpdated.emit(rating);
+   
     return false;
   }
 
@@ -85,7 +85,7 @@ reviewId = '';
     }
   }
   onSubmit(form:any) {
-    console.log(form.value);
+    // console.log(form.value);
     const obj = {
       comment : form.value.comment,
       rating :this.rating,
@@ -96,7 +96,7 @@ reviewId = '';
     this.router.navigate([PAGE.HOME]);
   }
   onUpdate(form:any) {
-    console.log(form.value);
+    // console.log(form.value);
     const obj = {
       comment : form.value.comment,
       rating :this.rating,

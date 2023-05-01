@@ -17,7 +17,7 @@ export class PhoneLoginComponent  implements OnInit {
 displayOtpPage = false;
   windowRef: any;
   verificationCode?: string;
-  user: any;
+
   showError= false;
 phoneNumber?:string;
   constructor(private win: WindowService , private http: HttpClient ,private router: Router , private authService : AuthService) { }
@@ -27,18 +27,10 @@ phoneNumber?:string;
     this.windowRef = this.win.windowRef
     this.windowRef.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container-3',{
       'size': 'normal',
-      // 'callback': (response:any) => {
-      //   // reCAPTCHA solved, allow signInWithPhoneNumber.
-      //   // ...    
-      // },
-      // 'expired-callback': () => {
-      //   // Response expired. Ask user to solve reCAPTCHA again.
-      //   // ...
-      // }
+  
     },auth)
     this.windowRef.recaptchaVerifier.render();
-    // this.windowRef.recaptchaVerifier.render().then((widgetId:any) => { 
-    // });
+   
   }
   async sendLoginCode() {
     if (this.loginForm.valid ) {
@@ -46,21 +38,21 @@ phoneNumber?:string;
     const auth = getAuth();
     const appVerifier = this.windowRef.recaptchaVerifier;
     const num = '+91'+this.loginForm.value.phone;
-    const exist = await this.authService.checkUserExist(this.loginForm.value.phone);
-    console.log(exist)
-    if(exist != null){
+    const userExist = await this.authService.checkUserExist(this.loginForm.value.phone);
+    // console.log(exist)
+    if(userExist != null){
   
-   if(exist ){
+   if(userExist ){
      signInWithPhoneNumber(auth,num, appVerifier)
                  .then(result => {
-                   console.log(result)
+                  //  console.log(result)
                      this.windowRef.confirmationResult = result;
                      if(this.windowRef.confirmationResult){
      this.displayOtpPage = true
                      }
                  })
                  .catch( error =>{
-                  console.log(error) 
+                  // console.log(error) 
                   Swal.fire(
                     `Error ${error.code}`,
                     error.message,
@@ -70,7 +62,7 @@ phoneNumber?:string;
                 );
    }
    else{
-    console.log("user does not exist!")
+    // console.log("user does not exist!")
     Swal.fire(
       'Error!',
       'user does not exist!',
@@ -90,21 +82,16 @@ phoneNumber?:string;
       this.showError=false;
     this.windowRef.confirmationResult
                   .confirm(this.verificationForm.value.otp)
-                  // .confirm(this.verificationCode)
+  
                   .then( (result:any) => {
-                    console.log(result)
-                    this.user = result.user;
-                 
+                    // console.log(result)
+                   
                     this.phoneNumber = ''+this.loginForm.value.phone
                     this.authService.userId = this.phoneNumber
-                    // this.authService.storeUserId(result.user.uid);
+            
                     this.authService.storeUserId(this.phoneNumber);
                     this.authService.storeToken(result.user.accessToken)
-                    // if(result._tokenResponse.isNewUser){
-                    //   this.router.navigate([PAGE.PROFILE])
-                    // }else{
-                    //   // this.router.navigate([PAGE.HOME])
-                    // }
+                 
                     this.authService.getUserData();
                     this.displayOtpPage = false;
     })

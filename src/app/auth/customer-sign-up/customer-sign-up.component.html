@@ -18,7 +18,7 @@
               </div>
             </div>
             <div class="card-body p-3 mb-0 text-center"  >
-            <!-- <div class="card-body p-3 mb-0 text-center" *ngIf="showCustomer" > -->
+          
               <h2 class="text-uppercase text-center mb-2">Enter Your Profile</h2>
   
               <form [formGroup]="registrationForm" class="align-self-center justify-content-center"
@@ -77,7 +77,7 @@
                       [ngClass]="{'is-invalid': controlName.phone.errors && (controlName.phone.touched || controlName.phone.dirty), 'is-valid':controlName.phone.valid}"
                       placeholder="Mobile Number" pattern="[0-9]*" appReplaceNumber
                      >  
-                     <!-- oninput="this.value = this.value.replace( /[^0-9]/g  , '')" -->
+                    
                     <div *ngIf="controlName.phone.invalid && showError " class="alert alert-danger">
                       <div *ngIf="controlName.phone.errors?.['required']">
                         Mobile Number is required.

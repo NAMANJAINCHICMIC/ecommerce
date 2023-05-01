@@ -50,13 +50,13 @@ export class VendorUpdateItemComponent implements OnInit {
   }
   async ngOnInit(): Promise<void> {
     this.productId = this.activatedRoute.snapshot.paramMap.get('id');
-    console.log( this.productId);
+    // console.log( this.productId);
     if( this.productId){
       const snap = await this.vendorService.getUniqueProduct( this.productId);
       if(snap){
       if (snap.exists()) {
                this.info = snap.data()      
-              console.log(this.info)   
+              // console.log(this.info)   
           }
           this.updateProductForm = new FormGroup(
             {
@@ -72,14 +72,7 @@ export class VendorUpdateItemComponent implements OnInit {
           )
     }
   }
-    // const snap = await getDoc(doc(db, 'product', productId))
-    
-  //   if (snap.exists()) {
-  //       const info = snap.data()      
-  //       console.log(info)   
-  //   }
-  //       const info = snap.data()
-//       this.role = info['role'];
+  
   }
   
 
@@ -91,18 +84,10 @@ get controlName(){
 onSubmit(){
   if (this.updateProductForm.valid ) {
    this.vendorService.updateProduct(this.updateProductForm.value , this.productId)
-  // this.mainService.addFood(this.addProductForm.value).subscribe(
-  //   (res:any)=>{
-  //     this.toastr.info(res.message);
-  //     if(res.success){
 
-  //       this.router.navigate([PAGE.HOME]);
-  //     }
-  //   }
-  // );
 
 } else {
-  console.log("show errors")
+  // console.log("show errors")
   this.showError = true;
 }
 }
@@ -114,21 +99,11 @@ onSubmit(){
     const uploadItem = await this.fireStorage.upload(path,file)
    this.imgPath  = await uploadItem.ref.getDownloadURL()
     this.updateProductForm.controls['pathToPic'].patchValue(this.imgPath)
-console.log(this.imgPath)
+// console.log(this.imgPath)
   }
-  // this.uploadImage = event.target.files[0]
-//  const formData = new FormData()
-//   formData.append('file',this.uploadImage)
-
-//  this.mainService.foodImageUpload(formData).subscribe((res:any)=>{
-//   // console.log(res.data.pathToPic);
-//   // this.addProductForm.value.pathToPic =  environment.AUTH_API +res.data.pathToPic
-//   this.addProductForm.controls['pathToPic'].patchValue(`${environment.AUTH_API}${res.data?.pathToPic}`)
+  
 this.picUpladed = true;
-// },
-//   (error:any) => {
-//     this.toastr.error(error,'error');
-//   })
+
 
 }
 }

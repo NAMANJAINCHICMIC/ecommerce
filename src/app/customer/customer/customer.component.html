@@ -7,7 +7,7 @@
           <div class="input-group rounded "  >
 
           <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" id="search" #search
-          aria-describedby="search-addon" ngModel name = "search" />
+          aria-describedby="search-addon" [(ngModel)]="customer.search" name = "search" (input)="emitValueInput(myForm.value.search)" />
           <span class="input-group-text border-0" id="search-addon" (click)="emitValue(myForm.value.search)">
             
             <mat-icon >search</mat-icon>
@@ -23,7 +23,7 @@
       <button class="btn" (click)="myCart()">My Cart</button>
       <button class="btn" (click)="myOrders()">My Orders</button>
       <button class="btn" (click)="viewProfile()">View Profile</button>
-      <!-- <button class="btn" (click)="updateProfile()">Update Profile</button> -->
+   
       <button class="btn" (click)="signOut()" *ngIf="!this.authService.isNotLoggedIn()">Log Out</button>
       <button class="btn" (click)="signIn()" *ngIf="this.authService.isNotLoggedIn()">Sign In</button>
     </span>

@@ -10,7 +10,7 @@ import { PAGE } from 'src/app/utils/constants/constant';
   styleUrls: ['./customer-view-profile.component.scss']
 })
 export class CustomerViewProfileComponent implements OnInit {
-  // myself:DocumentData = [];
+
   myself:any;
 
  info:DocumentData = [];
@@ -21,7 +21,7 @@ export class CustomerViewProfileComponent implements OnInit {
     if (snap.exists()) {
              this.info = snap.data()      
              this.myself = snap.data()      
-            console.log(this.info)   
+            // console.log(this.info)   
         }
  
 }

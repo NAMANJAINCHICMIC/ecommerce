@@ -32,7 +32,7 @@ const routes: Routes = [
       {
         path: 'home',
         component: CustomerHomeComponent,
-        // canActivate: [AuthGuard]
+       
       },
       {
         path: `view-details`,

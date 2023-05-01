@@ -21,6 +21,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 
 import { AddReviewsComponent } from './add-reviews/add-reviews.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { SharedModule } from '../shared/shared.module';
 const material =[
   MatIconModule,
   MatSelectModule,
@@ -50,6 +51,7 @@ const material =[
     CustomerRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    SharedModule,
     material,
     NgxPaginationModule
   ],

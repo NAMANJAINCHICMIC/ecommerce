@@ -1,17 +1,14 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { doc, getDoc,  } from "firebase/firestore";
-import { AUTH_URL,  auth } from 'src/environment';
+import { auth } from 'src/environment';
 import { PAGE } from '../utils/constants/constant';
 // import { AngularFireStore } from '@angular/fire/store';
-import { collection, getDocs } from "firebase/firestore";
 import { db } from 'src/environment';
 import { signOut } from "firebase/auth";
 import { FormGroup } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { catchError, throwError } from 'rxjs';
 @Injectable({
     providedIn: 'root'
 })
@@ -21,7 +18,7 @@ export class AuthService {
     store?: AngularFirestoreDocument<any>;
     tutorial?: any;
 
-    constructor(private http: HttpClient, private router: Router, private db: AngularFirestore) {
+    constructor(private router: Router, private db: AngularFirestore) {
 
 
     }
@@ -79,7 +76,7 @@ export class AuthService {
         if (!this.userId) {
             this.userId = this.getUserId();
         }
-    console.log(data.value.phone)
+    // console.log(data.value.phone)
     const boolValue = await this.checkUserExist(data.value.phone);
     if(boolValue != null){
     if(!boolValue){
@@ -100,9 +97,9 @@ export class AuthService {
         localStorage.clear();
         signOut(auth).then(() => {
             // Sign-out successful.
-            console.log("sign-out")
+            // console.log("sign-out")
         }).catch((err) => {
-                console.log('err',err);
+                // console.log('err',err);
                 // alert( err.message)
                 Swal.fire(
                     `Error ${err.code}`,
@@ -117,41 +114,38 @@ export class AuthService {
         // if (!this.userId) {
             this.userId = this.getUserId();
         // }
-        console.log(this.userId)
-        //  return getDocs(collection(db, this.userId ,'vendor',this.userId));
-        //  return getDoc(doc(db, this.userId ,'vendor',this.userId));
-
+      
         await getDoc(doc(db, 'user', this.userId)).then(
             async (snap)=>{
         // const snap = await getDocs(collection(db, this.userId ,'vendor',this.userId));
-        console.log(snap)
+        // console.log(snap)
         if (snap.exists()) {
 
-            console.log(snap.data())
+            // console.log(snap.data())
 
             const info = snap.data()
             this.role = info['role'];
             this.storeRole(info['role']);
-            console.log(this.role)
+            // console.log(this.role)
             this.router.navigate([PAGE.HOME]);
         }
         else {
              getDoc(doc(db, 'vendor', this.userId)).then(
                 async (snap)=>{
             if (snap.exists()) {
-                console.log(snap.data())
+                // console.log(snap.data())
 
                 const info = snap.data()
                 this.role = info['role'];
                 this.storeRole(info['role']);
-                console.log(this.role)
+                // console.log(this.role)
                 this.router.navigate([PAGE.VENDOR_HOME]);
             } else {
                 console.log("No Document exists")
                 // this.router.navigate([PAGE.PROFILE]);
             }
         }).catch((err) => {
-            console.log('err',err);
+            // console.log('err',err);
             // alert( err.message)
             Swal.fire(
                 `Error ${err.code}`,
@@ -161,7 +155,7 @@ export class AuthService {
         })
         }
     }).catch((err) => {
-        console.log('err',err);
+        // console.log('err',err);
         // alert( err.message)
         Swal.fire(
             `Error ${err.code}`,
@@ -173,7 +167,7 @@ export class AuthService {
     async checkUserExist(phone:any){
    return  await getDoc(doc(db, 'user', phone)).then(
         async (snap)=>{
-    console.log(snap)
+    // console.log(snap)
     if (snap.exists()) {
         return true;
         // this.router.navigate([PAGE.SIGN_IN]);
@@ -186,12 +180,12 @@ export class AuthService {
                
             } else {
     
-                console.log("New User")
+                // console.log("New User")
                 return false;
                 // this.router.navigate([PAGE.PROFILE]);
             }
         }).catch((err) => {
-            console.log('err',err);
+            // console.log('err',err);
             // alert( err.message)
             Swal.fire(
                 `Error ${err.code}`,
@@ -203,7 +197,7 @@ export class AuthService {
 }
            
         ).catch((err) => {
-            console.log('err',err)
+            // console.log('err',err)
             // alert( err.message)
             Swal.fire(
                 `Error ${err.code}`,

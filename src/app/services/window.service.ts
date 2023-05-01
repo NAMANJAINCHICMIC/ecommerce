@@ -15,18 +15,7 @@ windowRefrence : any;
   }
 constructor(private router: Router) {
   this.windowRefrence = this.windowRef
-  // this.windowRefrence.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container',{
-  //   'size': 'normal',
-  //   // 'callback': (response:any) => {
-  //   //   // reCAPTCHA solved, allow signInWithPhoneNumber.
-  //   //   // ...    
-  //   // },
-  //   // 'expired-callback': () => {
-  //   //   // Response expired. Ask user to solve reCAPTCHA again.
-  //   //   // ...
-  //   // }
-  // },auth)
-  // this.windowRefrence.recaptchaVerifier.render();
+ 
 }
 sendLoginCode(phone : string | null | undefined ,windowRefrence:any ) {
   const auth = getAuth();

@@ -77,7 +77,7 @@
           <input type="text" class="form-control col col-12" id="inputphone" formControlName="phone"
             [ngClass]="{'is-invalid': controlName.phone.errors && (controlName.phone.touched || controlName.phone.dirty), 'is-valid':controlName.phone.valid}"
             placeholder="Mobile Number" pattern="[0-9]*"
-            oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            appReplaceNumber >
           <div *ngIf="controlName.phone.invalid && showError " class="alert alert-danger">
             <div *ngIf="controlName.phone.errors?.['required']">
               Mobile Number is required.
@@ -123,10 +123,7 @@
         <p>(inclusive of 18% GST)</p>
     </div>
 
-      <!-- <div class="form-row align-self-center justify-content-center">
-
-        <button class="btn btn-primary " type="submit">Submit</button>
-      </div> -->
+    
       <div class="text-center cart-btn-group" >
         <div class="form-group">
             <button class="btn btn-outline-warning" (click)="goBackToCart()" style="margin-right: 15px">Back to cart</button>

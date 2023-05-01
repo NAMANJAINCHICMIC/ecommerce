@@ -25,31 +25,20 @@ export class OrderPageComponent implements OnInit {
   constructor(private customerService: CustomerService , private router : Router) {  
   }
   async ngOnInit(): Promise<void> {
-    // this.customerService.getUniqueCustomerOrder();
-//     const querySnapshot = await this.customerService.getUniqueCustomerOrder();
-// querySnapshot.forEach((doc) => {
-//   // console.log(doc.data());
-//   const transactionId = doc.id
-//  this.orderArray.push({ ...doc.data(), transactionId})
-//  console.log(this.orderArray);
-//   })
+
  await this.getUniqueCustomerOrder()
-  // this.listDetails()
+
 }
  
   async getUniqueCustomerOrder(){
   const querySnapshot = await this.customerService.getUniqueCustomerOrder();
 querySnapshot.forEach((doc) => {
-  // console.log("dummy");
-  // console.log(doc.data());
+ 
   const transactionId = doc.id
  this.orderArray.push({ ...doc.data(), transactionId})
-//  console.log(this.orderArray);
-//  this.listDetails()
+
 })
-// if(querySnapshot.docChanges()){
-//   // this.listDetails()
-// }
+
   this.listDetails()
 }
   getItemTotalAmount(price: number, quantity: number) {
@@ -57,9 +46,9 @@ querySnapshot.forEach((doc) => {
   }
   listDetails(){
     for (const order of this.orderArray){
-      console.log(order)
+      // console.log(order)
     this.innerObjectKeys = Object.keys(order.productDetails.items);
-      console.log(this.innerObjectKeys);
+      // console.log(this.innerObjectKeys);
       const oiArray: any[] = [];
       for(const oi of this.innerObjectKeys){
 
@@ -70,8 +59,7 @@ querySnapshot.forEach((doc) => {
           price: order.productDetails.items[oi].price,
           quantity: order.productDetails.items[oi].quantity,
           pathToPic: order.productDetails.items[oi].pathToPic,
-          
-          // totalAmt:order.productDetails.totalAmt,
+  
         };
         oiArray.push(orderObj);
       }

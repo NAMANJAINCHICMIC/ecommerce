@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CustomerService } from 'src/app/services/customer.service';
@@ -34,19 +35,7 @@ export class CustomerHomeComponent implements OnInit {
     private authService : AuthService
   ) {
     this.userId = this.authService.getUserId();
-  //   this.cartService.getCartDataObservable().subscribe((data : any) => {
-    
-  //     // here data is cart data object
-  //   console.log("data",data)
-  //   if (data && Object.keys(data.items).length > 0) {
-  //     this.isCartEmpty = false;
-  //     this.totalAmt = data.totalAmt;
-  //     this.totalCartItems = Object.keys(data.items).length;
-  //   }else{
-  //     this.isCartEmpty = true;
-  //   }
-  
-  // });
+
   }
   async ngOnInit() {  
     this.userId = this.authService.getUserId();
@@ -55,29 +44,38 @@ export class CustomerHomeComponent implements OnInit {
     querySnapshot.forEach((doc) => {
       const productId = doc.id;
       this.allProductList.push({ ...doc.data(), productId });
-      // this.productList.push({ ...doc.data(), productId });
+  
     });
     this.productList = this.allProductList
-    console.log(this.productList);
+    // console.log(this.productList);
     this.isLoading = false;
     // get searched product list
-    this.customerService.searchString.subscribe((res:string )=>{
+    this.customerService.searchString
+    .pipe(
+      debounceTime(700),
+      distinctUntilChanged(),
+      // switchMap((searchQuery) => this.chatService.searchUser(searchQuery))
+    )
+    .subscribe((res:string )=>{
       this.filterProductList(res)
     })
+    // this.customerService.searchString.subscribe((res:string )=>{
+    //   this.filterProductList(res)
+    // })
     this.totalItems = this.productList.length
    // Fill Cart and Recently View items
     if(this.userId){
-      // this.fillCart(this.userId)    
+        
     const snap = await this.customerService.getViewRecently();
     if (snap){
     if (snap.exists()) {
       const res = snap.data();
-      console.log(res)
+      // console.log(res)
       this.recentlyViewedProducts = res['myArray'];
-      console.log("recentlyViewedProducts",this.recentlyViewedProducts);
+      // console.log("recentlyViewedProducts",this.recentlyViewedProducts);
       for(const productId of this.recentlyViewedProducts){
         const snap = await this.customerService.getUniqueProduct(productId);   
-        // console.log("info",snap.data());   
+        
         if(snap.exists()){
           const info = snap.data()   
           info['productId']= productId
@@ -86,7 +84,7 @@ export class CustomerHomeComponent implements OnInit {
         this.productViewRecentlyList.reverse();
       }    
     }
-    console.log("productViewRecentlyList", this.productViewRecentlyList)
+    // console.log("productViewRecentlyList", this.productViewRecentlyList)
   }}
   
 }
@@ -97,28 +95,20 @@ export class CustomerHomeComponent implements OnInit {
         this.recentlyViewedProducts[0]
       );
     }
-    // this.customerService.recentlyViewing(productId)
+   
     this.router.navigate([`${PAGE.PRODUCT_DETAIL}/${productId}`]);
   }
-  // async fillCart(userId:string){
-  //   const snap = await this.cartService.getCartDataFirebase(userId);
-  //   if(snap.exists()){
-  //     const info = snap.data()  
-  //     this.totalAmt=info['totalAmt'];
-  //     this.totalCartItems=Object.keys(info['items']).length;
-  //     localStorage.setItem('cartData', JSON.stringify(info));
-  //   }
- 
-  // }
-  
+
   filterProductList(data:string){
+    // console.log(this.allProductList)
     this.searchedProductList = this.allProductList.filter(obj => {
-      return obj.productName.includes(data.toLowerCase()&& data.toUpperCase());
+      return obj.productName.includes(data.toLowerCase()|| data.toUpperCase());
     });
+    // console.log(this.searchedProductList)
     this.productList = this.searchedProductList
   }
   handlePageChange(event : number) {
-    // console.log(event);
+   
     this.page = event;
   }
 }

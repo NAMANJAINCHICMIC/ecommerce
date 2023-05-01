@@ -70,7 +70,7 @@ export class CartComponent implements OnInit {
       } else {
         this.isCartEmpty = false;
       }
-      console.log("itemObj",this.cartArray)
+      // console.log("itemObj",this.cartArray)
     }
   
     /** add to cart */
@@ -116,21 +116,3 @@ export class CartComponent implements OnInit {
     }
 }
 
-    // orderDetailsChanged() {
-
-    //   this.orderDetails.list=[];
-    //   for(let productItem of this.cartArray)
-    //   {
-    //       this.orderDetails.list.push({foodId:productItem.foodId,quantity:productItem.quantity})
-    //   }
-      
-    // }
-    // placeOrder(){
-    //   // this.cartService.removeCartData();
-    //   console.log(localStorage.getItem('cart'));
-    //   this.orderDetailsChanged()
-    //   this.socketService.userPlaceOrder(this.orderDetails)
-    //   // console.log(this.orderDetails);
-    //   this.clearCart()
-    //   this.router.navigate([PAGE.ORDERS]);
-    // }

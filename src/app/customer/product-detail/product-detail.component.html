@@ -54,10 +54,7 @@
                                 <button mat-raised-button color="accent" (click)="onAdd(item)">Add To Cart</button>
 
                             </div>
-                            <!-- <span class="btn btn-sm" *ngIf="item?.quantity == 0" (click)="onAdd(item)">
-                                    <mat-icon>add_shopping_cart</mat-icon>
-                                </span> -->
-
+                           
                             <div class="btn-toolbar" role="toolbar" *ngIf="item?.quantity > 0">
                                 <div class="btn-group" role="group" aria-label="-">
                                     <span type="button" class="btn btn-outline-danger btn-sm"
@@ -71,13 +68,7 @@
                         <div *ngIf="+item?.available === 0">
                             <span class="not-available-text">Not Available.</span>
                         </div>
-                        <!-- <div class="btn-toolbar" role="toolbar" *ngIf="item.quantity > 0">
-                                <div class="btn-group" role="group" aria-label="-">
-                                    <span type="button" class="btn btn-outline-danger btn-sm" (click)="onRemove(item)">-</span>
-                                    <span class="text-center" style="width: 30px;">{{[(item.quantity)]}}</span>
-                                    <span type="button" class="btn btn-outline-success btn-sm" (click)="onAdd(item)">+</span>
-                                </div>
-                            </div> -->
+                      
                     </div>
                    
                 </div>
@@ -110,7 +101,7 @@
                     </div>
                 </div>
             </div>
-            <!-- <app-cart-footer></app-cart-footer> -->
+          
         </div>
     </div>
 

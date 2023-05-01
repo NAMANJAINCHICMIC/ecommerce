@@ -28,6 +28,7 @@
     "jspdf": "^2.5.1",
     "ngx-pagination": "^6.0.3",
     "ngx-toastr": "^16.1.0",
+    "openai": "^3.2.1",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.7.3",
     "tslib": "^2.3.0",

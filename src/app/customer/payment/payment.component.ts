@@ -33,7 +33,7 @@ export class PaymentComponent implements OnInit {
     const snap = await this.customerService.getCustomerProfile();
     if (snap.exists()) {
       this.info = snap.data()
-      console.log(this.info)
+      // console.log(this.info)
     }
     this.customerForm = new FormGroup(
       {
@@ -44,8 +44,7 @@ export class PaymentComponent implements OnInit {
         firstName: new FormControl(this.info['firstName'], Validators.required),
         lastName: new FormControl(this.info['lastName'], Validators.required),
         role: new FormControl('customer')
-        // category: new FormControl('',Validators.required ),
-        // pathToProfilePic: new FormControl('', ),
+       
       }
     )
   }
@@ -56,7 +55,7 @@ export class PaymentComponent implements OnInit {
     email: FormControl<string | null>,
     phone: FormControl<string | null>,
     address: FormControl<string | null>,
-    // pathToProfilePic: FormControl<string | null>
+   
   }>;
   constructor(private router: Router, private toastr: ToastrService, private http: HttpClient, private customerService: CustomerService, private cartService: CartService, private authService: AuthService) {
     this.cartObj = JSON.parse(this.cartService.getCartData() || '{}');
@@ -69,8 +68,7 @@ export class PaymentComponent implements OnInit {
         firstName: new FormControl('', Validators.required),
         lastName: new FormControl('', Validators.required),
         role: new FormControl('customer')
-        // category: new FormControl('',Validators.required ),
-        // pathToProfilePic: new FormControl('', ),
+       
       }
     )
   }
@@ -85,8 +83,7 @@ export class PaymentComponent implements OnInit {
       key: 'pk_test_51MvYDjSDEyMQFlUwhQFGtTMIUPIfdtTT6FqapCEZpY59SsZOo18zHrZYjSxaLRhtODNNxQasNCea044aL8c5iKuk00UA2ULGkC',
       locale: 'auto',
       token: async (stripeToken: any) => {
-        // console.log(stripeToken);
-        // alert('Stripe token generated!');
+        
         const data = {
           customerDetail: this.customerForm.value,
           productDetails: this.cartObj,
@@ -97,7 +94,7 @@ export class PaymentComponent implements OnInit {
           vendorArray: this.vendorArray,
           orderStatus: 'Placed'
         }
-        // console.log("data",data);
+      
 
         let boolUpdateProduct = true;
         let boolTransaction = true;
@@ -137,8 +134,8 @@ export class PaymentComponent implements OnInit {
         this.paymentHandler = (<any>window).StripeCheckout.configure({
           key: 'pk_test_51MvYDjSDEyMQFlUwhQFGtTMIUPIfdtTT6FqapCEZpY59SsZOo18zHrZYjSxaLRhtODNNxQasNCea044aL8c5iKuk00UA2ULGkC',
           locale: 'auto',
-          token: function (stripeToken: any) {
-            console.log(stripeToken);
+          token: function () {
+            // console.log(stripeToken);
             alert('Payment has been successfull!');
           },
         });
@@ -180,8 +177,7 @@ export class PaymentComponent implements OnInit {
 
   calculateTotalAmount() {
     if (this.cartObj) {
-      // this.isCartEmpty = false;
-      // this.cartObj = JSON.parse(this.cartService.getCartData()||'{}');
+      
       const GST_Amt = (18 / 100) * Number(this.cartObj.totalAmt);
       this.totalAmt = (Number(this.cartObj.totalAmt) + GST_Amt).toFixed(2);
     }

@@ -24,7 +24,7 @@ export class CartService  {
 
   addOrUpdate(item: any) {
     // get cart data from local storage
-  console.log(item)
+  // console.log(item)
     this.cartObj = this.getCartDataConverted();
     // add cart object for the first time
     if (!this.cartObj) {
@@ -121,7 +121,7 @@ export class CartService  {
 
     // cart locol storage
     addCartData(cart: Cart |null) {
-      console.log("addCart",cart)
+      // console.log("addCart",cart)
       this.cartData(cart);
       localStorage.setItem('cartData', JSON.stringify(cart));
       const obj = JSON.parse(localStorage.getItem('cartData') || '{}');

@@ -13,9 +13,7 @@ import Swal from 'sweetalert2';
 })
 export class CartFooterComponent implements OnInit{
   isCartEmpty = true;
-  // @Input() totalAmt=0
-  // @Input()totalItems?: number;
-  goToOrders = false;
+  // goToOrders = false;
   userId = this.authService.getUserId();
   totalCartItems : any; 
   totalAmt: any;
@@ -26,47 +24,13 @@ export class CartFooterComponent implements OnInit{
     private route: ActivatedRoute,
     private authService : AuthService
   ) {
-    // this.cartService.getCartData()
-    // JSON.parse(this.cartService.getCartData()||'{}')
-  // this.cartService.getCartDataObservable().subscribe((data : any) => {
-    
-  //       // here data is cart data object
-  //     console.log("data",data)
-  //     if (data && Object.keys(data.items).length > 0) {
-  //       this.isCartEmpty = false;
-  //       this.totalAmt = data.totalAmt;
-  //       this.totalItems = Object.keys(data.items).length;
-  //     }else{
-  //       this.isCartEmpty = true;
-  //     }
-    
-  //   });
  
   }
-  // ngOnChanges(): void {
-  //   if(this.totalAmt || this.totalItems)
-  //   {
-  //     this.isCartEmpty=false
-  //   }
  
-  // }
 
   ngOnInit(): void {
-    // this.cartService.cartDataSub.subscribe((data : any) => {
-      // here data is cart data object
-      // console.log("data",data)
-    //   if (data && Object.keys(data.items).length > 0) {
-    //     this.isCartEmpty = false;
-    //     this.totalAmt = data.totalAmt;
-    //     this.totalItems = Object.keys(data.items).length;
-    //   }else{
-    //     this.isCartEmpty = true;
-    //   }
-    // });
-    // console.log("data")
+   
      this.cartService.cartDataSub.subscribe((data : any) => {
-  
-      // console.log("data",data)
       if (data && Object.keys(data.items).length > 0) {
         this.isCartEmpty = false;
         this.totalAmt = data.totalAmt;
@@ -76,13 +40,9 @@ export class CartFooterComponent implements OnInit{
       }
     });
 
-    this.userId = this.authService.getUserId();
-    if(this.userId){
-      this.fillCart(this.userId)  
-      }
-    
+      this.fillCart()   
   }
-  async fillCart(userId:string){
+  async fillCart(){
     await this.cartService.getCartDataFirebase().then(
       async (snap)=>{
   

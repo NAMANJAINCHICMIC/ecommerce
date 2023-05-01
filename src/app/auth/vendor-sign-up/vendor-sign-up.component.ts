@@ -43,8 +43,7 @@ export class VendorSignUpComponent implements OnInit {
       address: new FormControl('',Validators.required ),
       firmName: new FormControl('' ,Validators.required),
       role: new FormControl('vendor')
-      // category: new FormControl('',Validators.required ),
-      // pathToProfilePic: new FormControl('', ),
+      
     }
   )
 
@@ -72,7 +71,7 @@ this.win.sendLoginCode(this.vendorForm.value.phone,this.windowRef).then(result =
   this.windowRef.confirmationResult = result;
   this.win.windowRefrence.confirmationResult = result;
     if(this.windowRef.confirmationResult){
-// this.displayOtpPage = true
+
 this.phoneNumber = ''+this.vendorForm.value.phone
 this.authService.userId = this.phoneNumber
 this.authService.storeUserId(this.phoneNumber);

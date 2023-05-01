@@ -19,7 +19,7 @@ export class CustomerUpdateProfileComponent  implements OnInit{
     const snap = await this.customerService.getCustomerProfile( );
     if (snap.exists()) {
              this.info = snap.data()                 
-            console.log(this.info)   
+            // console.log(this.info)   
         }
         this.customerForm = new FormGroup(
           {      
@@ -40,7 +40,7 @@ export class CustomerUpdateProfileComponent  implements OnInit{
       email: FormControl<string | null>,
       phone: FormControl<string | null>,
       address: FormControl<string | null>,
-      // pathToProfilePic: FormControl<string | null>
+      
   }>;
   constructor(private router: Router ,private toastr: ToastrService , private http: HttpClient , private customerService : CustomerService){
     this.customerForm = new FormGroup(
@@ -52,8 +52,7 @@ export class CustomerUpdateProfileComponent  implements OnInit{
         firstName: new FormControl('' ,Validators.required),
         lastName: new FormControl('' ,Validators.required),
         role: new FormControl('customer')
-        // category: new FormControl('',Validators.required ),
-        // pathToProfilePic: new FormControl('', ),
+      
       }
     )
       }

@@ -1,10 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DocumentData } from 'firebase/firestore';
-import { ToastrService } from 'ngx-toastr';
-import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { PAGE, defaultImage } from 'src/app/utils/constants/constant';
@@ -28,18 +24,14 @@ numbers = [1, 2, 3, 4, 5];
   reviewArray : Array<any> =[]
 
   constructor(
-    private fireStorage: AngularFireStorage,
     private router: Router,
-    private toastr: ToastrService,
-    private http: HttpClient,
     private customerService: CustomerService,
-    private authService: AuthService,
     private cartService: CartService,
     private activatedRoute: ActivatedRoute
   ) {}
   async ngOnInit(): Promise<void> {
     this.productId = this.activatedRoute.snapshot.paramMap.get('id');
-    console.log(this.productId);
+    // console.log(this.productId);
     if (this.productId) {
       const snap = await this.customerService.getUniqueProduct(this.productId);
       if (snap.exists()) {
@@ -55,14 +47,14 @@ numbers = [1, 2, 3, 4, 5];
     const querySnapshot = await this.customerService.getReviewsByProductId(this.productId);
     if(querySnapshot){
     querySnapshot.forEach((doc) => {
-      console.log(doc.data());
+      // console.log(doc.data());
       if(doc.data()){
 
         const ref = doc.data()
         this.reviewArray.push(ref)
         // this.item.comment = ref['comment']
         this.updateReviewArray()
-        console.log(this.reviewArray);
+        // console.log(this.reviewArray);
       }
       // const transactionId = doc.id
     //  this.orderArray.push({ ...doc.data(), transactionId})
