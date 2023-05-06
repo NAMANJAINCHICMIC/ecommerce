@@ -11,68 +11,69 @@ import Swal from 'sweetalert2';
   templateUrl: './cart-footer.component.html',
   styleUrls: ['./cart-footer.component.scss']
 })
-export class CartFooterComponent implements OnInit{
+export class CartFooterComponent implements OnInit {
   isCartEmpty = true;
   // goToOrders = false;
   userId = this.authService.getUserId();
-  totalCartItems : any; 
+  totalCartItems: any;
   totalAmt: any;
-  totalItems :any;
+  totalItems: any;
   constructor(
     private cartService: CartService,
     private router: Router,
     private route: ActivatedRoute,
-    private authService : AuthService
+    private authService: AuthService
   ) {
- 
+
   }
- 
+
 
   ngOnInit(): void {
-   
-     this.cartService.cartDataSub.subscribe((data : any) => {
+
+    this.cartService.cartDataSub.subscribe((data: any) => {
       if (data && Object.keys(data.items).length > 0) {
         this.isCartEmpty = false;
         this.totalAmt = data.totalAmt;
         this.totalItems = Object.keys(data.items).length;
-      }else{
+      } else {
         this.isCartEmpty = true;
       }
     });
 
-      this.fillCart()   
+    this.fillCart()
   }
-  async fillCart(){
+  async fillCart() {
     await this.cartService.getCartDataFirebase().then(
-      async (snap)=>{
-  
-    if(snap.exists()){
-      const info = snap.data()  
-      this.totalAmt=info['totalAmt'];
-      this.totalItems=Object.keys(info['items']).length;
-      if(this.totalItems > 0)
-      this.isCartEmpty = false;
-      localStorage.setItem('cartData', JSON.stringify(info));
-    }else{
+      async (snap) => {
+
+        if (snap.exists()) {
+          const info = snap.data()
+          this.totalAmt = info['totalAmt'];
+          this.totalItems = Object.keys(info['items']).length;
+          if (this.totalItems > 0)
+            this.isCartEmpty = false;
+          localStorage.setItem('cartData', JSON.stringify(info));
+        } else {
           this.isCartEmpty = true;
         }
- 
-  }).catch((err) => {
-    console.log('err',err);
-    // alert( err.message)
-    Swal.fire(
-        `Error ${err.code}`,
-        err.message,
-        'error'
-        )
-})
+
+      })
+      .catch((err) => {
+        // console.log('err', err);
+        // // alert( err.message)
+        // Swal.fire(
+        //   `Error ${err.code}`,
+        //   err.message,
+        //   'error'
+        // )
+      })
   }
 
   onContinue() {
     this.router.navigate([PAGE.MY_CART]);
   }
 
-  placeOrder() {
-    this.router.navigate(['confirm-order']);
-  }
+  // placeOrder() {
+  //   this.router.navigate(['confirm-order']);
+  // }
 }
