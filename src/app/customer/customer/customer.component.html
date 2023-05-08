@@ -7,7 +7,8 @@
           <div class="input-group rounded "  >
 
           <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" id="search" #search
-          aria-describedby="search-addon" [(ngModel)]="customer.search" name = "search" (input)="emitValueInput(myForm.value.search)" />
+          aria-describedby="search-addon" [(ngModel)]="customer.search" name = "search"  />
+          <!-- (input)="emitValueInput(myForm.value.search)" -->
           <span class="input-group-text border-0" id="search-addon" (click)="emitValue(myForm.value.search)">
             
             <mat-icon >search</mat-icon>
