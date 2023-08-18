@@ -10,6 +10,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { PAGE, REGEX } from 'src/app/utils/constants/constant';
 import { Cart } from 'src/app/utils/models/product';
+import { STRIPE_KEY } from 'src/environment';
 
 @Component({
   selector: 'app-payment',
@@ -80,7 +81,7 @@ export class PaymentComponent implements OnInit {
   makePayment(amount: any) {
 
     const paymentHandler = (<any>window).StripeCheckout.configure({
-      key: 'pk_test_51MvYDjSDEyMQFlUwhQFGtTMIUPIfdtTT6FqapCEZpY59SsZOo18zHrZYjSxaLRhtODNNxQasNCea044aL8c5iKuk00UA2ULGkC',
+      key: STRIPE_KEY,
       locale: 'auto',
       token: async (stripeToken: any) => {
         
@@ -132,10 +133,9 @@ export class PaymentComponent implements OnInit {
       script.onload = () => {
 
         this.paymentHandler = (<any>window).StripeCheckout.configure({
-          key: 'pk_test_51MvYDjSDEyMQFlUwhQFGtTMIUPIfdtTT6FqapCEZpY59SsZOo18zHrZYjSxaLRhtODNNxQasNCea044aL8c5iKuk00UA2ULGkC',
+          key: STRIPE_KEY,
           locale: 'auto',
           token: function () {
-            // console.log(stripeToken);
             alert('Payment has been successfull!');
           },
         });
@@ -168,7 +168,6 @@ export class PaymentComponent implements OnInit {
       }
     }
     this.calculateTotalAmount();
-    console.log("vendor",this.vendorArray)
   }
 
   getItemTotalAmount(price: number, quantity: number) {

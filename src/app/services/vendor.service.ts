@@ -78,16 +78,7 @@ export class VendorService {
   });
     // this.router.navigate([PAGE.VENDOR_HOME]);
   }
-  async getVendorAllProduct() {
-    const querySnapshot = await getDocs(collection(db, 'product'));
-    querySnapshot.forEach((doc) => {
-      // console.log(`${doc.id} => ${doc.data()}`);
-      const info = doc.data();
-      if (info['userId'] == this.userId) {
-        // console.log(info);
-      }
-    });
-  }
+
   async getUniqueProduct(productId: string) {
     return await getDoc(doc(db, 'product', productId)).catch((err) => {
       // console.log('err',err);

@@ -29,3 +29,5 @@ export const db = getFirestore(app);
 export const auth = getAuth(app);
 // const database = getDatabase(environment.app);
 export const AUTH_URL = 'https://ecommerce-d831d-default-rtdb.asia-southeast1.firebasedatabase.app/'
+
+export const STRIPE_KEY = 'pk_test_51MvYDjSDEyMQFlUwhQFGtTMIUPIfdtTT6FqapCEZpY59SsZOo18zHrZYjSxaLRhtODNNxQasNCea044aL8c5iKuk00UA2ULGkC'
